@@ -1,0 +1,31 @@
+{
+  "name": "health-nutrition-of-a-dish-depending-on-its-ingredients-full-stack",
+  "version": "1.0.0",
+  "description": "health nutrition of a dish depending on its ingredients website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "div": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdullah-mallah/Health-nutrition-of-a-dish-depending-on-its-ingredients-Full-stack.git"
+  },
+  "author": "Abdullah Mallah, Omar Zarife, Fiona Maci, Shadia Nalule and Mustafa Qassmieh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abdullah-mallah/Health-nutrition-of-a-dish-depending-on-its-ingredients-Full-stack/issues"
+  },
+  "homepage": "https://github.com/abdullah-mallah/Health-nutrition-of-a-dish-depending-on-its-ingredients-Full-stack#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.1",
+    "node.js": "^0.0.1-security"
+  }
+}
