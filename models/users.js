@@ -15,7 +15,7 @@ async function addUser(userName, email, password) {
       return null; // if the user already exists
     }
 
-    const newUser = new user({
+    const newUser = new users({
       userName: userName,
       email: email,
       password: password,
