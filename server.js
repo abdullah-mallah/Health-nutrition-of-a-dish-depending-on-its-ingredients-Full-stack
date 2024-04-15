@@ -1,5 +1,5 @@
 const { //to import the functions from users.js
-  addUser
+  addUser, authenticateUser
 } = require("./models/users.js");
 
 require("dotenv").config(); //import .env file
@@ -55,6 +55,26 @@ app.post("/api/users", async (req, res) => { //take info from request body and s
   } catch (error) {
     console.error("Error in route when adding the user:", error);
     res.status(500).json({ message: "Error adding user data" });
+  }
+});
+
+app.post('/api/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await authenticateUser(email, password);
+    if (user) {
+      // Login successful, handle session or token generation here
+      res.status(200).json({
+        message: "Login successful",
+        user: { id: user._id, email: user.email } // Do not send password
+      });
+    } else {
+      res.status(401).json({ message: "Invalid credentials" });
+    }
+  } catch (error) {
+    console.error("Error in login route:", error);
+    res.status(500).json({ message: "Error processing login" });
   }
 });
 
