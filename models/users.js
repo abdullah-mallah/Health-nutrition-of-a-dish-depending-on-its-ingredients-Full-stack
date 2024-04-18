@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require('bcrypt');
 
 const usersSchema = new mongoose.Schema({
   userName: String,
@@ -12,23 +13,35 @@ async function addUser(userName, email, password) {
   try {
     const userExist = await users.findOne({ userName });
     if (userExist) {
-      return null; // if the user already exists
+      return null;
     }
-
+    const hashedPassword = await bcrypt.hash(password, 10); // Ensure passwords are hashed
     const newUser = new users({
       userName: userName,
       email: email,
-      password: password,
+      password: hashedPassword,
     });
-    await newUser.save(); // save user to database
-    console.log(newUser);
+    await newUser.save();
     return newUser;
   } catch (error) {
-    console.error("Error adding user:", error);
+      throw error; // handle the error in the route
+  }
+}
+
+async function authenticateUser(email, password) {
+  try {
+    const user = await users.findOne({ email: email });
+    if (user && await bcrypt.compare(password, user.password)) {
+      return user;
+    }
+    return null;
+  }
+  catch (error) {
     throw error; // handle the error in the route
   }
 }
 
 module.exports = { //prepare which functions I want this class to export
+  authenticateUser, 
   addUser
 };
