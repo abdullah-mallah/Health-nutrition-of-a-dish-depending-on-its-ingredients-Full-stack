@@ -9,12 +9,12 @@ const port = process.env.PORT || 5000;
 connectDB(); // Connect to MongoDB 
 
 const path = require("path");//
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public", )));
 app.use(bodyParser.json());//to use bodyparse in express
 app.use('/api/users', usersRoutes); // Attach user routes under '/api/users'
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 
 
