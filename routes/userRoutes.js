@@ -4,7 +4,7 @@ const { //to import the functions from users.js
     addUser, authenticateUser } = require("../models/users.js");
 
 // Register user
-router.post('/', async (req, res) => { //take info from request body and send it to addUser function in users.js
+router.post('/signup', async (req, res) => { //take info from request body and send it to addUser function in users.js
     try {
       const userInfo = req.body;
   
