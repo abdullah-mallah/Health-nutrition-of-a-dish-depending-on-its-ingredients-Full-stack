@@ -11,7 +11,7 @@ const users = mongoose.model("users", usersSchema);
 
 async function addUser(userName, email, password) {
   try {
-    const userExist = await users.findOne({ userName });
+    const userExist = await users.findOne({ email });
     if (userExist) {
       return null;
     }
