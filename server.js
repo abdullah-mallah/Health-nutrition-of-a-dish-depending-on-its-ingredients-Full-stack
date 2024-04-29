@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, "public", )));
 app.use(bodyParser.json());//to use bodyparse in express
 app.use('/api/users', usersRoutes); // Attach user routes under '/api/users'
 
-app.get("/", (req, res) => {
+app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 

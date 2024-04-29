@@ -1,16 +1,12 @@
 const api = "http://localhost:5000/api/users";
-const currentUser = await addUser(
-  userId,
-  userName,
-  userEmail
-)
+
 document.addEventListener("DOMContentLoaded", function () {
   const url = "http://localhost:5000/api/reciepes"; //example of totally another rout with another use
   const path = window.location.pathname;
-  if (path.includes('signup.html')) {
+  if (path.includes('signup')) {
     const signupForm = document.querySelector('#signupForm');
     signupForm.addEventListener('submit', signupFormSubmitHandler);
-  } else if (path.includes('login.html')) {
+  } else if (path.includes('login')) {
     const loginForm = document.querySelector('#loginForm');
     loginForm.addEventListener('submit', loginFormSubmitHandler);
   }
@@ -19,21 +15,21 @@ document.addEventListener("DOMContentLoaded", function () {
 function signupFormSubmitHandler(event) {
   event.preventDefault();
   console.log('Handling signup form submission');
-  const newUsername = document.getElementById('Name').value;
-  const newEmail = document.getElementById('E-mail').value;
-  const newPassword = document.getElementById('Password').value;
+  let newUsername = document.getElementById('Name').value;
+  let newEmail = document.getElementById('E-mail').value;
+  let newPassword = document.getElementById('Password').value;
   if (!checkNewInput(newUsername, 'username') || !checkNewInput(newEmail, 'email') || !checkNewInput(newPassword, 'password')){
     //switch 
     alert('Please enter the data  in the correct format');
   }else{
   // could make this into its own function 
-  const userData = { newUserName, newEmail, newPassword }; //preparing them to become a json 
+    let currentUser = { userName: newUsername, email: newEmail, password: newPassword} //preparing them to become a json 
   fetch(`${api}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData), //the body holds the data I'm sending to the route
+    body: JSON.stringify(currentUser), //the body holds the data I'm sending to the route
       })
         .then((response) => {
           if (response.ok) {
@@ -59,7 +55,7 @@ function loginFormSubmitHandler(event) {
   event.preventDefault();
   console.log('Handling login form submission');
   const Email = document.getElementById('E-mail').value;
-  const Password = document.getElementById('Password').value;
+  const Password = document.getElementById('password').value;
   if ( !checkNewInput(Email, 'email') || !checkNewInput(Password, 'password')){
     //switch
     alert('Please enter the data  in the correct format');
@@ -84,7 +80,6 @@ function loginFormSubmitHandler(event) {
           }
         })
         .then((data) => {
-          currentUser ={userId:  data.userId, userName:data.userName, userEmail:data.userEmail}
           console.log(currentUser.id, currentUser.userName)
           // Refresh the list after adding
           alert(data.message);
