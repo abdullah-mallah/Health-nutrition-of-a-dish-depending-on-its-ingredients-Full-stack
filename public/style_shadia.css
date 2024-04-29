@@ -52,6 +52,10 @@ html {
     width: 100%;
     /* to ensure the main tag takes full width */
   }
+  /*profile tab*/
+  #profile_info_list{
+    list-style-type: none;
+  }
   
   footer {
     background-color: blue;
