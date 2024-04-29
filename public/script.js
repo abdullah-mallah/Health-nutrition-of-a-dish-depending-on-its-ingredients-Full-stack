@@ -1,7 +1,8 @@
 const api = "http://localhost:5000/api/users";
 const currentUser = await addUser(
   userId,
-  userName
+  userName,
+  userEmail
 )
 document.addEventListener("DOMContentLoaded", function () {
   const url = "http://localhost:5000/api/reciepes"; //example of totally another rout with another use
@@ -15,17 +16,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-function signupFormSubmitHandler(event,api) {
+function signupFormSubmitHandler(event) {
   event.preventDefault();
   console.log('Handling signup form submission');
   const newUsername = document.getElementById('Name').value;
   const newEmail = document.getElementById('E-mail').value;
   const newPassword = document.getElementById('Password').value;
   if (!checkNewInput(newUsername, 'username') || !checkNewInput(newEmail, 'email') || !checkNewInput(newPassword, 'password')){
+    //switch 
     alert('Please enter the data  in the correct format');
-    return
-
-  }
+  }else{
   // could make this into its own function 
   const userData = { newUserName, newEmail, newPassword }; //preparing them to become a json 
   fetch(`${api}/signup`, {
@@ -51,7 +51,8 @@ function signupFormSubmitHandler(event,api) {
         .catch((error) => {
           alert(error.message)
         });
-  alert(`Creating account with username: ${newUsername}, E-mail: ${newEmail} and password: ${newPassword}`);
+  // alert(`Creating account with username: ${newUsername}, E-mail: ${newEmail} and password: ${newPassword}`);
+      }
 }
 
 function loginFormSubmitHandler(event) {
@@ -60,9 +61,10 @@ function loginFormSubmitHandler(event) {
   const Email = document.getElementById('E-mail').value;
   const Password = document.getElementById('Password').value;
   if ( !checkNewInput(Email, 'email') || !checkNewInput(Password, 'password')){
+    //switch
     alert('Please enter the data  in the correct format');
-    return
-  }
+   
+  }else{
   // could make this into its own function 
   const userData = { Email, Password }; //preparing them to become a json 
   fetch(`${api}/login`, {
@@ -82,7 +84,7 @@ function loginFormSubmitHandler(event) {
           }
         })
         .then((data) => {
-          currentUser ={userId:  data.userId, userName:data.userName}
+          currentUser ={userId:  data.userId, userName:data.userName, userEmail:data.userEmail}
           console.log(currentUser.id, currentUser.userName)
           // Refresh the list after adding
           alert(data.message);
@@ -90,7 +92,8 @@ function loginFormSubmitHandler(event) {
         .catch((error) => {
           alert(error.message)
         });
-  alert(`logged in to E-mail: ${Email} and password: ${Password}`);
+  // alert(`logged in to E-mail: ${Email} and password: ${Password}`);
+      }
 }
 
 
@@ -99,23 +102,27 @@ function checkNewInput(input, type) {
     // Check if username meets criteria
     if (!/^[\w.-]{3,15}$/.test(input)) {
       alert( "Username must be 3-15 characters long and can only contain letters, numbers, underscore, dot, or dash.");
+      return false;
     }
   } else if (type === 'email') {
     // Check if email meets criteria
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input)) {
       alert("Invalid email format.");
+      return false;
     }
   } else if (type === 'password') {
     // Check if password meets criteria
     if (input.length < 6) {
       alert("Password must be at least 6 characters long.");
+      return false;
     }
   } else {
     console.log("Invalid type specified.");
+    return false;
   }
 
   // If all criteria pass, return null (indicating success)
-  return null;
+  return true;
 }
 
 
