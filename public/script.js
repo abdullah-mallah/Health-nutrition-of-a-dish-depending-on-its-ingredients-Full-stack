@@ -62,7 +62,7 @@ function loginFormSubmitHandler(event) {
    
   }else{
   // could make this into its own function 
-  const userData = { Email, Password }; //preparing them to become a json 
+  const userData = { email: Email , password: Password }; //preparing them to become a json 
   fetch(`${api}/login`, {
         method: "POST",
         headers: {
@@ -79,10 +79,10 @@ function loginFormSubmitHandler(event) {
             });
           }
         })
-        .then((data) => {
-          console.log(currentUser.id, currentUser.userName)
+        .then((d) => {
+          console.log(userData.password, userData.email)
           // Refresh the list after adding
-          alert(data.message);
+          alert(d.message);
         })
         .catch((error) => {
           alert(error.message)
