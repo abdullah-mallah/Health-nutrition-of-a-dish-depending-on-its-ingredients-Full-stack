@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login window</title>
+    <link rel="stylesheet" href="style_shadia.css">
+</head>
+
+<body>
+    <header>
+        <h1>Healthy</h1>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a>
+                </li>
+                <li><a href="about.html">About</a>
+                </li>
+                <li><a href="recipes.html">Recipes</a>
+                </li>
+                <li><a href="nutritions.html">Nutritions</a>
+                </li>
+                <li><a href="favourites.html">Favourites</a>
+                </li>
+                <li><a class="active" href="profile.html">Profile</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="container" aria-label="profile detail section">
+            <article class="type" aria-label="profile info">
+                <h2>Profile info</h2>
+                <ul id="profile_info_list">
+                    <li id="username"></li>
+                    <li id="email"></li>
+                </ul>
+            </article>
+        </section>
+        <section class="container1" aria-label="account settings">
+            <label for="username">username:</label>
+            <input type="text" id="new_username" placeholder="username">
+            <button id="btn_change_name" name="Change name">
+                Change name
+            </button>
+            <label for="E-mail">E-mail:</label>
+            <input type="text" id="new_email" placeholder="E-mail">
+            <button id="btn_change_email" name="Change email">
+                Change email
+            </button>
+            <label for="password">password:</label>
+            <input type="text" id="new_password" placeholder="password">
+            <button id="btn_change_password" name="Change btn_change_password">
+                Change password
+            </button>
+        </section>
+    </main>
+    <footer id="page-footer">
+        &#169; example AB 2024
+        <address>Examplegatan 1, 111 111 malmö</address>
+    </footer>
+    
+</body>
+</html>

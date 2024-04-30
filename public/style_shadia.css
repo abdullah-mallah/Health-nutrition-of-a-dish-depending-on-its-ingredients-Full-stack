@@ -1,0 +1,72 @@
+html {
+    box-sizing: border-box;
+    /*all elements should use box sizing model*/
+  }
+  
+  *,
+  *:before,
+  *:after {
+    /*psuedo elements will apply same thing*/
+    box-sizing: inherit;
+  }
+  
+  body {
+    margin: 0;
+    /*sticky footer*/
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  
+  header {
+    background-color: blue;
+  }
+  
+  header h1 {
+    color: white;
+  }
+  
+  header nav ul {
+    list-style-type: none;
+  }
+  
+  header nav li {
+    float: right;
+  }
+  
+  header nav ul li a {
+    text-decoration: none;
+    color: white;
+    display:  block;
+    padding-right: 20px;
+  }
+  
+  /*under are class selectores*/
+  header .active {
+    color: red;
+  }
+  main {
+    min-height: 100vh;
+    flex: 1;
+    /*main should take all the space which is not taken by other elements*/
+    width: 100%;
+    /* to ensure the main tag takes full width */
+  }
+  /*profile tab*/
+  #profile_info_list{
+    list-style-type: none;
+  }
+  
+  footer {
+    background-color: blue;
+    text-align: center;
+    /* text floating in the center*/
+    color: white;
+  }
+  
+  footer address {
+    display: inline-block;
+    margin-left: 20px;
+    font-style: normal;
+    /*removing italic*/
+  }
