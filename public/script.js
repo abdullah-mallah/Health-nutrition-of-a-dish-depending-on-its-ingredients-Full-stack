@@ -79,10 +79,10 @@ function loginFormSubmitHandler(event) {
             });
           }
         })
-        .then((d) => {
+        .then((data) => {
           console.log(userData.password, userData.email)
           // Refresh the list after adding
-          alert(d.message);
+          alert(data.message);
         })
         .catch((error) => {
           alert(error.message)

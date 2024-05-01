@@ -22,5 +22,3 @@ router.get("/:food", async (req, res) => {
 });
 
 module.exports = router;
-
-
