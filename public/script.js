@@ -120,6 +120,29 @@ function checkNewInput(input, type) {
   return true;
 }
 
+function fetchRecipes() {
+  const food = document.getElementById('foodInput').value;
+  if (food) {
+      fetch(`http://localhost:5000/api/recipes/${food}`)
+      .then(response => response.json())
+      .then(recipes => {
+          const recipesContainer = document.getElementById('recipes');
+          recipesContainer.innerHTML = ''; // Clear previous results
+
+          recipes.forEach(recipe => {
+              const recipeElement = document.createElement('div');
+              recipeElement.innerHTML = `
+                  <h3>${recipe.label}</h3>
+                  <p>Calories: ${recipe.calories}</p>
+              `;
+              recipesContainer.appendChild(recipeElement);
+          });
+      })
+      .catch(error => console.error('Error fetching recipes:', error));
+  } else {
+      alert('Please enter a food item.');
+  }
+}
 
 
 // you can make the query injections as a seperate function since it is being used so often

@@ -10,12 +10,21 @@ const port = process.env.PORT || 5000;
 connectDB(); // Connect to MongoDB 
 
 const path = require("path");//
-app.use(express.static(path.join(__dirname, "public", )));
 app.use(bodyParser.json());//to use bodyparse in express
+
+// Serve static files from 'public' directory
+app.use(express.static('public'));
 
 // routes
 app.use('/api/users', usersRoutes); // Attach user routes under '/api/users'
 app.use('/api/recipes', recipeRoutes);
+
+
+// Serve recipe.html at root
+app.get("/recipes", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "recipe.html"));
+});
+
 
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
