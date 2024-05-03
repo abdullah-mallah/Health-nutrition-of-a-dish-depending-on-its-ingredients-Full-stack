@@ -43,6 +43,7 @@ function signupFormSubmitHandler(event) {
         .then((data) => {
           // Refresh the list after adding
           alert(data.message);
+          window.location.href = 'home.html';
         })
         .catch((error) => {
           alert(error.message)
@@ -83,6 +84,7 @@ function loginFormSubmitHandler(event) {
           console.log(userData.password, userData.email)
           // Refresh the list after adding
           alert(data.message);
+          window.location.href = 'home.html';
         })
         .catch((error) => {
           alert(error.message)
