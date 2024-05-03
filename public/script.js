@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
   } else if (path.includes('login')) {
     const loginForm = document.querySelector('#loginForm');
     loginForm.addEventListener('submit', loginFormSubmitHandler);
+  } else if (path.includes('recipes')) {
+    const recipeForm = document.querySelector('#RecipeForm');
+    recipeForm.addEventListener('submit', fetchRecipes);
   }
 });
 
@@ -122,7 +125,8 @@ function checkNewInput(input, type) {
   return true;
 }
 
-function fetchRecipes() {
+function fetchRecipes(event) {
+  event.preventDefault();
   const food = document.getElementById('foodInput').value;
   if (food) {
       fetch(`http://localhost:5000/api/recipes/${food}`)

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login window</title>
+    <title>Recipe window</title>
     <link rel="stylesheet" href="style_fiona.css">
 </head>
 
@@ -29,12 +29,16 @@
     </header>
 
     <main>
-
+        <form id="RecipeForm">
+            <input type="text" id="foodInput" placeholder="Enter a food item" />
+            <button type="submit">Search</button>
+          </form>
+        <div id="recipes"></div>
     </main>
     <footer id="page-footer">
         &#169; example AB 2024
         <address>Examplegatan 1, 111 111 malmö</address>
     </footer>
-    
+    <script src="script.js"></script>
 </body>
 </html>
