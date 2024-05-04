@@ -14,14 +14,16 @@ document.addEventListener("DOMContentLoaded", function () {
   } else if (path.includes('recipes')) {
     const recipeForm = document.querySelector('#RecipeForm');
     recipeForm.addEventListener('submit', fetchRecipes);
-
     // Adding listeners to checkboxes
   ['vegan', 'vegetarian', 'alcoholFree'].forEach(id => {
     document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
   });
+  } else if (path.includes('home')) {
+    home()
   }
 });
 
+//////////// Login and signup functions
 function signupFormSubmitHandler(event) {
   event.preventDefault();
   console.log('Handling signup form submission');
@@ -103,7 +105,6 @@ function loginFormSubmitHandler(event) {
       }
 }
 
-
 function checkNewInput(input, type) {
   if (type === 'username') {
     // Check if username meets criteria
@@ -132,7 +133,7 @@ function checkNewInput(input, type) {
   return true;
 }
 
-
+//////////// recipe tab functions
 function fetchRecipes(event) {
   event.preventDefault();
   const food = document.getElementById('foodInput').value;
@@ -152,7 +153,6 @@ function fetchRecipes(event) {
     alert('Please enter a food item.');
   }
 }
-
 
 function filterAndDisplayRecipes() {
   const vegan = document.getElementById('vegan').checked;
@@ -187,6 +187,42 @@ function filterAndDisplayRecipes() {
     `;
     recipesContainer.appendChild(recipeElement);
   });
+}
+
+//////////// profile tab functions
+
+//////////// ingrediant tab functions
+
+//////////// profile tab functions
+
+//////////// home tab functions
+function home() { 
+  // Get all images
+  var images = document.querySelectorAll('.food-image');
+  var currentIndex = 0;
+
+  function showImage(index) {
+    // Hide all images
+    images.forEach(function (image) {
+      image.style.display = 'none';
+    });
+    // Show the current image
+    images[index].style.display = 'block';
+  }
+
+  function nextImage() {
+    currentIndex++;
+    if (currentIndex >= images.length) {
+      currentIndex = 0;
+    }
+    showImage(currentIndex);
+  }
+
+  // Show the first image initially
+  showImage(currentIndex);
+
+  // Change image every 3 seconds
+  setInterval(nextImage, 3000);
 }
 
 
