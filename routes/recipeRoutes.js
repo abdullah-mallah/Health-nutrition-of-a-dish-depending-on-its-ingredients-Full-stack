@@ -11,7 +11,11 @@ router.get("/:food", async (req, res) => {
         const recipes = response.data.hits.map(hit => {
             return {
                 label: hit.recipe.label,
-                calories: Math.round(hit.recipe.calories) // Round the calories to a whole number
+                calories: Math.round(hit.recipe.calories), // Round the calories to a whole number
+                image: hit.recipe.image,
+                healthLabels: hit.recipe.healthLabels,
+                ingredientLines: hit.recipe.ingredientLines
+
             };
         });
         res.json(recipes); // Send labels and calories as JSON

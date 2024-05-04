@@ -3,42 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe window</title>
+    <title>Recipe Window</title>
     <link rel="stylesheet" href="style_fiona.css">
 </head>
-
 <body>
     <header>
         <h1>Healthy</h1>
         <nav>
             <ul>
-                <li><a href="home.html">Home</a>
-                </li>
-                <li><a href="about.html">About</a>
-                </li>
-                <li><a class="active" href="recipes.html">Recipes</a>
-                </li>
-                <li><a href="nutritions.html">Nutritions</a>
-                </li>
-                <li><a href="favourites.html">Favourites</a>
-                </li>
-                <li><a href="profile.html">Profile</a>
-                </li>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a class="active" href="recipes.html">Recipes</a></li>
+                <li><a href="nutritions.html">Nutritions</a></li>
+                <li><a href="favourites.html">Favourites</a></li>
+                <li><a href="profile.html">Profile</a></li>
             </ul>
         </nav>
     </header>
-
     <main>
         <form id="RecipeForm">
             <input type="text" id="foodInput" placeholder="Enter a food item" />
+            <div>
+                <label><input type="checkbox" id="vegan" value="Vegan"> Vegan</label>
+                <label><input type="checkbox" id="vegetarian" value="Vegetarian"> Vegetarian</label>
+                <label><input type="checkbox" id="alcoholFree" value="Alcohol-Free"> Alcohol Free</label>
+            </div>
             <button type="submit">Search</button>
-          </form>
+        </form>
         <div id="recipes"></div>
     </main>
     <footer id="page-footer">
         &#169; example AB 2024
-        <address>Examplegatan 1, 111 111 malmö</address>
+        <address>Examplegatan 1, 111 111 Malmö</address>
     </footer>
     <script src="script.js"></script>
 </body>
 </html>
+

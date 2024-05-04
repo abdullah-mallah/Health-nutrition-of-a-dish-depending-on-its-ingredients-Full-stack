@@ -1,5 +1,7 @@
 const api = "http://localhost:5000/api/users";
 
+let allRecipes = []; // Global variable to store all fetched recipes
+
 document.addEventListener("DOMContentLoaded", function () {
   const url = "http://localhost:5000/api/reciepes"; //example of totally another rout with another use
   const path = window.location.pathname;
@@ -12,6 +14,11 @@ document.addEventListener("DOMContentLoaded", function () {
   } else if (path.includes('recipes')) {
     const recipeForm = document.querySelector('#RecipeForm');
     recipeForm.addEventListener('submit', fetchRecipes);
+
+    // Adding listeners to checkboxes
+  ['vegan', 'vegetarian', 'alcoholFree'].forEach(id => {
+    document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
+  });
   }
 });
 
@@ -125,30 +132,63 @@ function checkNewInput(input, type) {
   return true;
 }
 
+
 function fetchRecipes(event) {
   event.preventDefault();
   const food = document.getElementById('foodInput').value;
-  if (food) {
-      fetch(`http://localhost:5000/api/recipes/${food}`)
-      .then(response => response.json())
-      .then(recipes => {
-          const recipesContainer = document.getElementById('recipes');
-          recipesContainer.innerHTML = ''; // Clear previous results
 
-          recipes.forEach(recipe => {
-              const recipeElement = document.createElement('div');
-              recipeElement.innerHTML = `
-                  <h3>${recipe.label}</h3>
-                  <p>Calories: ${recipe.calories}</p>
-              `;
-              recipesContainer.appendChild(recipeElement);
-          });
-      })
-      .catch(error => console.error('Error fetching recipes:', error));
+  if (food) { // Fetch new recipes every time the form is submitted
+    fetch(`http://localhost:5000/api/recipes/${food}`)
+    .then(response => response.json())
+    .then(recipes => {
+        allRecipes = recipes; // Store fetched recipes
+        filterAndDisplayRecipes(); // Filter and display recipes after fetching
+    })
+    .catch(error => {
+        console.error('Error fetching recipes:', error);
+        alert('Failed to fetch recipes.');
+    });
   } else {
-      alert('Please enter a food item.');
+    alert('Please enter a food item.');
   }
 }
+
+
+function filterAndDisplayRecipes() {
+  const vegan = document.getElementById('vegan').checked;
+  const vegetarian = document.getElementById('vegetarian').checked;
+  const alcoholFree = document.getElementById('alcoholFree').checked;
+
+  const filteredRecipes = allRecipes.filter(recipe => {
+    if (vegan && !recipe.healthLabels.includes('Vegan')) {
+      return false;
+    }
+    if (vegetarian && !recipe.healthLabels.includes('Vegetarian')) {
+      return false;
+    } 
+    if (alcoholFree && !recipe.healthLabels.includes('Alcohol-Free')) {
+      return false;
+    }
+    return true;
+  });
+
+  const recipesContainer = document.getElementById('recipes');
+  recipesContainer.innerHTML = ''; // Clear previous results
+
+  filteredRecipes.forEach(recipe => {
+    const recipeElement = document.createElement('div');
+    const ingredients = recipe.ingredientLines.map(ingredient => `<li>${ingredient}</li>`).join(''); // Prepare ingredient list items
+    recipeElement.innerHTML = `
+        <h3>${recipe.label}</h3>
+        <p>Calories: ${recipe.calories}</p>
+        <img src="${recipe.image}" alt="Recipe image">
+        <h4>Ingredients:</h4>
+        <ul>${ingredients}</ul> 
+    `;
+    recipesContainer.appendChild(recipeElement);
+  });
+}
+
 
 
 // you can make the query injections as a seperate function since it is being used so often
