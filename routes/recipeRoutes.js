@@ -4,7 +4,9 @@ const axios = require("axios");
 
 router.get("/:food", async (req, res) => {
     const food = req.params.food;
-    const url = `https://api.edamam.com/api/recipes/v2?q=${food}&app_id=4f21898d&app_key=4c3e681eb31124f74461092eb4196d07&type=public`;
+    const api_id = process.env.API_ID;
+    const api_key = process.env.API_KEY;
+    const url = `https://api.edamam.com/api/recipes/v2?q=${food}&app_id=${api_id}&app_key=${api_key}&type=public`;
     try {
         const response = await axios.get(url);
         // Extract both label and calories from each recipe
