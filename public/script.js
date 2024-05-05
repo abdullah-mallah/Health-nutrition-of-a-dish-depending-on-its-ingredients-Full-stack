@@ -3,7 +3,7 @@ const api = "http://localhost:5000/api/users";
 let allRecipes = []; // Global variable to store all fetched recipes
 
 document.addEventListener("DOMContentLoaded", function () {
-  const url = "http://localhost:5000/api/reciepes"; //example of totally another rout with another use
+  const url = "http://localhost:5000/api/reciepes"; // example of totally another rout with another use
   const path = window.location.pathname;
   if (path.includes('signup')) {
     const signupForm = document.querySelector('#signupForm');
@@ -15,13 +15,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const recipeForm = document.querySelector('#RecipeForm');
     recipeForm.addEventListener('submit', fetchRecipes);
     // Adding listeners to checkboxes
-  ['vegan', 'vegetarian', 'alcoholFree', 'highProtein', 'lowCarb', 'highFiber', 'lowFat'].forEach(id => {
-    document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
-  });
+    ['vegan', 'vegetarian', 'alcoholFree', 'highProtein', 'lowCarb', 'highFiber', 'lowFat', 'eggFree', 'fishFree', 'glutenFree', 'dairyFree'].forEach(id => {
+      document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
+    });
   } else if (path.includes('home')) {
     home()
   }
 });
+
 
 //////////// Login and signup functions
 function signupFormSubmitHandler(event) {
@@ -162,6 +163,10 @@ function filterAndDisplayRecipes() {
   const lowCarb = document.getElementById('lowCarb').checked;
   const lowFat = document.getElementById('lowFat').checked;
   const highFiber = document.getElementById('highFiber').checked;
+  const eggFree = document.getElementById('eggFree').checked;
+  const fishFree = document.getElementById('fishFree').checked;
+  const glutenFree = document.getElementById('glutenFree').checked;
+  const dairyFree = document.getElementById('dairyFree').checked;
 
   const filteredRecipes = allRecipes.filter(recipe => {
     return (!vegan || recipe.healthLabels.includes('Vegan')) &&
@@ -170,12 +175,17 @@ function filterAndDisplayRecipes() {
            (!highProtein || recipe.dietLabels.includes('High-Protein')) &&
            (!lowCarb || recipe.dietLabels.includes('Low-Carb')) &&
            (!lowFat || recipe.dietLabels.includes('Low-Fat')) &&
-           (!highFiber || recipe.dietLabels.includes('High-Fiber'));
+           (!highFiber || recipe.dietLabels.includes('High-Fiber')) &&
+           (!eggFree || recipe.healthLabels.includes('Egg-Free')) &&
+           (!fishFree || recipe.healthLabels.includes('Fish-Free')) &&
+           (!glutenFree || recipe.healthLabels.includes('Gluten-Free')) &&
+           (!dairyFree || recipe.healthLabels.includes('Dairy-Free'));
   });
 
   displayRecipeCount(filteredRecipes.length); // Display the count of filtered recipes
   displayRecipes(filteredRecipes); // Display the recipes themselves
 }
+
 
 function displayRecipeCount(count) {
   const countContainer = document.getElementById('recipeCount');
