@@ -16,6 +16,7 @@ router.get("/:food", async (req, res) => {
                 calories: Math.round(hit.recipe.calories), // Round the calories to a whole number
                 image: hit.recipe.image,
                 healthLabels: hit.recipe.healthLabels,
+                dietLabels: hit.recipe.dietLabels,
                 ingredientLines: hit.recipe.ingredientLines
 
             };
