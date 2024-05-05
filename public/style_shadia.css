@@ -1,72 +1,108 @@
-html {
-    box-sizing: border-box;
-    /*all elements should use box sizing model*/
-  }
-  
-  *,
-  *:before,
-  *:after {
-    /*psuedo elements will apply same thing*/
-    box-sizing: inherit;
-  }
-  
-  body {
-    margin: 0;
-    /*sticky footer*/
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
-  
-  header {
-    background-color: blue;
-  }
-  
-  header h1 {
-    color: white;
-  }
-  
-  header nav ul {
-    list-style-type: none;
-  }
-  
-  header nav li {
-    float: right;
-  }
-  
-  header nav ul li a {
-    text-decoration: none;
-    color: white;
-    display:  block;
-    padding-right: 20px;
-  }
-  
-  /*under are class selectores*/
-  header .active {
-    color: red;
-  }
-  main {
-    min-height: 100vh;
-    flex: 1;
-    /*main should take all the space which is not taken by other elements*/
-    width: 100%;
-    /* to ensure the main tag takes full width */
-  }
-  /*profile tab*/
-  #profile_info_list{
-    list-style-type: none;
-  }
-  
-  footer {
-    background-color: blue;
-    text-align: center;
-    /* text floating in the center*/
-    color: white;
-  }
-  
-  footer address {
-    display: inline-block;
-    margin-left: 20px;
-    font-style: normal;
-    /*removing italic*/
-  }
+/* Resetting default margin and padding */
+body, h1, h2, h3, ul, li, p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Setting up fonts */
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Header styling */
+header {
+  background-color: #4CAF50;
+  padding: 20px;
+}
+
+header h1 {
+  color: white;
+  font-size: 24px;
+}
+
+header nav ul {
+  list-style-type: none;
+}
+
+header nav li {
+  display: inline;
+  margin-left: 20px;
+}
+
+header nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+  color: #FF5733; /* Change color on hover */
+}
+
+/* Active link */
+header .active {
+  font-weight: bold;
+}
+
+/* Main content */
+main {
+  padding: 20px;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+/* Form styling */
+form {
+  max-width: 400px;
+  margin: auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049; /* Darken color on hover */
+}
+
+/* Footer styling */
+footer {
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+footer address {
+  display: inline-block;
+  margin-left: 20px;
+}
