@@ -168,23 +168,34 @@ function filterAndDisplayRecipes() {
   const glutenFree = document.getElementById('glutenFree').checked;
   const dairyFree = document.getElementById('dairyFree').checked;
 
+  // Get the value of maximum calories input field
+  const maxCalories = document.getElementById('maxCalories').value;
+
   const filteredRecipes = allRecipes.filter(recipe => {
-    return (!vegan || recipe.healthLabels.includes('Vegan')) &&
-           (!vegetarian || recipe.healthLabels.includes('Vegetarian')) &&
-           (!alcoholFree || recipe.healthLabels.includes('Alcohol-Free')) &&
-           (!highProtein || recipe.dietLabels.includes('High-Protein')) &&
-           (!lowCarb || recipe.dietLabels.includes('Low-Carb')) &&
-           (!lowFat || recipe.dietLabels.includes('Low-Fat')) &&
-           (!highFiber || recipe.dietLabels.includes('High-Fiber')) &&
-           (!eggFree || recipe.healthLabels.includes('Egg-Free')) &&
-           (!fishFree || recipe.healthLabels.includes('Fish-Free')) &&
-           (!glutenFree || recipe.healthLabels.includes('Gluten-Free')) &&
-           (!dairyFree || recipe.healthLabels.includes('Dairy-Free'));
+    const dietFilters =
+      (!vegan || recipe.healthLabels.includes('Vegan')) &&
+      (!vegetarian || recipe.healthLabels.includes('Vegetarian')) &&
+      (!alcoholFree || recipe.healthLabels.includes('Alcohol-Free')) &&
+      (!highProtein || recipe.dietLabels.includes('High-Protein')) &&
+      (!lowCarb || recipe.dietLabels.includes('Low-Carb')) &&
+      (!lowFat || recipe.dietLabels.includes('Low-Fat')) &&
+      (!highFiber || recipe.dietLabels.includes('High-Fiber')) &&
+      (!eggFree || recipe.healthLabels.includes('Egg-Free')) &&
+      (!fishFree || recipe.healthLabels.includes('Fish-Free')) &&
+      (!glutenFree || recipe.healthLabels.includes('Gluten-Free')) &&
+      (!dairyFree || recipe.healthLabels.includes('Dairy-Free'));
+
+    // Filter condition for maximum calories
+    const meetsMaxCalories = maxCalories === '' || recipe.calories <= maxCalories;
+
+    // Return true only if all filter conditions are met
+    return dietFilters && meetsMaxCalories;
   });
 
   displayRecipeCount(filteredRecipes.length); // Display the count of filtered recipes
   displayRecipes(filteredRecipes); // Display the recipes themselves
 }
+
 
 
 function displayRecipeCount(count) {
@@ -206,6 +217,8 @@ function displayRecipes(recipes) {
     recipeElement.innerHTML = `
       <h3>${recipe.label}</h3>
       <p>Calories: ${recipe.calories}</p>
+      <p>Protein: ${recipe.protein} g</p>
+      <p>Sugar: ${recipe.sugar} g</p>
       <img src="${recipe.image}" alt="Recipe image">
       <h4>Ingredients:</h4>
       <ul>${ingredients}</ul>
