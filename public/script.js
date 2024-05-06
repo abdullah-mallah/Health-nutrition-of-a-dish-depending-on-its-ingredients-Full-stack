@@ -1,35 +1,37 @@
 const api = "http://localhost:5000/api/users";
 
 let allRecipes = []; // Global variable to store all fetched recipes
+let userInfo = {};
 
 document.addEventListener("DOMContentLoaded", function () {
-  const url = "http://localhost:5000/api/reciepes"; //example of totally another rout with another use
+  const url = "http://localhost:5000/api/reciepes"; // example of totally another rout with another use
   const path = window.location.pathname;
   if (path.includes('signup')) {
-    const signupForm = document.querySelector('#signupForm');
+    const signupForm = document.querySelector('#signup_signupForm');
     signupForm.addEventListener('submit', signupFormSubmitHandler);
   } else if (path.includes('login')) {
-    const loginForm = document.querySelector('#loginForm');
+    const loginForm = document.querySelector('#login_loginForm');
     loginForm.addEventListener('submit', loginFormSubmitHandler);
   } else if (path.includes('recipes')) {
     const recipeForm = document.querySelector('#RecipeForm');
     recipeForm.addEventListener('submit', fetchRecipes);
     // Adding listeners to checkboxes
-  ['vegan', 'vegetarian', 'alcoholFree'].forEach(id => {
-    document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
-  });
+    ['vegan', 'vegetarian', 'alcoholFree', 'highProtein', 'lowCarb', 'highFiber', 'lowFat', 'eggFree', 'fishFree', 'glutenFree', 'dairyFree'].forEach(id => {
+      document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
+    });
   } else if (path.includes('home')) {
     home()
   }
 });
 
+
 //////////// Login and signup functions
 function signupFormSubmitHandler(event) {
   event.preventDefault();
   console.log('Handling signup form submission');
-  let newUsername = document.getElementById('Name').value;
-  let newEmail = document.getElementById('E-mail').value;
-  let newPassword = document.getElementById('Password').value;
+  let newUsername = document.getElementById('signup_Name').value;
+  let newEmail = document.getElementById('signup_E-mail').value;
+  let newPassword = document.getElementById('signup_Password').value;
   if (!checkNewInput(newUsername, 'username') || !checkNewInput(newEmail, 'email') || !checkNewInput(newPassword, 'password')){
     //switch 
     alert('Please enter the data  in the correct format');
@@ -67,8 +69,8 @@ function signupFormSubmitHandler(event) {
 function loginFormSubmitHandler(event) {
   event.preventDefault();
   console.log('Handling login form submission');
-  const Email = document.getElementById('E-mail').value;
-  const Password = document.getElementById('password').value;
+  const Email = document.getElementById('login_E-mail').value;
+  const Password = document.getElementById('login_password').value;
   if ( !checkNewInput(Email, 'email') || !checkNewInput(Password, 'password')){
     //switch
     alert('Please enter the data  in the correct format');
@@ -93,7 +95,8 @@ function loginFormSubmitHandler(event) {
           }
         })
         .then((data) => {
-          console.log(userData.password, userData.email)
+          console.log(data.user)
+          userInfo = data.user;
           // Refresh the list after adding
           alert(data.message);
           window.location.href = 'home.html';
@@ -158,36 +161,75 @@ function filterAndDisplayRecipes() {
   const vegan = document.getElementById('vegan').checked;
   const vegetarian = document.getElementById('vegetarian').checked;
   const alcoholFree = document.getElementById('alcoholFree').checked;
+  const highProtein = document.getElementById('highProtein').checked;
+  const lowCarb = document.getElementById('lowCarb').checked;
+  const lowFat = document.getElementById('lowFat').checked;
+  const highFiber = document.getElementById('highFiber').checked;
+  const eggFree = document.getElementById('eggFree').checked;
+  const fishFree = document.getElementById('fishFree').checked;
+  const glutenFree = document.getElementById('glutenFree').checked;
+  const dairyFree = document.getElementById('dairyFree').checked;
+
+  // Get the value of maximum calories input field
+  const maxCalories = document.getElementById('maxCalories').value;
 
   const filteredRecipes = allRecipes.filter(recipe => {
-    if (vegan && !recipe.healthLabels.includes('Vegan')) {
-      return false;
-    }
-    if (vegetarian && !recipe.healthLabels.includes('Vegetarian')) {
-      return false;
-    } 
-    if (alcoholFree && !recipe.healthLabels.includes('Alcohol-Free')) {
-      return false;
-    }
-    return true;
+    const dietFilters =
+      (!vegan || recipe.healthLabels.includes('Vegan')) &&
+      (!vegetarian || recipe.healthLabels.includes('Vegetarian')) &&
+      (!alcoholFree || recipe.healthLabels.includes('Alcohol-Free')) &&
+      (!highProtein || recipe.dietLabels.includes('High-Protein')) &&
+      (!lowCarb || recipe.dietLabels.includes('Low-Carb')) &&
+      (!lowFat || recipe.dietLabels.includes('Low-Fat')) &&
+      (!highFiber || recipe.dietLabels.includes('High-Fiber')) &&
+      (!eggFree || recipe.healthLabels.includes('Egg-Free')) &&
+      (!fishFree || recipe.healthLabels.includes('Fish-Free')) &&
+      (!glutenFree || recipe.healthLabels.includes('Gluten-Free')) &&
+      (!dairyFree || recipe.healthLabels.includes('Dairy-Free'));
+
+    // Filter condition for maximum calories
+    const meetsMaxCalories = maxCalories === '' || recipe.calories <= maxCalories;
+
+    // Return true only if all filter conditions are met
+    return dietFilters && meetsMaxCalories;
   });
 
+  displayRecipeCount(filteredRecipes.length); // Display the count of filtered recipes
+  displayRecipes(filteredRecipes); // Display the recipes themselves
+}
+
+
+
+function displayRecipeCount(count) {
+  const countContainer = document.getElementById('recipeCount');
+  if (!countContainer) {
+    console.error('Recipe count display element not found!');
+    return;
+  }
+  countContainer.textContent = `Showing ${count} recipe(s) that match your filters.`;
+}
+
+function displayRecipes(recipes) {
   const recipesContainer = document.getElementById('recipes');
   recipesContainer.innerHTML = ''; // Clear previous results
 
-  filteredRecipes.forEach(recipe => {
+  recipes.forEach(recipe => {
     const recipeElement = document.createElement('div');
-    const ingredients = recipe.ingredientLines.map(ingredient => `<li>${ingredient}</li>`).join(''); // Prepare ingredient list items
+    const ingredients = recipe.ingredientLines.map(ingredient => `<li>${ingredient}</li>`).join('');
     recipeElement.innerHTML = `
-        <h3>${recipe.label}</h3>
-        <p>Calories: ${recipe.calories}</p>
-        <img src="${recipe.image}" alt="Recipe image">
-        <h4>Ingredients:</h4>
-        <ul>${ingredients}</ul> 
+      <h3>${recipe.label}</h3>
+      <p>Meal Type: ${recipe.mealType}</p>
+      <p>Calories: ${recipe.calories} kcal</p>
+      <p>Protein: ${recipe.protein} g</p>
+      <p>Sugar: ${recipe.sugar} g</p>
+      <img src="${recipe.image}" alt="Recipe image">
+      <h4>Ingredients:</h4>
+      <ul>${ingredients}</ul>
     `;
     recipesContainer.appendChild(recipeElement);
   });
 }
+
 
 //////////// profile tab functions
 
@@ -198,7 +240,7 @@ function filterAndDisplayRecipes() {
 //////////// home tab functions
 function home() { 
   // Get all images
-  var images = document.querySelectorAll('.food-image');
+  var images = document.querySelectorAll('.home_food-image');
   var currentIndex = 0;
 
   function showImage(index) {
