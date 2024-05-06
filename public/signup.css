@@ -1,0 +1,36 @@
+.signup_main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#signup_signupForm {
+  display: flex;
+  flex-direction: column;
+  background-color: #f2f2f6;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+#signup_Name,
+#signup_E-mail,
+#signup_Password {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #020202;
+  border-radius: 4px;
+}
+
+#signup_btn-create {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#signup_btn-create:hover {
+  background-color: #0056b3;
+}
