@@ -7,14 +7,6 @@ html {
 *:after {
   box-sizing: inherit;
 }
-
-body {
-  margin: 0;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
 header {
   background-color: rgb(40, 176, 33);
 }
@@ -41,6 +33,14 @@ header nav ul li a {
 header .active {
   color: red;
 }
+
+body {
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 main {
   min-height: 100vh;
   flex: 1;

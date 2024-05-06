@@ -9,17 +9,8 @@ html {
     /*psuedo elements will apply same thing*/
     box-sizing: inherit;
   }
-  
-  body {
-    margin: 0;
-    /*sticky footer*/
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
-  
   header {
-    background-color: blue;
+    background-color: rgb(40, 176, 33);
   }
   
   header h1 {
@@ -36,10 +27,23 @@ html {
   
   header nav ul li a {
     text-decoration: none;
-    color: white;
+    color: rgb(8, 8, 8);
     display:  block;
     padding-right: 20px;
   }
+  
+  header .active {
+    color: red;
+  }
+  
+  body {
+    margin: 0;
+    /*sticky footer*/
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  
   
   /*under are class selectores*/
   header .active {
