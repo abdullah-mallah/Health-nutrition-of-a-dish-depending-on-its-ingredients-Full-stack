@@ -2,6 +2,7 @@
 const usersRoutes = require('./routes/userRoutes');
 const recipeRoutes = require('./routes/recipeRoutes');
 const ingrediantRoutes = require('./routes/ingrediantRoutes')
+const adminRoutes = require('./routes/adminRoutes')
 
 require("dotenv").config(); //import .env file
 
@@ -24,6 +25,7 @@ app.use(express.static('public'));
 app.use('/api/users', usersRoutes); // Attach user routes under '/api/users'
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/ingrediants', ingrediantRoutes)
+app.use('/api/admin', adminRoutes)
 
 
 // Serve recipe.html at root
