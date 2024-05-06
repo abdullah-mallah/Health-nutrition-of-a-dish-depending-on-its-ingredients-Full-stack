@@ -1,51 +1,133 @@
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .login-form,
-  .signup-form {
-    background-color: #f2f2f6;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  input {
-    margin-bottom: 10px;
+/*---------- all pages ----------*/
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body{
+  margin: 0;
+  /*sticky footer*/
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+main {
+  padding-top: 100px;
+  flex-grow: 1;
+    /* grows to take up any remaining space */
+  width: 100%;/* to ensure the main tag takes full width */
+}
+footer {
+  height: 50px;
+  background-color: blue;
+  text-align: center;
+  /* text floating in the center*/
+  color: white;
+}
+footer address {
+  display: inline-block;
+  margin-left: 20px;
+  font-style: normal;
+  /*removing italic*/
+}
+#page-footer {
+  background-color: #0056b3;
+}
+
+/*---------- nav section ----------*/
+.nav-link .icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bi {
+  width: 32px;/* or any other size */
+  height: 32px;/* match the width for consistency */
+  margin-bottom: 4px;/* adds a little space between the icon and text */
+}
+.nav-link div {
+  text-align: center;/* centers the text below the icon */
+}
+.navbar-collapse.collapsing,
+.navbar-collapse.show {
+  max-height: 75vh;/* Adjust based on your needs */
+  overflow-y: auto;
+}
+.navbar-brand {
+  font-size: xx-large;
+  font-family: cursive;
+}
+
+/*---------- login and signup section ----------*/
+.login_main,
+.signup_main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+#login_loginForm,
+#signup_signupForm {
+  display: flex;
+  flex-direction: column;
+  background-color: #f2f2f6;
+  padding: 20px;
+  border-radius: 8px;
+}
+#login_E-mail,
+#login_password,
+#signup_Name,
+#signup_E-mail,
+#signup_Password{
+  margin-bottom: 10px;
     padding: 8px;
     border: 1px solid #020202;
     border-radius: 4px;
-  }
-  
-  button {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  .signup-form {
-    display: none;
-  }
-  
-  .show-signup .signup-form {
-    display: block;
-  }
-  .signup-form {
-    display: none;
-  }
-  #page-footer{
-    background-color: #0056b3;
-  }
+}
+#login_btn-login,
+#signup_btn-create {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#login_btn-login:hover,
+#signup_btn-create:hover {
+  background-color: #0056b3;
+}
+
+/*---------- home tab section ----------*/
+.home_food {
+  background-color: rgb(40, 176, 33);
+  padding: 20px;
+  text-align: center;
+}
+.home_content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+.home_food-image {
+  width: 30%;/* Set the width to fill the container */
+  height: 300px;/* Set the height */
+  object-fit: cover;/* Ensure the image covers the defined dimensions */
+  margin: 0 auto;/* Center the image horizontally within the container */
+}
+.home_slideshow-container {
+  width: 100%;/* Set the maximum width of the container */
+  margin: 0 auto;/* Center the container horizontally */
+}
+/*---------- about tab section section ----------*/
+/*---------- favourites tab section ----------*/
+/*---------- nutritions tab section ----------*/
+/*---------- profile tab section ----------*/
+#profile_info_list {
+  list-style-type: none;
+}
+/*---------- recipes tab section ----------*/

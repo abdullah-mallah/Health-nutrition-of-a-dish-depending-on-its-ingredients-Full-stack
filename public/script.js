@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const url = "http://localhost:5000/api/reciepes"; // example of totally another rout with another use
   const path = window.location.pathname;
   if (path.includes('signup')) {
-    const signupForm = document.querySelector('#signupForm');
+    const signupForm = document.querySelector('#signup_signupForm');
     signupForm.addEventListener('submit', signupFormSubmitHandler);
   } else if (path.includes('login')) {
-    const loginForm = document.querySelector('#loginForm');
+    const loginForm = document.querySelector('#login_loginForm');
     loginForm.addEventListener('submit', loginFormSubmitHandler);
   } else if (path.includes('recipes')) {
     const recipeForm = document.querySelector('#RecipeForm');
@@ -28,9 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
 function signupFormSubmitHandler(event) {
   event.preventDefault();
   console.log('Handling signup form submission');
-  let newUsername = document.getElementById('Name').value;
-  let newEmail = document.getElementById('E-mail').value;
-  let newPassword = document.getElementById('Password').value;
+  let newUsername = document.getElementById('signup_Name').value;
+  let newEmail = document.getElementById('signup_E-mail').value;
+  let newPassword = document.getElementById('signup_Password').value;
   if (!checkNewInput(newUsername, 'username') || !checkNewInput(newEmail, 'email') || !checkNewInput(newPassword, 'password')){
     //switch 
     alert('Please enter the data  in the correct format');
@@ -68,8 +68,8 @@ function signupFormSubmitHandler(event) {
 function loginFormSubmitHandler(event) {
   event.preventDefault();
   console.log('Handling login form submission');
-  const Email = document.getElementById('E-mail').value;
-  const Password = document.getElementById('password').value;
+  const Email = document.getElementById('login_E-mail').value;
+  const Password = document.getElementById('login_password').value;
   if ( !checkNewInput(Email, 'email') || !checkNewInput(Password, 'password')){
     //switch
     alert('Please enter the data  in the correct format');
@@ -238,7 +238,7 @@ function displayRecipes(recipes) {
 //////////// home tab functions
 function home() { 
   // Get all images
-  var images = document.querySelectorAll('.food-image');
+  var images = document.querySelectorAll('.home_food-image');
   var currentIndex = 0;
 
   function showImage(index) {
