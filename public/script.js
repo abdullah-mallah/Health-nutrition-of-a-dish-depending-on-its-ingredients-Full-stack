@@ -1,6 +1,7 @@
 const api = "http://localhost:5000/api/users";
 
 let allRecipes = []; // Global variable to store all fetched recipes
+let userInfo = {};
 
 document.addEventListener("DOMContentLoaded", function () {
   const url = "http://localhost:5000/api/reciepes"; // example of totally another rout with another use
@@ -94,7 +95,8 @@ function loginFormSubmitHandler(event) {
           }
         })
         .then((data) => {
-          console.log(userData.password, userData.email)
+          console.log(data.user)
+          userInfo = data.user;
           // Refresh the list after adding
           alert(data.message);
           window.location.href = 'home.html';
