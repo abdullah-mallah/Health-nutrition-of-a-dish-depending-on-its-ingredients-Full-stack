@@ -216,7 +216,8 @@ function displayRecipes(recipes) {
     const ingredients = recipe.ingredientLines.map(ingredient => `<li>${ingredient}</li>`).join('');
     recipeElement.innerHTML = `
       <h3>${recipe.label}</h3>
-      <p>Calories: ${recipe.calories}</p>
+      <p>Meal Type: ${recipe.mealType}</p>
+      <p>Calories: ${recipe.calories} kcal</p>
       <p>Protein: ${recipe.protein} g</p>
       <p>Sugar: ${recipe.sugar} g</p>
       <img src="${recipe.image}" alt="Recipe image">

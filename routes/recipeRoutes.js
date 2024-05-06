@@ -19,7 +19,8 @@ router.get("/:food", async (req, res) => {
                 dietLabels: hit.recipe.dietLabels,
                 ingredientLines: hit.recipe.ingredientLines,
                 protein: Math.round(hit.recipe.totalNutrients.PROCNT.quantity),
-                sugar: Math.round(hit.recipe.totalNutrients.SUGAR.quantity)
+                sugar: Math.round(hit.recipe.totalNutrients.SUGAR.quantity),
+                mealType: hit.recipe.mealType
 
             };
         });
