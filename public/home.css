@@ -1,0 +1,30 @@
+.home_food {
+  background-color: rgb(40, 176, 33);
+  padding: 20px;
+  text-align: center;
+}
+
+.home_content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.home_food-image {
+  width: 30%;
+  /* Set the width to fill the container */
+  height: 300px;
+  /* Set the height */
+  object-fit: cover;
+  /* Ensure the image covers the defined dimensions */
+  margin: 0 auto;
+  /* Center the image horizontally within the container */
+}
+
+.home_slideshow-container {
+  width: 100%;
+  /* Set the maximum width of the container */
+  margin: 0 auto;
+  /* Center the container horizontally */
+}
