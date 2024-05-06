@@ -1,0 +1,48 @@
+#profile_info_list {
+  list-style-type: none;
+}
+
+/* General styling for sections */
+.profile_container {
+  margin-bottom: 30px;
+}
+
+/* Header styling within sections */
+.profile_container h2 {
+  margin-bottom: 10px;
+}
+
+/* Form styling specifically for the update account section */
+#profile_new_username,
+#profile_new_email,
+#profile_password {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Label styling in the form of the update profile section */
+.profile_container label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Submit button styling specific to the update profile section */
+.profile_container button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile_container button[type="submit"]:hover {
+  background-color: #45a049;
+  /* Darken color on hover */
+}
