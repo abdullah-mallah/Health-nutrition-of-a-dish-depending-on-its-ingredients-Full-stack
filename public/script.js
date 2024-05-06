@@ -1,10 +1,13 @@
 const api = "http://localhost:5000/api/users";
 
 let allRecipes = []; // Global variable to store all fetched recipes
-let userInfo = {};
+let UserId; 
+let FavouritesRecipes = {};
 
 document.addEventListener("DOMContentLoaded", function () {
-  const url = "http://localhost:5000/api/reciepes"; // example of totally another rout with another use
+
+  UserId = sessionStorage.getItem('UserId');
+  
   const path = window.location.pathname;
   if (path.includes('signup')) {
     const signupForm = document.querySelector('#signup_signupForm');
@@ -95,9 +98,9 @@ function loginFormSubmitHandler(event) {
           }
         })
         .then((data) => {
-          console.log(data.user)
-          userInfo = data.user;
-          // Refresh the list after adding
+          UserId = data.user.id;
+
+          sessionStorage.setItem('UserId', UserId);  // Save to session storage
           alert(data.message);
           window.location.href = 'home.html';
         })
@@ -223,11 +226,28 @@ function displayRecipes(recipes) {
       <p>Protein: ${recipe.protein} g</p>
       <p>Sugar: ${recipe.sugar} g</p>
       <img src="${recipe.image}" alt="Recipe image">
+      <button type="button" id="saveRecipe-${recipe.label}">Save Recipe</button>
       <h4>Ingredients:</h4>
       <ul>${ingredients}</ul>
     `;
     recipesContainer.appendChild(recipeElement);
+    document.getElementById(`saveRecipe-${recipe.label}`).addEventListener('click', function() {
+      saveRecipe(recipe);
+    });
   });
+}
+
+function saveRecipe(recipe) {
+  if (UserId) {
+    const FavouritesRecipes = {
+      user_id: UserId,
+      recipe_name: recipe.label,
+      calories: recipe.calories
+    };
+    console.log('Recipe saved:', FavouritesRecipes); 
+  } else {
+    console.log('UserId not set. Cannot save recipe.');
+  }
 }
 
 
