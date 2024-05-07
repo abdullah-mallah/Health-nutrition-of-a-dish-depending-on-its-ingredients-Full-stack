@@ -5,11 +5,12 @@ const usersSchema = new mongoose.Schema({
   userName: String,
   email: String,
   password: String,
+  admin: Boolean
 });
 
 const users = mongoose.model("users", usersSchema);
 
-async function addUser(userName, email, password) {
+async function addUser(userName, email, password, admin) {
   try {
     const userExist = await users.findOne({ email });
     if (userExist) {
@@ -20,6 +21,7 @@ async function addUser(userName, email, password) {
       userName: userName,
       email: email,
       password: hashedPassword,
+      admin: admin,
     });
     await newUser.save();
     return newUser;
@@ -40,6 +42,7 @@ async function authenticateUser(email, password) {
     throw error; // handle the error in the route
   }
 }
+
 
 module.exports = { //prepare which functions I want this class to export
   authenticateUser, 

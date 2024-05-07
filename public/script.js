@@ -35,12 +35,13 @@ function signupFormSubmitHandler(event) {
   let newUsername = document.getElementById('signup_Name').value;
   let newEmail = document.getElementById('signup_E-mail').value;
   let newPassword = document.getElementById('signup_Password').value;
+  let admin = document.getElementById('signup_Admin').value;
   if (!checkNewInput(newUsername, 'username') || !checkNewInput(newEmail, 'email') || !checkNewInput(newPassword, 'password')){
     //switch 
     alert('Please enter the data  in the correct format');
   }else{
   // could make this into its own function 
-    let currentUser = { userName: newUsername, email: newEmail, password: newPassword} //preparing them to become a json 
+    let currentUser = { userName: newUsername, email: newEmail, password: newPassword,admin: admin} //preparing them to become a json 
   fetch(`${api}/signup`, {
         method: "POST",
         headers: {
@@ -287,7 +288,8 @@ function home() {
   setInterval(nextImage, 3000);
 }
 
-
+function fetchArticlesFromAPI() {
+}
 
 // you can make the query injections as a seperate function since it is being used so often
 // you can then take the check validity based on type 

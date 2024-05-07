@@ -11,11 +11,13 @@ router.post('/signup', async (req, res) => { //take info from request body and s
       const userName = userInfo.userName;
       const email = userInfo.email;
       const password = userInfo.password;
+      const admin = userInfo.admin;
   
       const user = await addUser(
         userName,
         email,
-        password
+        password,
+        admin
       );
   
       if (!user) {
