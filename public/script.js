@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+
 //////////// Login and signup functions
 function signupFormSubmitHandler(event) {
   event.preventDefault();
@@ -199,6 +200,8 @@ function filterAndDisplayRecipes() {
   displayRecipes(filteredRecipes); // Display the recipes themselves
 }
 
+
+
 function displayRecipeCount(count) {
   const countContainer = document.getElementById('recipeCount');
   if (!countContainer) {
@@ -233,13 +236,52 @@ function displayRecipes(recipes) {
   });
 }
 
+function saveRecipe(recipe) {
+  if (UserId) {
+    const recipeData = {
+      user_id: UserId,
+      recipe_name: recipe.label,
+      calories: recipe.calories,
+      image: recipe.image
+    };
+
+    fetch('http://localhost:5000/api/favourites/save', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(recipeData)
+})
+.then(response => {
+  if (response.status === 409) {
+    // Handle conflict
+    alert('This recipe has already been saved.');
+    return;
+  }
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+})
+.then(data => {
+  if (data) {
+    console.log('Recipe saved:', data);
+    alert('Recipe saved successfully!');
+  }
+})
+.catch(error => console.error('Failed to save recipe:', error));
+
+
+  } else {
+    console.log('UserId not set. Cannot save recipe.');
+  }
+}
+
 //////////// profile tab functions
 
 //////////// ingrediant tab functions
 
 //////////// profile tab functions
-
-//////////// favourite tab functions
 
 //////////// home tab functions
 function home() { 
@@ -270,6 +312,8 @@ function home() {
   // Change image every 3 seconds
   setInterval(nextImage, 3000);
 }
+
+
 
 // you can make the query injections as a seperate function since it is being used so often
 // you can then take the check validity based on type 
