@@ -3,7 +3,7 @@ const usersRoutes = require('./routes/userRoutes');
 const recipeRoutes = require('./routes/recipeRoutes');
 const favouriteRoutes = require('./routes/favouriteRoutes');
 const ingrediantRoutes = require('./routes/ingrediantRoutes')
-const adminRoutes = require('./routes/adminRoutes')
+// const adminRoutes = require('./routes/adminRoutes')
 
 require("dotenv").config(); //import .env file
 
