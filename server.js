@@ -1,6 +1,7 @@
 // importing routes
 const usersRoutes = require('./routes/userRoutes');
 const recipeRoutes = require('./routes/recipeRoutes');
+const favouriteRoutes = require('./routes/favouriteRoutes');
 const ingrediantRoutes = require('./routes/ingrediantRoutes')
 const adminRoutes = require('./routes/adminRoutes')
 
@@ -23,8 +24,9 @@ app.use(express.static('public'));
 
 // routes
 app.use('/api/users', usersRoutes);
-app.use('/api/recipes', recipeRoutes) // get the recipes from api and save in DB;
+app.use('/api/recipes', recipeRoutes) // to get the recipes from the api
 app.use('/api/ingrediants', ingrediantRoutes)
+app.use('/api/favourites', favouriteRoutes); 
 //app.use('/api/admin', adminRoutes)
 
 

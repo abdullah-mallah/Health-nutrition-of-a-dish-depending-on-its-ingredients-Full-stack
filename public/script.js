@@ -245,7 +245,7 @@ function saveRecipe(recipe) {
       image: recipe.image
     };
 
-    fetch('http://localhost:5000/api/recipes/save', {
+    fetch('http://localhost:5000/api/favourites/save', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
