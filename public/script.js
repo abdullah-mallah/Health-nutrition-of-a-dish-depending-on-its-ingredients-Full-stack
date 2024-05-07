@@ -2,7 +2,6 @@ const api = "http://localhost:5000/api/users";
 
 let allRecipes = []; // Global variable to store all fetched recipes
 let UserId; 
-let FavouritesRecipes = {};
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -240,17 +239,44 @@ function displayRecipes(recipes) {
 
 function saveRecipe(recipe) {
   if (UserId) {
-    const FavouritesRecipes = {
+    const recipeData = {
       user_id: UserId,
       recipe_name: recipe.label,
-      calories: recipe.calories
+      calories: recipe.calories,
+      image: recipe.image
     };
-    console.log('Recipe saved:', FavouritesRecipes); 
+
+    fetch('http://localhost:5000/api/favourites/save', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(recipeData)
+})
+.then(response => {
+  if (response.status === 409) {
+    // Handle conflict
+    alert('This recipe has already been saved.');
+    return;
+  }
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+})
+.then(data => {
+  if (data) {
+    console.log('Recipe saved:', data);
+    alert('Recipe saved successfully!');
+  }
+})
+.catch(error => console.error('Failed to save recipe:', error));
+
+
   } else {
     console.log('UserId not set. Cannot save recipe.');
   }
 }
-
 
 //////////// profile tab functions
 

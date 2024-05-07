@@ -42,9 +42,17 @@ async function authenticateUser(email, password) {
     throw error; // handle the error in the route
   }
 }
-
-
+async function getUsers() {
+  try {
+    const allUsers = await users.find();
+    return allUsers;
+  }
+  catch (error) {
+    throw error; // handle the error in the route
+  }
+}
 module.exports = { //prepare which functions I want this class to export
   authenticateUser, 
-  addUser
+  addUser,
+  getUsers
 };

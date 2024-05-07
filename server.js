@@ -1,7 +1,9 @@
 // importing routes
 const usersRoutes = require('./routes/userRoutes');
 const recipeRoutes = require('./routes/recipeRoutes');
+const favouriteRoutes = require('./routes/favouriteRoutes');
 const ingrediantRoutes = require('./routes/ingrediantRoutes')
+// const adminRoutes = require('./routes/adminRoutes')
 
 require("dotenv").config(); //import .env file
 
@@ -21,9 +23,11 @@ app.use(bodyParser.json());//to use bodyparse in express
 app.use(express.static('public'));
 
 // routes
-app.use('/api/users', usersRoutes); // Attach user routes under '/api/users'
-app.use('/api/recipes', recipeRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/recipes', recipeRoutes) // to get the recipes from the api
 app.use('/api/ingrediants', ingrediantRoutes)
+app.use('/api/favourites', favouriteRoutes); 
+//app.use('/api/admin', adminRoutes)
 
 
 // Serve recipe.html at root
