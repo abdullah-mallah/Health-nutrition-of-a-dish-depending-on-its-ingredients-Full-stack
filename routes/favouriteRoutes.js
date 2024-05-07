@@ -38,7 +38,6 @@ router.delete('/delete', async (req, res) => {
 router.get('/getAllFavouriteRecipes', async (req, res) => {
     try {
         const favouriteRecipes = await Recipe.find();
-        console.log(favouriteRecipes)
         if (!favouriteRecipes) {
             return res.status(404).json({ message: 'No favourite recipes yet' });
         }
