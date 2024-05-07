@@ -22,10 +22,10 @@ app.use(bodyParser.json());//to use bodyparse in express
 app.use(express.static('public'));
 
 // routes
-app.use('/api/users', usersRoutes); // Attach user routes under '/api/users'
-app.use('/api/recipes', recipeRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/recipes', recipeRoutes) // get the recipes from api and save in DB;
 app.use('/api/ingrediants', ingrediantRoutes)
-app.use('/api/admin', adminRoutes)
+//app.use('/api/admin', adminRoutes)
 
 
 // Serve recipe.html at root
