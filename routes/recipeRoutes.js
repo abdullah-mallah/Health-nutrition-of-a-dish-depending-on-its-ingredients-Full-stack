@@ -35,7 +35,7 @@ router.get("/:food", async (req, res) => {
 
 
 router.post('/save', async (req, res) => {
-    const { user_id, recipe_name, calories } = req.body;
+    const { user_id, recipe_name, calories, image } = req.body;
   
     try {
       // Check if the recipe with the same name already exists for this user
@@ -45,7 +45,7 @@ router.post('/save', async (req, res) => {
       }
   
       // If no existing recipe is found, save the new one
-      const newRecipe = new Recipe({ user_id, recipe_name, calories });
+      const newRecipe = new Recipe({ user_id, recipe_name, calories, image });
       await newRecipe.save();
       res.status(201).json({ message: 'Recipe saved successfully' });
     } catch (error) {

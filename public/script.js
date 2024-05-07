@@ -241,7 +241,8 @@ function saveRecipe(recipe) {
     const recipeData = {
       user_id: UserId,
       recipe_name: recipe.label,
-      calories: recipe.calories
+      calories: recipe.calories,
+      image: recipe.image
     };
 
     fetch('http://localhost:5000/api/recipes/save', {
