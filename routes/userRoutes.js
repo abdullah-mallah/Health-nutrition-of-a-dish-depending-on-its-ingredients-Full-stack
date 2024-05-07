@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { //to import the functions from users.js
-    addUser, authenticateUser } = require("../models/users.js");
+  addUser, authenticateUser, deleteUser, getUsers } = require("../models/users.js");
 
 // Register user
 router.post('/signup', async (req, res) => { //take info from request body and send it to addUser function in users.js
@@ -53,6 +53,38 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     console.error("Error in login route:", error);
     res.status(500).json({ message: "Error processing login" });
+  }
+});
+
+router.delete("deleteUser/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const deletedUser = await deleteUser(id);
+    if (!deletedUser) { // if this variable is null
+      return res
+        .status(404)
+        .json({ message: "A user with that id wasn't found" });
+    }
+    res.status(200).json({
+      message: "User deleted successfully"
+    });
+  } catch (error) {
+    console.error("Error in route when deleteing the recipe:", error);
+    res.status(500).json({ message: "Error deleteing recipe data" });
+  }
+});
+
+router.get("/getUsers", async (req, res) => {
+  try {
+    const allUsers = await getUsers();
+    res.json({
+      message: "All users retrieved successfully",
+      allUsers,
+    });
+  } catch (error) {
+    console.error("Error in route when retrieving all users:", error);
+    res.status(500).json({ message: "Error retrieving user's data" });
   }
 });
 

@@ -51,8 +51,23 @@ async function getUsers() {
     throw error; // handle the error in the route
   }
 }
+
+async function deleteUser(id) {
+  try {
+    const deletedUser = await Recipe.findByIdAndDelete(id);
+    if (!deletedUser) {
+      return null; // if there are no recipe with that id
+    }
+    return deletedUser;
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error; // handle the error in the route
+  }
+}
+
 module.exports = { //prepare which functions I want this class to export
   authenticateUser, 
   addUser,
-  getUsers
+  getUsers,
+  deleteUser
 };

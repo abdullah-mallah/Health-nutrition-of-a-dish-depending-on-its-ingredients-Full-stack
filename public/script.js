@@ -23,6 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   } else if (path.includes('home')) {
     home()
+  } else if (path.includes('nutritions')) {
+    fetchIngrediants();
   }
 });
 
@@ -281,6 +283,34 @@ function saveRecipe(recipe) {
 //////////// profile tab functions
 
 //////////// ingrediant tab functions
+function fetchIngrediants() {
+  fetch("http://localhost:5000/api/ingrediants/getAllIngrediants")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      const tableBody = document.getElementById("ingrediantsRows");
+      tableBody.innerHTML = ""; // Clear existing rows
+      console.log(data.ingrediants)
+      data.ingrediants.forEach((ingrediant) => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = ingrediant.name;
+        row.insertCell(1).textContent = ingrediant.size;
+        row.insertCell(2).textContent = ingrediant.fat;
+        row.insertCell(3).textContent = ingrediant.cholesterol;
+        row.insertCell(4).textContent = ingrediant.sodium;
+        row.insertCell(5).textContent = ingrediant.carbohydrate;
+        row.insertCell(6).textContent = ingrediant.sugar;
+        row.insertCell(7).textContent = ingrediant.protein;
+        row.insertCell(8).textContent = ingrediant.vitamin_c;
+        row.insertCell(9).textContent = ingrediant.vitamin_d;
+        row.insertCell(10).textContent = ingrediant.iron;
+        row.insertCell(11).textContent = ingrediant.calcium;
+        row.insertCell(12).textContent = ingrediant.potassium;
+        row.insertCell(13).textContent = ingrediant.phosphorus;
+      });
+    })
+    .catch((error) => console.error("Error fetching recipes:", error));
+}
 
 //////////// profile tab functions
 
