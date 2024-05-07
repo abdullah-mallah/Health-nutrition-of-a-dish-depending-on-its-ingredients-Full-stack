@@ -35,4 +35,21 @@ router.delete('/delete', async (req, res) => {
     }
 });
 
+router.get('/getAllFavouriteRecipes', async (req, res) => {
+    try {
+        const favouriteRecipes = await Recipe.find();
+        console.log(favouriteRecipes)
+        if (!favouriteRecipes) {
+            return res.status(404).json({ message: 'No favourite recipes yet' });
+        }
+        res.status(200).json({
+            message: 'Favourite recipes retrieved successfully',
+            favouriteRecipes,
+            //favouriteRecipes: { user_id: favouriteRecipes.user_id, recipe_name: favouriteRecipes.recipe_name, calories: favouriteRecipes.calories, image: favouriteRecipes.image },
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
 module.exports = router;
