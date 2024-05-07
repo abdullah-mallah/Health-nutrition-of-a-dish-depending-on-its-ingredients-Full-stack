@@ -34,12 +34,7 @@ function signupFormSubmitHandler(event) {
   let newUsername = document.getElementById('signup_Name').value;
   let newEmail = document.getElementById('signup_E-mail').value;
   let newPassword = document.getElementById('signup_Password').value;
-  let admin = document.addEventListener('DOMContentLoaded',() => {
-    if (document.getElementById('signup_Admin').checked){
-      return true;
-    }else{
-      return false;
-    }});
+  let admin =document.getElementById('signup_Admin').checked;
   if (!checkNewInput(newUsername, 'username') || !checkNewInput(newEmail, 'email') || !checkNewInput(newPassword, 'password')){
     //switch 
     alert('Please enter the data  in the correct format');
