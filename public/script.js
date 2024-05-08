@@ -368,6 +368,31 @@ function saveMealDate(recipeLabelSanitized, date) {
 
 }
 
+function fetchEntries() {
+  const startDate = document.getElementById('startDate').value;
+  const endDate = document.getElementById('endDate').value;
+
+  const url = `http://localhost:5000/api/calorieEntries/${UserId}?startDate=${startDate}&endDate=${endDate}`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);  // Log data to console
+        displayCalorieData(data);  // Function to display data in the browser
+    })
+    .catch(error => console.error('Failed to fetch entries:', error));
+}
+
+function displayCalorieData(data) {
+    const container = document.getElementById('calorieData');
+    container.innerHTML = '';  // Clear previous data
+    data.forEach(day => {
+        const dayDiv = document.createElement('div');
+        dayDiv.textContent = `Date: ${day._id}, Total Calories: ${day.totalCalories}`;
+        container.appendChild(dayDiv);
+    });
+}
+
 
 //////////// profile tab functions
 
