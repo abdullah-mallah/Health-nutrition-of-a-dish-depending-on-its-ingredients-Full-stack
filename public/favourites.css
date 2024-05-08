@@ -1,10 +1,3 @@
-/* General body styling */
-body {
-    font-family: Arial, sans-serif; /* Sets the font across the page */
-    background-color: #f8f8f8; /* Light grey background for slight contrast */
-    color: #333; /* Dark grey color for text for better readability */
-    padding: 20px; /* Adds padding around the content */
-}
 
 /* Main heading */
 h1 {
