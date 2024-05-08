@@ -25,7 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
     home()
   } else if (path.includes('nutritions')) {
     fetchIngrediants();
-  }
+  } else if (path.includes('favourites')) {
+      getFavouriteRecipes()
+}
 });
 
 
