@@ -237,7 +237,7 @@ function displayRecipes(recipes) {
     <ul>${ingredients}</ul>
 
     <div class="recipe-card-buttons">
-      <button type="button" class="cardButton" id="saveRecipe-${recipeLabelSanitized}" data-calories="${recipe.calories}">Add to favorites</button>
+      <button type="button" class="cardButton" id="saveRecipe-${recipeLabelSanitized}" data-calories="${recipe.calories}">Add to favourites</button>
       <button type="button" class="cardButton" onclick="openDatePicker('${recipeLabelSanitized}', '${recipe.calories}')">Schedule Meal</button>
       <div style="display:none;" id="datePicker-${recipeLabelSanitized}">
           <input type="date" id="dateInput-${recipeLabelSanitized}">

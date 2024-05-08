@@ -71,6 +71,7 @@
 
   .recipe-card:hover {
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    transform: scale(1.01);
 }
   
   .recipe-card img {
@@ -97,7 +98,7 @@
   
   .recipe-card-buttons {
     padding: 10px 15px;
-    background-color: #f9f9f9;
+   
     border-top: 1px solid #ccc;
     display: flex;
     justify-content: space-around;
@@ -120,6 +121,144 @@
   }
   
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+main {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  background-color: #fafafa;
+  color: #333;
+  margin-top: 100px;
+}
+
+form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #4CAF50;
+}
+
+p, label {
+  color: #666;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+fieldset {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+legend {
+  padding: 0 10px;
+  color: #333;
+  font-weight: bold;
+}
+
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+label {
+  margin-right: 20px;
+  font-size: 14px;
+}
+
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #357ABD;
+}
+
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  width: 50%;
+  z-index: 1000;
+  display: none; 
+}
+
+.modal-content h4, .modal-content p {
+  margin: 0 0 15px 0;
+}
+
+.modal-footer {
+  text-align: right;
+}
+
+.modal-close {
+  background-color: #ccc;
+  color: white;
+}
+
+.btn {
+  background-color: #5CB85C;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #4CAE4C;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .modal {
+      width: 90%;
+  }
+}
 
 
 

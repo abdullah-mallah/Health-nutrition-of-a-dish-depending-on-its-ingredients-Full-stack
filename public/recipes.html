@@ -93,8 +93,20 @@
 
     <main>
         <form id="RecipeForm">
-          <input type="text" id="foodInput" placeholder="Enter a food item" />
-            <div>
+        <h2>Recipe Finder</h2>
+        <p>Enter ingredients or dishes to find recipes that match your dietary preferences.</p>
+
+        <label for="foodInput">Food Item:</label>
+        <input type="text" id="foodInput" placeholder="e.g., Chicken, Apple, Carrot" />
+
+        <div>
+          <label for="maxCalories">Maximum Calories:</label>
+          <input type="number" id="maxCalories" min="0" placeholder="Enter maximum calorie limit">
+        </div>
+
+        
+            <fieldset>
+                <legend>Dietary Preferences</legend>
                 <label><input type="checkbox" id="vegan" value="Vegan"> Vegan</label>
                 <label><input type="checkbox" id="vegetarian" value="Vegetarian"> Vegetarian</label>
                 <label><input type="checkbox" id="alcoholFree" value="Alcohol-Free"> Alcohol Free</label>
@@ -106,19 +118,15 @@
                 <label><input type="checkbox" id="fishFree" value="Fish-Free"> Fish Free</label>
                 <label><input type="checkbox" id="glutenFree" value="Gluten-Free"> Gluten Free</label>
                 <label><input type="checkbox" id="dairyFree" value="Dairy-Free"> Dairy Free</label>
-            </div>
-
-            <div>
-                <label for="maxCalories">Max Calories:</label>
-                <input type="number" id="maxCalories" min="0">
-            </div>
+            </fieldset>
             
-            <button type="submit">Search</button>
+            <button type="submit">Search Recipes</button>
 
             <!-- Modal Structure -->
             <div id="dateModal" class="modal">
               <div class="modal-content">
                 <h4>Select Date</h4>
+                <p>Choose a date to save this recipe search.</p>
                 <input type="date" id="modalDateInput">
               </div>
               <div class="modal-footer">
