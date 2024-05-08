@@ -21,7 +21,7 @@ main {
   width: 100%;/* to ensure the main tag takes full width */
 }
 footer {
-  background-color: blue;
+  background-color: #212529;
   text-align: center;
   /* text floating in the center*/
   color: white;
@@ -33,7 +33,7 @@ footer address {
   /*removing italic*/
 }
 #page-footer {
-  background-color: #0056b3;
+  background-color: #212529;
 }
 
 /*---------- nav section ----------*/
