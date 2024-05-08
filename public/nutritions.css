@@ -1,0 +1,26 @@
+/* Main heading */
+h1 {
+    color: #2a2a2a; /* Slightly darker color for headings */
+    text-align: center; /* Center-align the main heading */
+}
+
+/* Table styling */
+table {
+    width: 100%; /* Full width to maximize space */
+    border-collapse: collapse; /* Collapses border to avoid double lines */
+    margin-top: 20px; /* Adds space above the table */
+}
+
+/* Table headers */
+th {
+    background-color: #4CAF50; /* Green background for headers */
+    color: white; /* White text color for contrast */
+    padding: 10px 15px; /* Padding inside headers */
+    text-align: left; /* Aligns text to the left */
+}
+
+/* Table rows and cells */
+td {
+    padding: 8px 15px; /* Padding inside table cells */
+    border-top: 1px solid #ddd; /* Light grey border for each row */
+}

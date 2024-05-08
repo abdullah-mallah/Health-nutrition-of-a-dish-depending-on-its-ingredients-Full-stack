@@ -35,9 +35,10 @@ router.delete('/delete', async (req, res) => {
     }
 });
 
-router.get('/getAllFavouriteRecipes', async (req, res) => {
+router.get('/getAllFavouriteRecipes/:id', async (req, res) => {
+    const id = req.params.id;
     try {
-        const favouriteRecipes = await Recipe.find();
+        const favouriteRecipes = await Recipe.find({user_id:id});
         if (!favouriteRecipes) {
             return res.status(404).json({ message: 'No favourite recipes yet' });
         }
