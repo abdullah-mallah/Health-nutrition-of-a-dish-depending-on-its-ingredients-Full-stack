@@ -314,9 +314,30 @@ function home() {
   setInterval(nextImage, 3000);
 }
 
-function fetchArticlesFromAPI() {
+function fetchArticlesFromAPI(numberOfArticles) {
 }
+function appendArticle(article) {
+  var chosenDiv = document.getElementById("Articles");
+  let articles = {};
+  articles = fetchArticlesFromAPI("number of articles");
 
+  for (article in articles){
+    var newContainer = document.createElement('div')
+    newContainer.classList.add('module')
+
+    var newH3 = document.createElement('H3');
+    newH3.innerText = article.title;
+    newContainer.appendChild(newH3);
+
+    var newP = document.createElement('p')
+    newP.innerHTML= article.explanation;
+    newContainer.appendChild(newP);
+
+    chosenDiv.insertBefore(newContainer, chosenDiv.firstChild);
+
+
+  }
+}
 // you can make the query injections as a seperate function since it is being used so often
 // you can then take the check validity based on type 
 // checking if too long can be part of the query check or validity
