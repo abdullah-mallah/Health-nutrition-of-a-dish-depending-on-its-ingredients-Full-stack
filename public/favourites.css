@@ -1,49 +1,92 @@
-/* Main heading */
-h1 {
-    color: #2a2a2a; /* Slightly darker color for headings */
-    text-align: center; /* Center-align the main heading */
-}
-
-/* Table styling */
-table {
-    width: 100%; /* Full width to maximize space */
-    border-collapse: collapse; /* Collapses border to avoid double lines */
-    margin-top: 20px; /* Adds space above the table */
-}
-
-/* Table headers */
-th {
-    background-color: #4CAF50; /* Green background for headers */
-    color: white; /* White text color for contrast */
-    padding: 10px 15px; /* Padding inside headers */
-    text-align: left; /* Aligns text to the left */
-}
-
-/* Table rows and cells */
-td {
-    padding: 8px 15px; /* Padding inside table cells */
-    border-top: 1px solid #ddd; /* Light grey border for each row */
-}
-
-/* Image styling within table cells */
-img {
-    width: 100px; /* Fixed width for consistency */
-    height: auto; /* Auto height to maintain aspect ratio */
-    border-radius: 5px; /* Rounded corners for images */
-}
-
-/* Button styling */
-button {
-    padding: 5px 10px; /* Padding inside the button */
-    background-color: #f44336; /* Red background for delete buttons */
-    color: white; /* White text for readability */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
-
-/* Button hover effect */
-button:hover {
-    background-color: #d73833; /* Darker shade of red on hover */
-}
+/* General styling for body to ensure no extra margins */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif; /* Use a simple and widely supported font */
+  }
+  
+  /* Styling for the table */
+  table {
+    width: 100%; /* Full-width to use available space */
+    max-width: 100%; /* Limit maximum width to prevent overflow */
+    border-collapse: collapse; /* Borders are merged into a single border */
+    margin: 20px 0; /* Add some space around the table */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for 3D effect */
+  }
+  
+  /* Header row styling */
+  thead th {
+    background-color: #007BFF; /* Blue color for header to make it stand out */
+    color: white;
+    text-align: left;
+    padding: 12px 15px; /* Padding for content inside headers */
+    border-bottom: 2px solid #ddd; /* Solid line for the bottom of the header cells */
+  }
+  
+  /* Table body cell styling */
+  tbody td {
+    padding: 12px 15px; /* Consistent padding for cells */
+    border-bottom: 1px solid #ddd; /* Subtle border for each cell */
+    text-align: left; /* Align text to the left for consistency */
+  }
+  
+  /* Hover effect for rows */
+  tbody tr:hover {
+    background-color: #f5f5f5; /* Light grey background on hover */
+  }
+  
+  /* Responsive table adjustments */
+  @media screen and (max-width: 768px) {
+    table {
+      display: block;
+      overflow-x: auto; /* Allows table to scroll horizontally on smaller screens */
+    }
+  
+    thead, tbody, th, td, tr {
+      display: block;
+    }
+  
+    thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+  
+    tr { border: 1px solid #ccc; }
+  
+    td {
+      border: none;
+      position: relative;
+      padding-left: 50%; /* Makes text more readable by padding */
+      text-align: right; /* Align text to the right for readability */
+    }
+  
+    td:before {
+      /* To create labels in mobile view */
+      position: absolute;
+      top: 12px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      text-align: left;
+      font-weight: bold;
+      content: attr(data-label); /* Using attribute for content in mobile view */
+    }
+  }
+  
+  /* Styling for buttons for better user interaction */
+  button {
+    padding: 8px 16px;
+    background-color: #dc3545; /* Red color for delete buttons to indicate a destructive action */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #c82333; /* Darker red on hover for button feedback */
+  }
+  

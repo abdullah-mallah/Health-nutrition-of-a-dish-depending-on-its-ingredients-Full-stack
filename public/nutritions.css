@@ -1,26 +1,89 @@
-/* Main heading */
-h1 {
-    color: #2a2a2a; /* Slightly darker color for headings */
-    text-align: center; /* Center-align the main heading */
-}
-
-/* Table styling */
-table {
-    width: 100%; /* Full width to maximize space */
-    border-collapse: collapse; /* Collapses border to avoid double lines */
-    margin-top: 20px; /* Adds space above the table */
-}
-
-/* Table headers */
-th {
-    background-color: #4CAF50; /* Green background for headers */
-    color: white; /* White text color for contrast */
-    padding: 10px 15px; /* Padding inside headers */
-    text-align: left; /* Aligns text to the left */
-}
-
-/* Table rows and cells */
-td {
-    padding: 8px 15px; /* Padding inside table cells */
-    border-top: 1px solid #ddd; /* Light grey border for each row */
-}
+/* Basic reset for styling */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Set a clean and simple font */
+  }
+  
+  /* Styling the table to be full width and adding basic styles */
+  table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures that table borders are collapsed into a single border */
+    table-layout: fixed; /* Helps in defining column widths */
+  }
+  
+  /* Table header styles */
+  thead th {
+    background-color: #4CAF50; /* A nice green color for the header */
+    color: white;
+    text-align: left;
+    padding: 12px; /* Adds space around text */
+    border-bottom: 2px solid #ddd; /* Adds a subtle line between header and rows */
+  }
+  
+  /* Table body styles */
+  tbody td {
+    padding: 8px; /* Smaller padding for cell content */
+    border-bottom: 1px solid #ddd; /* Light line for separating rows */
+    text-align: left; /* Align text to left for readability */
+  }
+  
+  /* Style for alternate row colors to enhance readability */
+  tbody tr:nth-child(odd) {
+    background-color: #f9f9f9; /* Light grey color for every other row */
+  }
+  
+  /* Responsive design: Ensure table is scrollable on small devices */
+  @media screen and (max-width: 600px) {
+    table {
+      width: 100%;
+      overflow-x: auto; /* Allows table to scroll sideways on small screens */
+      display: block; /* Makes the table a block element */
+    }
+  
+    thead, tbody, th, td, tr {
+      display: block; /* Changes the display to block for all table elements */
+    }
+  
+    thead tr {
+      position: absolute; /* Fixes the header at the top */
+      top: -9999px; /* Moves the header out of view */
+    }
+  
+    tr { border: 1px solid #ccc; }
+  
+    td {
+      border: none;
+      border-bottom: 1px solid #eee; /* Keeps a line between rows */
+      position: relative;
+      padding-left: 50%; /* Gives enough room for content */
+    }
+  
+    td:before {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 45%; /* Label width, make it less than padding-left of td */
+      padding-right: 10px; /* Right padding for label */
+      white-space: nowrap; /* Ensures label text does not wrap */
+      content: attr(data-title); /* Uses the data-title attribute as content */
+    }
+  }
+  
+  /* Customizing scrollbar for better visibility on small devices */
+  ::-webkit-scrollbar {
+    width: 12px; /* Width of scrollbar */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color when hovering over the thumb */
+  }
+  
