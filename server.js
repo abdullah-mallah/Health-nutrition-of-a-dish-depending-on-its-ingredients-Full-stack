@@ -1,17 +1,40 @@
-const usersRoutes = require('./routes/userRoutes'); // Import user routes
+// importing routes
+const usersRoutes = require('./routes/userRoutes');
+const recipeRoutes = require('./routes/recipeRoutes');
+const favouriteRoutes = require('./routes/favouriteRoutes');
+const ingrediantRoutes = require('./routes/ingrediantRoutes')
+// const adminRoutes = require('./routes/adminRoutes')
+
 require("dotenv").config(); //import .env file
+
 const express = require("express");
+const app = express();
+
 const connectDB = require('./connection.js'); // Import the MongoDB connection
 const bodyParser = require("body-parser");
-
-const app = express();
-const port = process.env.PORT || 5000;
 connectDB(); // Connect to MongoDB 
 
+const port = process.env.PORT || 5000;
+
 const path = require("path");//
-app.use(express.static(path.join(__dirname, "public", )));
 app.use(bodyParser.json());//to use bodyparse in express
-app.use('/api/users', usersRoutes); // Attach user routes under '/api/users'
+
+// Serve static files from 'public' directory
+app.use(express.static('public'));
+
+// routes
+app.use('/api/users', usersRoutes);
+app.use('/api/recipes', recipeRoutes) // to get the recipes from the api
+app.use('/api/ingrediants', ingrediantRoutes)
+app.use('/api/favourites', favouriteRoutes); 
+//app.use('/api/admin', adminRoutes)
+
+
+// Serve recipe.html at root
+app.get("/recipes", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "recipes.html"));
+});
+
 
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
