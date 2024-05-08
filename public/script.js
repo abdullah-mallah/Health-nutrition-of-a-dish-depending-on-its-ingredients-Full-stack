@@ -23,7 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   } else if (path.includes('home')) {
     home()
-  }
+  } else if (path.includes('nutritions')) {
+    fetchIngrediants();
+  } else if (path.includes('favourites')) {
+      getFavouriteRecipes()
+}
 });
 
 
@@ -34,12 +38,13 @@ function signupFormSubmitHandler(event) {
   let newUsername = document.getElementById('signup_Name').value;
   let newEmail = document.getElementById('signup_E-mail').value;
   let newPassword = document.getElementById('signup_Password').value;
+  let admin =document.getElementById('signup_Admin').checked;
   if (!checkNewInput(newUsername, 'username') || !checkNewInput(newEmail, 'email') || !checkNewInput(newPassword, 'password')){
     //switch 
     alert('Please enter the data  in the correct format');
   }else{
   // could make this into its own function 
-    let currentUser = { userName: newUsername, email: newEmail, password: newPassword} //preparing them to become a json 
+    let currentUser = { userName: newUsername, email: newEmail, password: newPassword,admin: admin} //preparing them to become a json 
   fetch(`${api}/signup`, {
         method: "POST",
         headers: {
@@ -362,8 +367,91 @@ function saveMealDate(recipeLabelSanitized, date) {
 //////////// profile tab functions
 
 //////////// ingrediant tab functions
+function fetchIngrediants() {
+  fetch("http://localhost:5000/api/ingrediants/getAllIngrediants")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      const tableBody = document.getElementById("ingrediantsRows");
+      tableBody.innerHTML = ""; // Clear existing rows
+      console.log(data.ingrediants)
+      data.ingrediants.forEach((ingrediant) => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = ingrediant.name;
+        row.insertCell(1).textContent = ingrediant.size;
+        row.insertCell(2).textContent = ingrediant.fat;
+        row.insertCell(3).textContent = ingrediant.cholesterol;
+        row.insertCell(4).textContent = ingrediant.sodium;
+        row.insertCell(5).textContent = ingrediant.carbohydrate;
+        row.insertCell(6).textContent = ingrediant.sugar;
+        row.insertCell(7).textContent = ingrediant.protein;
+        row.insertCell(8).textContent = ingrediant.vitamin_c;
+        row.insertCell(9).textContent = ingrediant.vitamin_d;
+        row.insertCell(10).textContent = ingrediant.iron;
+        row.insertCell(11).textContent = ingrediant.calcium;
+        row.insertCell(12).textContent = ingrediant.potassium;
+        row.insertCell(13).textContent = ingrediant.phosphorus;
+      });
+    })
+    .catch((error) => console.error("Error fetching recipes:", error));
+}
 
-//////////// profile tab functions
+//////////// favourites tab functions
+function getFavouriteRecipes() {
+  fetch(`http://localhost:5000/api/favourites/getAllFavouriteRecipes/${UserId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      const tableBody = document.getElementById("favouriteRecipeRows");
+      tableBody.innerHTML = ""; // Clear existing rows
+      console.log(data.favouriteRecipes)
+      data.favouriteRecipes.forEach((favouriteRecipe) => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = favouriteRecipe.recipe_name;
+        row.insertCell(1).textContent = favouriteRecipe.calories;
+
+        // Create an image element
+        const img = document.createElement('img');
+        img.src = favouriteRecipe.image;
+        img.alt = 'Favourite recipe image';
+        img.style.width = '100px';
+        img.style.height = 'auto';
+
+        // Insert a new cell for the image
+        const imgCell = row.insertCell(2);  // Create the new cell for the image
+        imgCell.appendChild(img);  // Append the image to the new cell
+        
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = function () {
+          deleteRecipe(UserId, favouriteRecipe.recipe_name);
+        };
+        row.insertCell(3).appendChild(deleteButton);
+      });
+      function deleteRecipe(UserId, recipe_name) {
+        const favouriteRecipeData = { user_id: UserId, recipe_name: recipe_name }; //preparing them to become a json 
+        fetch("http://localhost:5000/api/favourites/delete", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(favouriteRecipeData),
+        }).then((response) => {
+            if (response.ok) {
+              alert("Favourite recipe successfully deleted.");
+              getFavouriteRecipes(); // Refresh the list after deletion
+            } else {
+              throw new Error("Failed to delete favourite recipe");
+            }
+          }).catch((error) => {
+            console.error("Error deleting favourite recipe:", error);
+            alert(error.message);
+          });
+      }
+    })
+    .catch((error) => console.error("Error fetching recipes:", error));
+}
+
 
 //////////// home tab functions
 function home() { 
@@ -395,7 +483,8 @@ function home() {
   setInterval(nextImage, 3000);
 }
 
-
+function fetchArticlesFromAPI() {
+}
 
 // you can make the query injections as a seperate function since it is being used so often
 // you can then take the check validity based on type 

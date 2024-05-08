@@ -1,0 +1,49 @@
+/* Main heading */
+h1 {
+    color: #2a2a2a; /* Slightly darker color for headings */
+    text-align: center; /* Center-align the main heading */
+}
+
+/* Table styling */
+table {
+    width: 100%; /* Full width to maximize space */
+    border-collapse: collapse; /* Collapses border to avoid double lines */
+    margin-top: 20px; /* Adds space above the table */
+}
+
+/* Table headers */
+th {
+    background-color: #4CAF50; /* Green background for headers */
+    color: white; /* White text color for contrast */
+    padding: 10px 15px; /* Padding inside headers */
+    text-align: left; /* Aligns text to the left */
+}
+
+/* Table rows and cells */
+td {
+    padding: 8px 15px; /* Padding inside table cells */
+    border-top: 1px solid #ddd; /* Light grey border for each row */
+}
+
+/* Image styling within table cells */
+img {
+    width: 100px; /* Fixed width for consistency */
+    height: auto; /* Auto height to maintain aspect ratio */
+    border-radius: 5px; /* Rounded corners for images */
+}
+
+/* Button styling */
+button {
+    padding: 5px 10px; /* Padding inside the button */
+    background-color: #f44336; /* Red background for delete buttons */
+    color: white; /* White text for readability */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #d73833; /* Darker shade of red on hover */
+}
