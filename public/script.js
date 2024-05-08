@@ -368,6 +368,11 @@ function saveMealDate(recipeLabelSanitized, date) {
 
 }
 
+
+
+
+
+//////////// tracker tab
 function fetchEntries() {
   const startDate = document.getElementById('startDate').value;
   const endDate = document.getElementById('endDate').value;

@@ -157,7 +157,7 @@ form {
   margin-bottom: 20px;
 }
 
-h2 {
+h1 {
   color: #4CAF50;
 }
 
@@ -213,7 +213,7 @@ button {
 }
 
 button:hover {
-  background-color: #357ABD;
+  background-color: #45a049;
 }
 
 
