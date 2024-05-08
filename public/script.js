@@ -312,7 +312,62 @@ function fetchIngrediants() {
     .catch((error) => console.error("Error fetching recipes:", error));
 }
 
-//////////// profile tab functions
+//////////// favourites tab functions
+function getFavouriteRecipes() {
+  fetch(`http://localhost:5000/api/favourites/getAllFavouriteRecipes/${UserId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      const tableBody = document.getElementById("favouriteRecipeRows");
+      tableBody.innerHTML = ""; // Clear existing rows
+      console.log(data.favouriteRecipes)
+      data.favouriteRecipes.forEach((favouriteRecipe) => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = favouriteRecipe.recipe_name;
+        row.insertCell(1).textContent = favouriteRecipe.calories;
+
+        // Create an image element
+        const img = document.createElement('img');
+        img.src = favouriteRecipe.image;
+        img.alt = 'Favourite recipe image';
+        img.style.width = '100px';
+        img.style.height = 'auto';
+
+        // Insert a new cell for the image
+        const imgCell = row.insertCell(2);  // Create the new cell for the image
+        imgCell.appendChild(img);  // Append the image to the new cell
+        
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = function () {
+          deleteRecipe(UserId, favouriteRecipe.recipe_name);
+        };
+        row.insertCell(3).appendChild(deleteButton);
+      });
+      function deleteRecipe(UserId, recipe_name) {
+        const favouriteRecipeData = { user_id: UserId, recipe_name: recipe_name }; //preparing them to become a json 
+        fetch("http://localhost:5000/api/favourites/delete", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(favouriteRecipeData),
+        }).then((response) => {
+            if (response.ok) {
+              alert("Favourite recipe successfully deleted.");
+              getFavouriteRecipes(); // Refresh the list after deletion
+            } else {
+              throw new Error("Failed to delete favourite recipe");
+            }
+          }).catch((error) => {
+            console.error("Error deleting favourite recipe:", error);
+            alert(error.message);
+          });
+      }
+    })
+    .catch((error) => console.error("Error fetching recipes:", error));
+}
+
 
 //////////// home tab functions
 function home() { 
