@@ -1,5 +1,6 @@
+const DEPLOY_URL = "http://localhost:5000"
 
-const api = "http://localhost:5000/api/users";
+const user_api = `${DEPLOY_URL}/api/users`;
 
 let allRecipes = []; // Global variable to store all fetched recipes
 let UserId; 
@@ -48,7 +49,7 @@ function signupFormSubmitHandler(event) {
   }else{
   // could make this into its own function 
     let currentUser = { userName: newUsername, email: newEmail, password: newPassword,admin: admin} //preparing them to become a json 
-  fetch(`${api}/signup`, {
+  fetch(`${user_api}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +89,7 @@ function loginFormSubmitHandler(event) {
   }else{
   // could make this into its own function 
   const userData = { email: Email , password: Password }; //preparing them to become a json 
-  fetch(`${api}/login`, {
+  fetch(`${user_api}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -152,7 +153,7 @@ function fetchRecipes(event) {
   const food = document.getElementById('foodInput').value;
 
   if (food) { // Fetch new recipes every time the form is submitted
-    fetch(`http://localhost:5000/api/recipes/${food}`)
+    fetch(`${DEPLOY_URL}/api/recipes/${food}`)
     .then(response => response.json())
     .then(recipes => {
         allRecipes = recipes; // Store fetched recipes
@@ -266,7 +267,7 @@ function saveRecipe(recipe) {
       image: recipe.image
     };
 
-    fetch('http://localhost:5000/api/favourites/save', {
+    fetch(`${DEPLOY_URL}/api/favourites/save`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -343,7 +344,7 @@ function saveMealDate(recipeLabelSanitized, date) {
   };
 
   
-  fetch('http://localhost:5000/api/calorieEntries', {
+  fetch(`${DEPLOY_URL}/api/calorieEntries`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -380,13 +381,13 @@ function fetchEntries() {
   const startDate = document.getElementById('startDate').value;
   const endDate = document.getElementById('endDate').value;
 
-  const url = `http://localhost:5000/api/calorieEntries/${UserId}?startDate=${startDate}&endDate=${endDate}`;
+  const url = `${DEPLOY_URL}/api/calorieEntries/${UserId}?startDate=${startDate}&endDate=${endDate}`;
 
   fetch(url)
     .then(response => response.json())
     .then(data => {
-        console.log(data);  // Log data to console
-        displayCalorieData(data);  // Function to display data in the browser
+        console.log(data);
+        displayCalorieData(data); 
     })
     .catch(error => console.error('Failed to fetch entries:', error));
 }
@@ -404,7 +405,7 @@ function displayCalorieData(data) {
 
 //////////// profile tab functions
 function getAcooutInfo() {
-  fetch(`http://localhost:5000/api/users/getAccountInfo/${UserId}`)
+  fetch(`${DEPLOY_URL}/api/users/getAccountInfo/${UserId}`)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -457,7 +458,7 @@ function getAcooutInfo() {
         row.cells[3].appendChild(confirmBtn);
       }
       function updateAccount(id, updatedData) {
-        fetch(`http://localhost:5000/api/users/uppdateAccount/${id}`, {
+        fetch(`${DEPLOY_URL}/api/users/uppdateAccount/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -484,7 +485,7 @@ function getAcooutInfo() {
 
 //////////// ingrediant tab functions
 function fetchIngrediants() {
-  fetch("http://localhost:5000/api/ingrediants/getAllIngrediants")
+  fetch(`${DEPLOY_URL}/api/ingrediants/getAllIngrediants`)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -514,7 +515,7 @@ function fetchIngrediants() {
 
 //////////// favourites tab functions
 function getFavouriteRecipes() {
-  fetch(`http://localhost:5000/api/favourites/getAllFavouriteRecipes/${UserId}`)
+  fetch(`${DEPLOY_URL}/api/favourites/getAllFavouriteRecipes/${UserId}`)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -546,7 +547,7 @@ function getFavouriteRecipes() {
       });
       function deleteRecipe(UserId, recipe_name) {
         const favouriteRecipeData = { user_id: UserId, recipe_name: recipe_name }; //preparing them to become a json 
-        fetch("http://localhost:5000/api/favourites/delete", {
+        fetch(`${DEPLOY_URL}/api/favourites/delete`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
