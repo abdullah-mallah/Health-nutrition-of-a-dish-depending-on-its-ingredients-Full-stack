@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { //to import the functions from users.js
-  addUser, authenticateUser, deleteUser, getUsers } = require("../models/users.js");
+  addUser, authenticateUser, deleteUser, getUsers, getAccountInfos, updateAccount } = require("../models/users.js");
 
 // Register user
 router.post('/signup', async (req, res) => { //take info from request body and send it to addUser function in users.js
@@ -56,10 +56,9 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.delete("deleteUser/:id", async (req, res) => {
+router.delete("/deleteUser/:id", async (req, res) => {
+  const id = req.params.id;
   try {
-    const id = req.params.id;
-
     const deletedUser = await deleteUser(id);
     if (!deletedUser) { // if this variable is null
       return res
@@ -85,6 +84,39 @@ router.get("/getUsers", async (req, res) => {
   } catch (error) {
     console.error("Error in route when retrieving all users:", error);
     res.status(500).json({ message: "Error retrieving user's data" });
+  }
+});
+
+router.get('/getAccountInfo/:id', async (req, res) => {
+  const UserId = req.params.id;
+  try {
+    const accountInfos = await getAccountInfos(UserId);
+    res.status(200).json({
+      message: 'Account infos retrieved successfully',
+      accountInfos,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+router.put("/uppdateAccount/:id", async (req, res) => {
+  try {
+    var id = req.params.id;
+    const updatedInfo = req.body;
+
+    const updatedRecipe = await updateAccount(id, updatedInfo);
+    if (!updatedRecipe) { // returned value is null
+      return res
+        .status(404)
+        .json({ message: "A recipe with that id wasn't found" });
+    }
+    res.status(200).json({
+      message: "Recipe updated successfully"
+    });
+  } catch (error) {
+    console.error("Error in route when updating the recipe:", error);
+    res.status(500).json({ message: "Error updating recipe data" });
   }
 });
 

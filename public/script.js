@@ -1,3 +1,4 @@
+
 const api = "http://localhost:5000/api/users";
 
 let allRecipes = []; // Global variable to store all fetched recipes
@@ -26,8 +27,10 @@ document.addEventListener("DOMContentLoaded", function () {
   } else if (path.includes('nutritions')) {
     fetchIngrediants();
   } else if (path.includes('favourites')) {
-      getFavouriteRecipes()
-}
+    getFavouriteRecipes()
+  } else if (path.includes('profile')) {
+    getAcooutInfo();
+  }
 });
 
 
@@ -283,6 +286,84 @@ function saveRecipe(recipe) {
 }
 
 //////////// profile tab functions
+function getAcooutInfo() {
+  fetch(`http://localhost:5000/api/users/getAccountInfo/${UserId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      const tableBody = document.getElementById("accountInfoRows");
+      tableBody.innerHTML = ""; // Clear existing rows
+      console.log(data.accountInfos)
+      data.accountInfos.forEach((accountInfo) => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = accountInfo.userName;
+        row.insertCell(1).textContent = accountInfo.email;
+        row.insertCell(2).textContent = accountInfo.password;
+
+        const btn_uppdate = document.createElement("button");
+        btn_uppdate.textContent = "Update";
+        btn_uppdate.onclick = function () {
+          transformRowToUpdateMode(row, accountInfo); //
+        };
+        row.insertCell(3).appendChild(btn_uppdate);
+      });
+      function transformRowToUpdateMode(row, accountInfo) {
+        const userName = document.createElement("input");
+        userName.type = "text";
+        userName.value = accountInfo.userName;
+        row.cells[0].innerHTML = "";
+        row.cells[0].appendChild(userName);
+
+        const email = document.createElement("input");
+        email.type = "text";
+        email.value = accountInfo.email;
+        row.cells[1].innerHTML = "";
+        row.cells[1].appendChild(email);
+
+        const password = document.createElement("input");
+        password.type = "text";
+        password.value = accountInfo.password;
+        row.cells[2].innerHTML = "";
+        row.cells[2].appendChild(password);
+
+        const confirmBtn = document.createElement("button");
+        confirmBtn.textContent = "Confirm Update";
+        confirmBtn.onclick = function () {
+          updateAccount(UserId, {
+            userName: userName.value,
+            email: email.value,
+            password: password.value,
+            admin: accountInfo.admin,
+          });
+        };
+        row.cells[3].innerHTML = ""; // Clear previous buttons
+        row.cells[3].appendChild(confirmBtn);
+      }
+      function updateAccount(id, updatedData) {
+        fetch(`http://localhost:5000/api/users/uppdateAccount/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              return response.json().then(data => {
+                throw new Error(data.message); // Assuming the JSON contains a "message" property with the error message
+              });
+            }
+          })
+          .then((data) => {
+            getAcooutInfo(); // Refresh the list to show the updated info
+          })
+          .catch((error) => console.error("Error updating account info:", error));
+      }
+    })
+    .catch((error) => console.error("Error fetching account info:", error));
+}
 
 //////////// ingrediant tab functions
 function fetchIngrediants() {

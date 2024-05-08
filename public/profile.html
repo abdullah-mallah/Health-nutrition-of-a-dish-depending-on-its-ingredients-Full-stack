@@ -106,25 +106,17 @@
     <main>
         <section class="profile_container" aria-label="profile details">
             <h2>Profile Info</h2>
-            <ul id="profile_info_list">
-                <li id="username"></li>
-                <li id="email"></li>
-            </ul>
-        </section>
-        <section class="profile_container" aria-label="update account">
-            <h2>Update Profile</h2>
-            <form action="#" method="post">
-                <label for="new_username">Username:</label>
-                <input type="text" id="profile_new_username" placeholder="Enter new username">
-
-                <label for="new_email">E-mail:</label>
-                <input type="text" id="profile_new_email" placeholder="Enter new email">
-
-                <label for="password">Password:</label>
-                <input type="password" id="profile_password" placeholder="Enter new password">
-                
-                <button type="submit">Update</button>
-            </form>
+            <table id="accountInfo">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="accountInfoRows"></tbody>
+            </table>
         </section>
     </main>
     <footer id="page-footer">
