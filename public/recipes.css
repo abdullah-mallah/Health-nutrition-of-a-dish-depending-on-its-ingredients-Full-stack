@@ -1,0 +1,46 @@
+/* Modal CSS */
+.modal {
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: auto;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    display: none; /* Hidden by default */
+    z-index: 1000; /* Sit on top */
+  }
+  
+  .modal-content {
+    padding: 20px;
+  }
+  
+  .modal-footer {
+    padding: 10px 20px;
+    text-align: right;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .btn {
+    padding: 6px 12px;
+    margin: 0 4px;
+    color: white;
+    background-color: #2196f3;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-flat {
+    background: none;
+    color: #333;
+  }
+  
+  .btn:hover {
+    background-color: #0b7dda;
+  }
+  
+  .btn-flat:hover {
+    background-color: #f0f0f0;
+  }
+  

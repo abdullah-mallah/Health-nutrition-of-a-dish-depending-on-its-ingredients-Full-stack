@@ -216,26 +216,34 @@ function displayRecipes(recipes) {
   recipesContainer.innerHTML = ''; // Clear previous results
 
   recipes.forEach(recipe => {
+    const recipeLabelSanitized = recipe.label.replace(/[^a-zA-Z0-9]/g, '_'); // Replace non-alphanumeric characters with underscores
     const recipeElement = document.createElement('div');
     const ingredients = recipe.ingredientLines.map(ingredient => `<li>${ingredient}</li>`).join('');
     recipeElement.innerHTML = `
-      <h3>${recipe.label}</h3>
-      <p>Meal Type: ${recipe.mealType}</p>
-      <p>Calories: ${recipe.calories} kcal</p>
-      <p>Protein: ${recipe.protein} g</p>
-      <p>Sugar: ${recipe.sugar} g</p>
-      <img src="${recipe.image}" alt="Recipe image">
-      <button type="button" id="saveRecipe-${recipe.label}">Save Recipe</button>
-      <h4>Ingredients:</h4>
-      <ul>${ingredients}</ul>
-    `;
+  <h3 id="recipeName-${recipeLabelSanitized}">${recipe.label}</h3>
+  <p>Meal Type: ${recipe.mealType}</p>
+  <p>Calories: ${recipe.calories} kcal</p>
+  <p>Protein: ${recipe.protein} g</p>
+  <p>Sugar: ${recipe.sugar} g</p>
+  <img src="${recipe.image}" alt="Recipe image">
+  <button type="button" id="saveRecipe-${recipeLabelSanitized}" data-calories="${recipe.calories}">Save Recipe</button>
+  <button type="button" onclick="openDatePicker('${recipeLabelSanitized}', '${recipe.calories}')">Schedule Meal</button>
+  <div style="display:none;" id="datePicker-${recipeLabelSanitized}">
+      <input type="date" id="dateInput-${recipeLabelSanitized}">
+      <button type="button" onclick="saveMealDate('${recipeLabelSanitized}', '${recipe.calories}')">Save Date</button>
+  </div>
+  <h4>Ingredients:</h4>
+  <ul>${ingredients}</ul>
+`;
+
     recipesContainer.appendChild(recipeElement);
-    document.getElementById(`saveRecipe-${recipe.label}`).addEventListener('click', function() {
+    document.getElementById(`saveRecipe-${recipeLabelSanitized}`).addEventListener('click', function() {
       saveRecipe(recipe);
     });
   });
 }
 
+///////// favourites tab functions
 function saveRecipe(recipe) {
   if (UserId) {
     const recipeData = {
@@ -276,6 +284,80 @@ function saveRecipe(recipe) {
     console.log('UserId not set. Cannot save recipe.');
   }
 }
+
+//// calorie Entry tab function
+let selectedRecipeId; // This will store the recipe id for which the date is being set
+
+function openDatePicker(recipeLabelSanitized, calories) {
+    selectedRecipeId = recipeLabelSanitized; // Store the current recipe ID
+    const modal = document.getElementById('dateModal');
+    modal.style.display = 'block'; // Show the modal
+}
+
+function confirmDateSelection() {
+  const date = document.getElementById('modalDateInput').value;
+  if (!date) {
+      alert('Please select a date.');
+      return;
+  }
+  const modal = document.getElementById('dateModal');
+  modal.style.display = 'none'; // Hide the modal
+
+  saveMealDate(selectedRecipeId, date);
+}
+function cancelDateSelection() {
+  const modal = document.getElementById('dateModal');
+  modal.style.display = 'none'; // Hide the modal
+}
+
+
+function saveMealDate(recipeLabelSanitized, date) {
+  const caloriesElement = document.getElementById(`saveRecipe-${recipeLabelSanitized}`);
+  const calories = caloriesElement.getAttribute('data-calories');
+  const recipeNameElement = document.getElementById(`recipeName-${recipeLabelSanitized}`);
+  const recipeName = recipeNameElement.textContent.trim();
+
+  if (!date) {
+      alert('Please select a date.');
+      return;
+  }
+
+  const recipeData = {
+      user_id: UserId,
+      date: date,
+      recipe_name: recipeName,
+      calories: calories
+  };
+
+  
+  fetch('http://localhost:5000/api/calorieEntries', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(recipeData)
+})
+.then(response => {
+    if (response.status === 409) {
+        alert('This recipe has already been scheduled for this date.');
+        return null;
+    } else if (!response.ok) {
+        throw new Error(`HTTP status ${response.status}: ` + response.statusText);
+    }
+    return response.json();
+})
+.then(data => {
+    if (data) {
+        alert('Meal scheduled successfully!');
+    }
+})
+.catch(error => {
+    console.error('Failed to schedule meal:', error);
+    alert('Failed to schedule meal: ' + error.message);
+});
+
+}
+
 
 //////////// profile tab functions
 

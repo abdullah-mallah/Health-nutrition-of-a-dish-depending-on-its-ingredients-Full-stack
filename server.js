@@ -3,6 +3,8 @@ const usersRoutes = require('./routes/userRoutes');
 const recipeRoutes = require('./routes/recipeRoutes');
 const favouriteRoutes = require('./routes/favouriteRoutes');
 const ingrediantRoutes = require('./routes/ingrediantRoutes')
+const calorieEntryRoutes = require('./routes/calorieEntriesRoutes.js')
+
 // const adminRoutes = require('./routes/adminRoutes')
 
 require("dotenv").config(); //import .env file
@@ -18,7 +20,6 @@ const port = process.env.PORT || 5000;
 
 const path = require("path");//
 app.use(bodyParser.json());//to use bodyparse in express
-
 // Serve static files from 'public' directory
 app.use(express.static('public'));
 
@@ -26,7 +27,8 @@ app.use(express.static('public'));
 app.use('/api/users', usersRoutes);
 app.use('/api/recipes', recipeRoutes) // to get the recipes from the api
 app.use('/api/ingrediants', ingrediantRoutes)
-app.use('/api/favourites', favouriteRoutes); 
+app.use('/api/favourites', favouriteRoutes);
+app.use('/api/calorieEntries', calorieEntryRoutes); 
 //app.use('/api/admin', adminRoutes)
 
 
