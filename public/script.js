@@ -218,22 +218,27 @@ function displayRecipes(recipes) {
   recipes.forEach(recipe => {
     const recipeLabelSanitized = recipe.label.replace(/[^a-zA-Z0-9]/g, '_'); // Replace non-alphanumeric characters with underscores
     const recipeElement = document.createElement('div');
+    recipeElement.className = 'recipe-card'; // Assign class for styling
     const ingredients = recipe.ingredientLines.map(ingredient => `<li>${ingredient}</li>`).join('');
     recipeElement.innerHTML = `
-  <h3 id="recipeName-${recipeLabelSanitized}">${recipe.label}</h3>
-  <p>Meal Type: ${recipe.mealType}</p>
-  <p>Calories: ${recipe.calories} kcal</p>
-  <p>Protein: ${recipe.protein} g</p>
-  <p>Sugar: ${recipe.sugar} g</p>
-  <img src="${recipe.image}" alt="Recipe image">
-  <button type="button" id="saveRecipe-${recipeLabelSanitized}" data-calories="${recipe.calories}">Save Recipe</button>
-  <button type="button" onclick="openDatePicker('${recipeLabelSanitized}', '${recipe.calories}')">Schedule Meal</button>
-  <div style="display:none;" id="datePicker-${recipeLabelSanitized}">
-      <input type="date" id="dateInput-${recipeLabelSanitized}">
-      <button type="button" onclick="saveMealDate('${recipeLabelSanitized}', '${recipe.calories}')">Save Date</button>
-  </div>
-  <h4>Ingredients:</h4>
-  <ul>${ingredients}</ul>
+    <img src="${recipe.image}" alt="Recipe image">
+    <div class="recipe-card-content">
+    <h3 id="recipeName-${recipeLabelSanitized}">${recipe.label}</h3>
+    <p>Meal Type: ${recipe.mealType}</p>
+    <p>Calories: ${recipe.calories} kcal</p>
+    <p>Protein: ${recipe.protein} g</p>
+    <p>Sugar: ${recipe.sugar} g</p>
+    <h4>Ingredients:</h4>
+    <ul>${ingredients}</ul>
+
+    <div class="recipe-card-buttons">
+      <button type="button" class="cardButton" id="saveRecipe-${recipeLabelSanitized}" data-calories="${recipe.calories}">Add to favorites</button>
+      <button type="button" class="cardButton" onclick="openDatePicker('${recipeLabelSanitized}', '${recipe.calories}')">Schedule Meal</button>
+      <div style="display:none;" id="datePicker-${recipeLabelSanitized}">
+          <input type="date" id="dateInput-${recipeLabelSanitized}">
+          <button type="button" onclick="saveMealDate('${recipeLabelSanitized}', '${recipe.calories}')">Save Date</button>
+      </div>
+    </div>
 `;
 
     recipesContainer.appendChild(recipeElement);
