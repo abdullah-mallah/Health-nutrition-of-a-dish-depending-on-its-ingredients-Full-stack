@@ -6,32 +6,35 @@ let allRecipes = []; // Global variable to store all fetched recipes
 let UserId; 
 
 document.addEventListener("DOMContentLoaded", function () {
-
-  UserId = sessionStorage.getItem('UserId');
-  
   const path = window.location.pathname;
-  if (path.includes('signup')) {
-    const signupForm = document.querySelector('#signup_signupForm');
-    signupForm.addEventListener('submit', signupFormSubmitHandler);
-  } else if (path.includes('login')) {
-    const loginForm = document.querySelector('#login_loginForm');
-    loginForm.addEventListener('submit', loginFormSubmitHandler);
-  } else if (path.includes('recipes')) {
-    const recipeForm = document.querySelector('#RecipeForm');
-    recipeForm.addEventListener('submit', fetchRecipes);
-    // Adding listeners to checkboxes
-    ['vegan', 'vegetarian', 'alcoholFree', 'highProtein', 'lowCarb', 'highFiber', 'lowFat', 'eggFree', 'fishFree', 'glutenFree', 'dairyFree'].forEach(id => {
-      document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
-    });
-  } else if (path.includes('home')) {
-    home()
-  } else if (path.includes('nutritions')) {
-    fetchIngrediants();
-  } else if (path.includes('favourites')) {
-    getFavouriteRecipes()
-  } else if (path.includes('profile')) {
-    getAcooutInfo();
+  UserId = sessionStorage.getItem('UserId');
+  if (!UserId && !path.includes('login') && !path.includes('signup')) {
+    window.location.href = 'login.html';
+  } else {
+    if (path.includes('signup')) {
+      const signupForm = document.querySelector('#signup_signupForm');
+      signupForm.addEventListener('submit', signupFormSubmitHandler);
+    } else if (path.includes('login')) {
+      const loginForm = document.querySelector('#login_loginForm');
+      loginForm.addEventListener('submit', loginFormSubmitHandler);
+    } else if (path.includes('recipes')) {
+      const recipeForm = document.querySelector('#RecipeForm');
+      recipeForm.addEventListener('submit', fetchRecipes);
+      // Adding listeners to checkboxes
+      ['vegan', 'vegetarian', 'alcoholFree', 'highProtein', 'lowCarb', 'highFiber', 'lowFat', 'eggFree', 'fishFree', 'glutenFree', 'dairyFree'].forEach(id => {
+        document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
+      });
+    } else if (path.includes('home')) {
+      home()
+    } else if (path.includes('nutritions')) {
+      fetchIngrediants();
+    } else if (path.includes('favourites')) {
+      getFavouriteRecipes()
+    } else if (path.includes('profile')) {
+      getAcooutInfo();
+    }
   }
+  
 });
 
 
@@ -450,7 +453,7 @@ function getAcooutInfo() {
         const confirmBtn = document.createElement("button");
         confirmBtn.textContent = "Confirm Update";
         confirmBtn.onclick = function () {
-          updateAccount(UserId, {
+          updateAc0count(UserId, {
             userName: userName.value,
             email: email.value,
             password: password.value,
