@@ -244,11 +244,11 @@ function displayRecipes(recipes) {
     <ul>${ingredients}</ul>
 
     <div class="recipe-card-buttons">
-      <button type="button" class="cardButton" id="saveRecipe-${recipeLabelSanitized}" data-calories="${recipe.calories}">Add to favourites</button>
-      <button type="button" class="cardButton" onclick="openDatePicker('${recipeLabelSanitized}', '${recipe.calories}')">Schedule Meal</button>
+      <button type="button" class="cardButton" id="saveRecipe-${recipeLabelSanitized}" data-calories="${recipe.calories}" data-sugar="${recipe.sugar}" data-protein="${recipe.protein}" >Add to favourites</button>
+      <button type="button" class="cardButton" onclick="openDatePicker('${recipeLabelSanitized}', '${recipe.calories}', '${recipe.protein}', '${recipe.sugar}' )">Schedule Meal</button>
       <div style="display:none;" id="datePicker-${recipeLabelSanitized}">
           <input type="date" id="dateInput-${recipeLabelSanitized}">
-          <button type="button" onclick="saveMealDate('${recipeLabelSanitized}', '${recipe.calories}')">Save Date</button>
+          <button type="button" onclick="saveMealDate('${recipeLabelSanitized}', '${recipe.calories}', '${recipe.protein}', '${recipe.sugar}')">Save Date</button>
       </div>
     </div>
 `;
@@ -302,10 +302,10 @@ function saveRecipe(recipe) {
   }
 }
 
-//// calorie Entry tab function
+//// calorie and protein Entry tab function
 let selectedRecipeId; // This will store the recipe id for which the date is being set
 
-function openDatePicker(recipeLabelSanitized, calories) {
+function openDatePicker(recipeLabelSanitized, calories, protein, sugar) {
     selectedRecipeId = recipeLabelSanitized; // Store the current recipe ID
     const modal = document.getElementById('dateModal');
     modal.style.display = 'block'; // Show the modal
@@ -329,8 +329,10 @@ function cancelDateSelection() {
 
 
 function saveMealDate(recipeLabelSanitized, date) {
-  const caloriesElement = document.getElementById(`saveRecipe-${recipeLabelSanitized}`);
-  const calories = caloriesElement.getAttribute('data-calories');
+  const dataElement = document.getElementById(`saveRecipe-${recipeLabelSanitized}`);
+  const calories = dataElement.getAttribute('data-calories');
+  const protein = dataElement.getAttribute('data-protein');
+  const sugar = dataElement.getAttribute('data-sugar');
   const recipeNameElement = document.getElementById(`recipeName-${recipeLabelSanitized}`);
   const recipeName = recipeNameElement.textContent.trim();
 
@@ -343,7 +345,9 @@ function saveMealDate(recipeLabelSanitized, date) {
       user_id: UserId,
       date: date,
       recipe_name: recipeName,
-      calories: calories
+      calories: calories,
+      protein: protein,
+      sugar: sugar,
   };
 
   
@@ -375,10 +379,6 @@ function saveMealDate(recipeLabelSanitized, date) {
 
 }
 
-
-
-
-
 //////////// tracker tab
 function fetchEntries() {
   const startDate = document.getElementById('startDate').value;
@@ -390,17 +390,17 @@ function fetchEntries() {
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        displayCalorieData(data); 
+        displayNutritionsData(data); 
     })
     .catch(error => console.error('Failed to fetch entries:', error));
 }
 
-function displayCalorieData(data) {
-    const container = document.getElementById('calorieData');
+function displayNutritionsData(data) {
+    const container = document.getElementById('nutritionsData');
     container.innerHTML = '';  // Clear previous data
     data.forEach(day => {
         const dayDiv = document.createElement('div');
-        dayDiv.textContent = `Date: ${day._id}, Total Calories: ${day.totalCalories}`;
+        dayDiv.textContent = `Date: ${day._id}, Total Calories: ${day.totalCalories}, Total Protien: ${day.totalProtein}, Total Sugar: ${day.totalSugar}`;
         container.appendChild(dayDiv);
     });
 }
