@@ -101,6 +101,43 @@ footer address {
 }
 
 /*---------- home tab section ----------*/
+.home_articles {
+  margin-bottom: 100px; 
+  font-size:34px;
+  color:#050505
+}
+
+.article {
+  margin-bottom: 70px; 
+  background-color: #FFA500; /* Add border */
+  padding: 20px; /* Add padding */
+  border-radius: 10px; /* Add border radius */
+}
+
+.article h3 {
+  font-size:50px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color:#f2f2f6 
+}
+
+.article p {
+  margin-bottom: 30px; 
+  font-size:30px;
+  color:#020202
+}
+
+.article a {
+  font-size:20px;
+  color: rgb(238, 244, 237);
+  text-decoration: none; 
+  font-weight: bold; 
+}
+
+.article a:hover {
+  text-decoration: underline; 
+}
+
 .home_food {
   background-color: rgb(40, 176, 33);
   padding: 20px;
@@ -114,13 +151,59 @@ footer address {
 }
 .home_food-image {
   width: 30%;/* Set the width to fill the container */
-  height: 300px;/* Set the height */
+  height: 700px;/* Set the height */
   object-fit: cover;/* Ensure the image covers the defined dimensions */
   margin: 0 auto;/* Center the image horizontally within the container */
 }
 .home_slideshow-container {
   width: 100%;/* Set the maximum width of the container */
   margin: 0 auto;/* Center the container horizontally */
+}
+/* calendar */
+.home_calendar {
+  position: fixed;
+  bottom: 20px; 
+  right: 200px; 
+  z-index: 9999; 
+  background-color: rgb(40, 176, 33); 
+  padding: 20px;
+  border-radius: 10px; 
+}
+#calendar {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 37px;
+  background:rgb(40, 176, 33);
+  border-radius:60px;
+}
+
+.month {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.weekdays {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 0;
+}
+
+.days {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 0;
+}
+
+.days li {
+  width: 46px;
+  height: 50px;
+  line-height: 30px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 /*---------- about tab section section ----------*/
