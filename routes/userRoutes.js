@@ -27,7 +27,7 @@ router.post('/signup', async (req, res) => { //take info from request body and s
       }
       res.status(201).json({
         message: "User added successfully",
-        user,
+        user: { id: user._id, email: user.email }
       });
     } catch (error) {
       console.error("Error in route when adding the user:", error);

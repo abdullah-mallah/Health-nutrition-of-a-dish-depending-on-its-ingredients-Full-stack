@@ -66,6 +66,9 @@ function signupFormSubmitHandler(event) {
           }
         })
         .then((data) => {
+
+          UserId = data.user.id;
+          sessionStorage.setItem('UserId', UserId);
           // Refresh the list after adding
           alert(data.message);
           window.location.href = 'home.html';
