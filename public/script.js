@@ -102,10 +102,14 @@ function loginFormSubmitHandler(event) {
         },
         body: JSON.stringify(userData), //the body holds the data I'm sending to the route
       })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
+      .then((response) => {
+        if (response.ok) {
+          return response.json();  
+        } else if (response.status === 401) {  
+          return response.json().then(data => {
+            alert(data.message); 
+          });
+        } else {
             return response.json().then(data => {
               throw new Error(data.message); // Assuming the JSON contains a "message" property with the error message
             });
@@ -115,7 +119,6 @@ function loginFormSubmitHandler(event) {
           UserId = data.user.id;
 
           sessionStorage.setItem('UserId', UserId);  // Save to session storage
-          alert(data.message);
           window.location.href = 'home.html';
         })
         .catch((error) => {
@@ -422,7 +425,7 @@ function getAcooutInfo() {
         const row = tableBody.insertRow();
         row.insertCell(0).textContent = accountInfo.userName;
         row.insertCell(1).textContent = accountInfo.email;
-        row.insertCell(2).textContent = accountInfo.password;
+        row.insertCell(2).textContent = "******"
 
         const btn_uppdate = document.createElement("button");
         btn_uppdate.textContent = "Update";
@@ -446,14 +449,14 @@ function getAcooutInfo() {
 
         const password = document.createElement("input");
         password.type = "text";
-        password.value = accountInfo.password;
+        password.value = "******";
         row.cells[2].innerHTML = "";
         row.cells[2].appendChild(password);
 
         const confirmBtn = document.createElement("button");
         confirmBtn.textContent = "Confirm Update";
         confirmBtn.onclick = function () {
-          updateAc0count(UserId, {
+          updateAccount(UserId, {
             userName: userName.value,
             email: email.value,
             password: password.value,
