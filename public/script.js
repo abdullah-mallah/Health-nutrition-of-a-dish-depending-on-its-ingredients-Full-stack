@@ -320,7 +320,6 @@ function saveRecipe(recipe) {
 })
 .then(data => {
   if (data) {
-    console.log('Recipe saved:', data);
     alert('Recipe saved successfully!');
   }
 })
@@ -425,7 +424,6 @@ function fetchEntries() {
   })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         displayNutritionsData(data); 
     })
     .catch(error => console.error('Failed to fetch entries:', error));
@@ -480,10 +478,8 @@ function getAcooutInfo() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       const tableBody = document.getElementById("accountInfoRows");
       tableBody.innerHTML = ""; // Clear existing rows
-      console.log(data.accountInfos)
       data.accountInfos.forEach((accountInfo) => {
         const row = tableBody.insertRow();
         row.insertCell(0).textContent = accountInfo.userName;
@@ -567,10 +563,8 @@ function fetchIngrediants() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       const tableBody = document.getElementById("ingrediantsRows");
       tableBody.innerHTML = ""; // Clear existing rows
-      console.log(data.ingrediants)
       data.ingrediants.forEach((ingrediant) => {
         const row = tableBody.insertRow();
         row.insertCell(0).textContent = ingrediant.name;
@@ -603,10 +597,8 @@ function getFavouriteRecipes() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       const tableBody = document.getElementById("favouriteRecipeRows");
       tableBody.innerHTML = ""; // Clear existing rows
-      console.log(data.favouriteRecipes)
       data.favouriteRecipes.forEach((favouriteRecipe) => {
         const row = tableBody.insertRow();
         row.insertCell(0).textContent = favouriteRecipe.recipe_name;

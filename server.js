@@ -67,16 +67,11 @@ function authenticateToken(req, res, next) {
     return res.sendStatus(401);  // No token present
   }
 
-  console.log(`Received token: ${token}`);
-
   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
     if (err) {
       console.log(`Token validation error: ${err.message}`);
       return res.sendStatus(403);  // Invalid token
     }
-
-    console.log(`Token decoded successfully, user ID: ${user.id}`);
-
     req.user = user;
     next();
   });
