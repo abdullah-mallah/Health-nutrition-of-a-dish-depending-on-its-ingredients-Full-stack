@@ -8,34 +8,53 @@ let UserId;
 document.addEventListener("DOMContentLoaded", function () {
   const path = window.location.pathname;
   UserId = sessionStorage.getItem('UserId');
-  if (!UserId && !path.includes('login') && !path.includes('signup')) {
+  if (!UserId && !path.includes('login')) {
     window.location.href = 'login.html';
   } else {
-    if (path.includes('signup')) {
-      const signupForm = document.querySelector('#signup_signupForm');
-      signupForm.addEventListener('submit', signupFormSubmitHandler);
-    } else if (path.includes('login')) {
-      const loginForm = document.querySelector('#login_loginForm');
-      loginForm.addEventListener('submit', loginFormSubmitHandler);
-    } else if (path.includes('recipes')) {
-      const recipeForm = document.querySelector('#RecipeForm');
-      recipeForm.addEventListener('submit', fetchRecipes);
-      // Adding listeners to checkboxes
-      ['vegan', 'vegetarian', 'alcoholFree', 'highProtein', 'lowCarb', 'highFiber', 'lowFat', 'eggFree', 'fishFree', 'glutenFree', 'dairyFree'].forEach(id => {
-        document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
-      });
-    } else if (path.includes('home')) {
-      home()
-    } else if (path.includes('nutritions')) {
-      fetchIngrediants();
-    } else if (path.includes('favourites')) {
-      getFavouriteRecipes()
-    } else if (path.includes('profile')) {
-      getAcooutInfo();
-    }
+    if (path.includes('login')) {
+    const signupForm = document.querySelector('#signup_signupForm');
+    const loginForm = document.querySelector('#login_loginForm');
+    const sign_in_btn = document.querySelector("#sign-in-btn");
+    const sign_up_btn = document.querySelector("#sign-up-btn");
+    const container = document.querySelector(".container");
+    const sign_in_btn2 = document.querySelector("#sign-in-btn2");
+    const sign_up_btn2 = document.querySelector("#sign-up-btn2");
+
+    sign_up_btn.addEventListener("click", () => {
+      container.classList.add("sign-up-mode");
+  });
+  sign_in_btn.addEventListener("click", () => {
+      container.classList.remove("sign-up-mode");
+  });
+  sign_up_btn2.addEventListener("click", () => {
+      container.classList.add("sign-up-mode2");
+  });
+  sign_in_btn2.addEventListener("click", () => {
+      container.classList.remove("sign-up-mode2");
+  });
+   
+
+
+    signupForm.addEventListener('submit', signupFormSubmitHandler);
+    loginForm.addEventListener('submit', loginFormSubmitHandler);
+
+  } else if (path.includes('recipes')) {
+    const recipeForm = document.querySelector('#RecipeForm');
+    recipeForm.addEventListener('submit', fetchRecipes);
+    // Adding listeners to checkboxes
+    ['vegan', 'vegetarian', 'alcoholFree', 'highProtein', 'lowCarb', 'highFiber', 'lowFat', 'eggFree', 'fishFree', 'glutenFree', 'dairyFree'].forEach(id => {
+      document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
+    });
+  } else if (path.includes('home')) {
+    home()
+  } else if (path.includes('nutritions')) {
+    fetchIngrediants();
+  } else if (path.includes('favourites')) {
+    getFavouriteRecipes()
+  } else if (path.includes('profile')) {
+    getAcooutInfo();
   }
-  
-});
+}});
 
 
 //////////// Login and signup functions
