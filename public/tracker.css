@@ -26,7 +26,7 @@ input[type="date"] {
     box-sizing: border-box; /* Ensures padding does not affect width */
 }
 
-button {
+.nutritionButtion {
     width: 100%;
     padding: 10px;
     background-color: #4CAF50;
@@ -38,7 +38,7 @@ button {
     margin-top: 20px;
 }
 
-button:hover {
+.nutritionButtion:hover {
     background-color: #45a049;
 }
 
