@@ -135,9 +135,9 @@ function loginFormSubmitHandler(event) {
         })
         .then((data) => {
           UserId = data.user.id;
-          sessionStorage.setItem('UserId', UserId);  // Save to session storage
+          sessionStorage.setItem('UserId', UserId);
           token = data.token.Token
-          sessionStorage.setItem('token', token)
+          sessionStorage.setItem('token', token);
           window.location.href = 'home.html';
         })
         .catch((error) => {
@@ -681,6 +681,30 @@ function home() {
 
 function fetchArticlesFromAPI() {
 }
+
+
+//// logout
+function logout() {
+  fetch('/api/logout', {
+      method: 'POST',
+      headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+      }
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log(data.message);
+      sessionStorage.removeItem('token'); 
+      sessionStorage.removeItem('UserId'); 
+      window.location.href = 'login.html'; 
+  })
+  .catch(error => console.error('Error logging out:', error));
+}
+
+
+
+
 
 // you can make the query injections as a seperate function since it is being used so often
 // you can then take the check validity based on type 
