@@ -16,7 +16,7 @@ body, html {
   
   /* Header row styling */
   thead th {
-    background-color: #007BFF; /* Blue color for header to make it stand out */
+    background-color: #4CAF50; /* Blue color for header to make it stand out */
     color: white;
     text-align: left;
     padding: 12px 15px; /* Padding for content inside headers */

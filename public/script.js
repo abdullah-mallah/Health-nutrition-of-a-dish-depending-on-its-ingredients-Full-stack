@@ -327,7 +327,7 @@ function saveRecipe(recipe) {
   }
 }
 
-//// calorie and protein Entry tab function
+//// calorie, protein and sugar Entry tab function
 let selectedRecipeId; // This will store the recipe id for which the date is being set
 
 function openDatePicker(recipeLabelSanitized, calories, protein, sugar) {
@@ -421,14 +421,41 @@ function fetchEntries() {
 }
 
 function displayNutritionsData(data) {
-    const container = document.getElementById('nutritionsData');
-    container.innerHTML = '';  // Clear previous data
-    data.forEach(day => {
-        const dayDiv = document.createElement('div');
-        dayDiv.textContent = `Date: ${day._id}, Total Calories: ${day.totalCalories}, Total Protien: ${day.totalProtein}, Total Sugar: ${day.totalSugar}`;
-        container.appendChild(dayDiv);
-    });
+  const container = document.getElementById('nutritionsData');
+  container.innerHTML = '';  // Clear previous data
+
+  data.forEach(day => {
+    const dayDiv = document.createElement('div');
+    dayDiv.className = 'nutrition-day';  // Add a class for styling
+
+    const date = document.createElement('div');
+    date.className = 'nutrition-date';
+    date.textContent = `Date: ${day._id}`;
+    dayDiv.appendChild(date);
+
+    // Creating the calorie info with icon
+    const calories = document.createElement('div');
+    calories.className = 'nutrition-calories';
+    calories.innerHTML = `<i class="fas fa-fire"></i> Total Calories: ${day.totalCalories} kcal`;  // Using 'fas fa-fire' for calories icon
+    dayDiv.appendChild(calories);
+
+    // Creating the protein info with icon
+    const protein = document.createElement('div');
+    protein.className = 'nutrition-protein';
+    protein.innerHTML = `<i class="fas fa-dumbbell"></i> Total Protein: ${day.totalProtein} g`;  // Using 'fas fa-dumbbell' for protein icon
+    dayDiv.appendChild(protein);
+
+    // Creating the sugar info with icon
+    const sugar = document.createElement('div');
+    sugar.className = 'nutrition-sugar';
+    sugar.innerHTML = `<i class="fas fa-candy-cane"></i> Total Sugar: ${day.totalSugar} g`;  // Using 'fas fa-candy-cane' for sugar icon
+    dayDiv.appendChild(sugar);
+
+    container.appendChild(dayDiv);
+  });
 }
+
+
 
 
 //////////// profile tab functions
@@ -553,7 +580,7 @@ function getFavouriteRecipes() {
       data.favouriteRecipes.forEach((favouriteRecipe) => {
         const row = tableBody.insertRow();
         row.insertCell(0).textContent = favouriteRecipe.recipe_name;
-        row.insertCell(1).textContent = favouriteRecipe.calories;
+        row.insertCell(1).textContent = favouriteRecipe.calories + " kcal";
 
         // Create an image element
         const img = document.createElement('img');
