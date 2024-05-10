@@ -1,89 +1,110 @@
-/* Basic reset for styling */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif; /* Set a clean and simple font */
-  }
-  
-  /* Styling the table to be full width and adding basic styles */
-  table {
+/* Basic Styling for the whole page */
+main {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 110px;
+}
+
+
+label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 16px;
+}
+
+input[type="date"] {
     width: 100%;
-    border-collapse: collapse; /* Ensures that table borders are collapsed into a single border */
-    table-layout: fixed; /* Helps in defining column widths */
-  }
-  
-  /* Table header styles */
-  thead th {
-    background-color: #4CAF50; /* A nice green color for the header */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding does not affect width */
+}
+
+.nutritionButtion {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
     color: white;
-    text-align: left;
-    padding: 12px; /* Adds space around text */
-    border-bottom: 2px solid #ddd; /* Adds a subtle line between header and rows */
-  }
-  
-  /* Table body styles */
-  tbody td {
-    padding: 8px; /* Smaller padding for cell content */
-    border-bottom: 1px solid #ddd; /* Light line for separating rows */
-    text-align: left; /* Align text to left for readability */
-  }
-  
-  /* Style for alternate row colors to enhance readability */
-  tbody tr:nth-child(odd) {
-    background-color: #f9f9f9; /* Light grey color for every other row */
-  }
-  
-  /* Responsive design: Ensure table is scrollable on small devices */
-  @media screen and (max-width: 600px) {
-    table {
-      width: 100%;
-      overflow-x: auto; /* Allows table to scroll sideways on small screens */
-      display: block; /* Makes the table a block element */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.nutritionButtion:hover {
+    background-color: #45a049;
+}
+
+h1 {
+  color: #4CAF50;
+}
+
+p {
+    color: #666;
+}
+
+#calorieData {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Styling individual entries */
+#calorieData div {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+/* Removes the border from the last div to maintain uniformity */
+#calorieData div:last-child {
+    border-bottom: none;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    main {
+        padding: 10px;
     }
-  
-    thead, tbody, th, td, tr {
-      display: block; /* Changes the display to block for all table elements */
+    label, button {
+        font-size: 14px;
     }
-  
-    thead tr {
-      position: absolute; /* Fixes the header at the top */
-      top: -9999px; /* Moves the header out of view */
+}
+
+#nutritionsData {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    max-width: 800px; /* Limit max width and center */
+    margin: auto;
+}
+
+.nutrition-day {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.nutrition-day > div {
+    margin-bottom: 4px; /* Space between each data line */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+    .nutrition-day {
+        flex-direction: column;
+        padding: 10px;
     }
-  
-    tr { border: 1px solid #ccc; }
-  
-    td {
-      border: none;
-      border-bottom: 1px solid #eee; /* Keeps a line between rows */
-      position: relative;
-      padding-left: 50%; /* Gives enough room for content */
-    }
-  
-    td:before {
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      width: 45%; /* Label width, make it less than padding-left of td */
-      padding-right: 10px; /* Right padding for label */
-      white-space: nowrap; /* Ensures label text does not wrap */
-      content: attr(data-title); /* Uses the data-title attribute as content */
-    }
-  }
-  
-  /* Customizing scrollbar for better visibility on small devices */
-  ::-webkit-scrollbar {
-    width: 12px; /* Width of scrollbar */
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Color of the track */
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #888; /* Color of the scrollbar thumb */
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Color when hovering over the thumb */
-  }
-  
+}

@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   } else if (path.includes('home')) {
     home()
-  } else if (path.includes('nutritions')) {
+  } else if (path.includes('ingredients')) {
     fetchIngrediants();
   } else if (path.includes('favourites')) {
     getFavouriteRecipes()
