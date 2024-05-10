@@ -7,12 +7,12 @@ router.get('/getAllIngrediants', async (req, res) => {
   try {
     const ingrediants = await getIngrediants();
     res.json({
-      message: "ingrediants retrieved successfully",
+      message: "Ingredients retrieved successfully",
       ingrediants,
     });
   } catch (error) {
-    console.error("Error in route when retrieving ingrediants:", error);
-    res.status(500).json({ message: "Error retrieving ingrediants data" });
+    console.error("Error in route when retrieving ingredients:", error);
+    res.status(500).json({ message: "Error retrieving ingredients data" });
   }
 });
 
@@ -52,7 +52,7 @@ router.post('/addIngrediant', async (req, res) => {
       ingrediantPhosphorus,
     );
     res.status(201).json({
-      message: "ingrediant added successfully",
+      message: "Ingredient added successfully",
     });
   } catch (error) {
     console.error("Error in route when adding the ingrediant:", error);
