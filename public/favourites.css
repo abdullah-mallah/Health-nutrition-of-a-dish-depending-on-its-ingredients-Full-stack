@@ -75,18 +75,20 @@ body, html {
     }
   }
   
-  /* Styling for buttons for better user interaction */
-  button {
-    padding: 8px 16px;
-    background-color: #dc3545; /* Red color for delete buttons to indicate a destructive action */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #c82333; /* Darker red on hover for button feedback */
-  }
+
+/* Styling for delete buttons for better user interaction */
+.delete-button {
+  padding: 8px 16px;
+  background-color: #dc3545; /* Red color for delete buttons to indicate a destructive action */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Darker red on hover for button feedback */
+}
+
   
