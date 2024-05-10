@@ -8,6 +8,7 @@ let UserId;
 document.addEventListener("DOMContentLoaded", function () {
   const path = window.location.pathname;
   UserId = sessionStorage.getItem('UserId');
+  token = sessionStorage.getItem('token');
   if (!UserId && !path.includes('login')) {
     window.location.href = 'login.html';
   } else {
@@ -32,8 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
   sign_in_btn2.addEventListener("click", () => {
       container.classList.remove("sign-up-mode2");
   });
-   
-
 
     signupForm.addEventListener('submit', signupFormSubmitHandler);
     loginForm.addEventListener('submit', loginFormSubmitHandler);
@@ -55,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
     getAcooutInfo();
   }
 }});
-
 
 //////////// Login and signup functions
 function signupFormSubmitHandler(event) {
@@ -88,9 +86,10 @@ function signupFormSubmitHandler(event) {
           }
         })
         .then((data) => {
-
           UserId = data.user.id;
           sessionStorage.setItem('UserId', UserId);
+          token = data.token.Token
+          sessionStorage.setItem('token', token)
           // Refresh the list after adding
           alert(data.message);
           window.location.href = 'home.html';
@@ -114,7 +113,7 @@ function loginFormSubmitHandler(event) {
   }else{
   // could make this into its own function 
   const userData = { email: Email , password: Password }; //preparing them to become a json 
-  fetch(`${user_api}/login`, {
+    fetch(`${DEPLOY_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -136,8 +135,9 @@ function loginFormSubmitHandler(event) {
         })
         .then((data) => {
           UserId = data.user.id;
-
           sessionStorage.setItem('UserId', UserId);  // Save to session storage
+          token = data.token.Token
+          sessionStorage.setItem('token', token)
           window.location.href = 'home.html';
         })
         .catch((error) => {
@@ -181,7 +181,13 @@ function fetchRecipes(event) {
   const food = document.getElementById('foodInput').value;
 
   if (food) { // Fetch new recipes every time the form is submitted
-    fetch(`${DEPLOY_URL}/api/recipes/${food}`)
+    fetch(`${DEPLOY_URL}/api/recipes/${food}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+      }
+    })
     .then(response => response.json())
     .then(recipes => {
         allRecipes = recipes; // Store fetched recipes
@@ -236,8 +242,6 @@ function filterAndDisplayRecipes() {
   displayRecipeCount(filteredRecipes.length); // Display the count of filtered recipes
   displayRecipes(filteredRecipes); // Display the recipes themselves
 }
-
-
 
 function displayRecipeCount(count) {
   const countContainer = document.getElementById('recipeCount');
@@ -296,11 +300,12 @@ function saveRecipe(recipe) {
     };
 
     fetch(`${DEPLOY_URL}/api/favourites/save`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(recipeData)
+    method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+      },
+    body: JSON.stringify(recipeData)
 })
 .then(response => {
   if (response.status === 409) {
@@ -352,7 +357,6 @@ function cancelDateSelection() {
   modal.style.display = 'none'; // Hide the modal
 }
 
-
 function saveMealDate(recipeLabelSanitized, date) {
   const dataElement = document.getElementById(`saveRecipe-${recipeLabelSanitized}`);
   const calories = dataElement.getAttribute('data-calories');
@@ -379,7 +383,8 @@ function saveMealDate(recipeLabelSanitized, date) {
   fetch(`${DEPLOY_URL}/api/calorieEntries`, {
     method: 'POST',
     headers: {
-        'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
     },
     body: JSON.stringify(recipeData)
 })
@@ -411,7 +416,13 @@ function fetchEntries() {
 
   const url = `${DEPLOY_URL}/api/calorieEntries/${UserId}?startDate=${startDate}&endDate=${endDate}`;
 
-  fetch(url)
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
     .then(response => response.json())
     .then(data => {
         console.log(data);
@@ -430,10 +441,15 @@ function displayNutritionsData(data) {
     });
 }
 
-
 //////////// profile tab functions
 function getAcooutInfo() {
-  fetch(`${DEPLOY_URL}/api/users/getAccountInfo/${UserId}`)
+  fetch(`${DEPLOY_URL}/api/users/getAccountInfo/${UserId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -489,7 +505,8 @@ function getAcooutInfo() {
         fetch(`${DEPLOY_URL}/api/users/uppdateAccount/${id}`, {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`  // Ensure this is correctly set
           },
           body: JSON.stringify(updatedData),
         })
@@ -513,7 +530,13 @@ function getAcooutInfo() {
 
 //////////// ingrediant tab functions
 function fetchIngrediants() {
-  fetch(`${DEPLOY_URL}/api/ingrediants/getAllIngrediants`)
+  fetch(`${DEPLOY_URL}/api/ingrediants/getAllIngrediants`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -543,7 +566,13 @@ function fetchIngrediants() {
 
 //////////// favourites tab functions
 function getFavouriteRecipes() {
-  fetch(`${DEPLOY_URL}/api/favourites/getAllFavouriteRecipes/${UserId}`)
+  fetch(`${DEPLOY_URL}/api/favourites/getAllFavouriteRecipes/${UserId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);

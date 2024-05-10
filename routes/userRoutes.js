@@ -35,26 +35,26 @@ router.post('/signup', async (req, res) => { //take info from request body and s
     }
   });
 
-// Login user
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+// // Login user
+// router.post('/login', async (req, res) => {
+//   const { email, password } = req.body;
 
-  try {
-    const user = await authenticateUser(email, password);
-    if (user) {
-      // Login successful, handle session or token generation here
-      res.status(200).json({
-        message: "Login successful",
-        user: { id: user._id, email: user.email } // Do not send password
-      });
-    } else {
-      res.status(401).json({ message: "Invalid credentials" });
-    }
-  } catch (error) {
-    console.error("Error in login route:", error);
-    res.status(500).json({ message: "Error processing login" });
-  }
-});
+//   try {
+//     const user = await authenticateUser(email, password);
+//     if (user) {
+//       // Login successful, handle session or token generation here
+//       res.status(200).json({
+//         message: "Login successful",
+//         user: { id: user._id, email: user.email } // Do not send password
+//       });
+//     } else {
+//       res.status(401).json({ message: "Invalid credentials" });
+//     }
+//   } catch (error) {
+//     console.error("Error in login route:", error);
+//     res.status(500).json({ message: "Error processing login" });
+//   }
+// });
 
 router.delete("/deleteUser/:id", async (req, res) => {
   const id = req.params.id;
