@@ -1,14 +1,24 @@
+const { //to import the functions from users.js
+  authenticateUser } = require("./models/users.js");
 // importing routes
 const usersRoutes = require('./routes/userRoutes');
 const recipeRoutes = require('./routes/recipeRoutes');
 const favouriteRoutes = require('./routes/favouriteRoutes');
 const ingrediantRoutes = require('./routes/ingrediantRoutes')
+const calorieEntryRoutes = require('./routes/calorieEntriesRoutes.js')
+const logoutRoute = require('./routes/logoutRoute.js');
+const signuptRoute = require('./routes/signupRoute.js');
+
+
 // const adminRoutes = require('./routes/adminRoutes')
 
 require("dotenv").config(); //import .env file
 
 const express = require("express");
 const app = express();
+
+const jwt = require("jsonwebtoken");
+app.use('/api', authenticateToken);
 
 const connectDB = require('./connection.js'); // Import the MongoDB connection
 const bodyParser = require("body-parser");
@@ -18,7 +28,6 @@ const port = process.env.PORT || 5000;
 
 const path = require("path");//
 app.use(bodyParser.json());//to use bodyparse in express
-
 // Serve static files from 'public' directory
 app.use(express.static('public'));
 
@@ -26,19 +35,53 @@ app.use(express.static('public'));
 app.use('/api/users', usersRoutes);
 app.use('/api/recipes', recipeRoutes) // to get the recipes from the api
 app.use('/api/ingrediants', ingrediantRoutes)
-app.use('/api/favourites', favouriteRoutes); 
-//app.use('/api/admin', adminRoutes)
+app.use('/api/favourites', favouriteRoutes);
+app.use('/api/calorieEntries', calorieEntryRoutes); 
+app.use('/api/logout', logoutRoute);
+app.use('/', signuptRoute )
 
 
-// Serve recipe.html at root
-app.get("/recipes", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "recipes.html"));
+
+app.post("/login", async (req, res) => { // Added async here
+  const { email, password } = req.body;
+
+  try {
+    const user = await authenticateUser(email, password); // Added await here
+    if (user) {
+      const userPayload = { id: user._id, email: user.email , userName: user.userName};
+      var accessToken = jwt.sign(userPayload, process.env.TOKEN_SECRET);
+      res.status(200).json({
+        message: "Login successful",
+        user: { id: user._id, email: user.email, userName: user.userName },
+        token: { Token: accessToken }
+      });
+    } else {
+      res.status(401).json({ message: "Invalid credentials" });
+    }
+  } catch (error) {
+    console.error("Error in login route:", error);
+    res.status(500).json({ message: "Error processing login" });
+  }
 });
 
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
 
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
-});
+  if (token == null) {
+    console.log('No token provided');
+    return res.sendStatus(401);  // No token present
+  }
+
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+    if (err) {
+      console.log(`Token validation error: ${err.message}`);
+      return res.sendStatus(403);  // Invalid token
+    }
+    req.user = user;
+    next();
+  });
+}
 
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

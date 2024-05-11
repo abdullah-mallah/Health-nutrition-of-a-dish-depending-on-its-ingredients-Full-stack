@@ -42,6 +42,7 @@ async function authenticateUser(email, password) {
     throw error; // handle the error in the route
   }
 }
+
 async function getUsers() {
   try {
     const allUsers = await users.find();
@@ -51,8 +52,52 @@ async function getUsers() {
     throw error; // handle the error in the route
   }
 }
+
+async function deleteUser(id) {
+  try {
+    const deletedUser = await users.findByIdAndDelete(id);
+    if (!deletedUser) {
+      return null; // if there are no recipe with that id
+    }
+    return deletedUser;
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error; // handle the error in the route
+  }
+}
+
+async function getAccountInfos(id) {
+  try {
+    const accountInfos = await users.find({ _id: id });
+    return accountInfos;
+  }
+  catch (error) {
+    throw error; // handle the error in the route
+  }
+}
+
+async function updateAccount(id, updatedInfo) {
+  updatedInfo.password = await bcrypt.hash(updatedInfo.password, 10);
+  try {
+    const updatedAccount = await users.findByIdAndUpdate(id, updatedInfo, {
+      new: true,
+    });
+    if (!updatedAccount) {
+      return null; // if there are no recipe with that id
+    }
+    return updatedAccount;
+  } catch (error) {
+    console.error("Error updating recipe:", error);
+    throw error; // handle the error in the route
+  }
+
+}
+
 module.exports = { //prepare which functions I want this class to export
   authenticateUser, 
   addUser,
-  getUsers
+  getUsers,
+  deleteUser,
+  getAccountInfos,
+  updateAccount,
 };
