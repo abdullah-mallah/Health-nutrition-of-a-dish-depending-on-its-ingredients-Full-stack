@@ -497,32 +497,42 @@ function getAcooutInfo() {
         userName.value = accountInfo.userName;
         row.cells[0].innerHTML = "";
         row.cells[0].appendChild(userName);
-
+    
         const email = document.createElement("input");
         email.type = "text";
         email.value = accountInfo.email;
         row.cells[1].innerHTML = "";
         row.cells[1].appendChild(email);
-
+    
         const password = document.createElement("input");
-        password.type = "text";
-        password.value = "******";
+        password.type = "password";
+        password.placeholder = "New Password"; 
         row.cells[2].innerHTML = "";
         row.cells[2].appendChild(password);
-
+    
         const confirmBtn = document.createElement("button");
         confirmBtn.textContent = "Confirm Update";
         confirmBtn.onclick = function () {
-          updateAccount(UserId, {
-            userName: userName.value,
-            email: email.value,
-            password: password.value,
-            admin: accountInfo.admin,
-          });
+            if (validatePassword(password.value)) { 
+                updateAccount(UserId, {
+                    userName: userName.value,
+                    email: email.value,
+                    password: password.value,
+                    admin: accountInfo.admin,
+                });
+            } else {
+                alert("Password should be at least 8 characters long.");
+            }
         };
         row.cells[3].innerHTML = ""; // Clear previous buttons
         row.cells[3].appendChild(confirmBtn);
-      }
+    }
+    
+    function validatePassword(password) {
+        // Simple password validation, you can adjust it based on your requirements
+        return password.length >= 8;
+    }
+    
       function updateAccount(id, updatedData) {
         fetch(`${DEPLOY_URL}/api/users/uppdateAccount/${id}`, {
           method: "PUT",
