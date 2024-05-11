@@ -69,7 +69,7 @@ function signupFormSubmitHandler(event) {
   }else{
   // could make this into its own function 
     let currentUser = { userName: newUsername, email: newEmail, password: newPassword,admin: admin} //preparing them to become a json 
-  fetch(`${user_api}/signup`, {
+  fetch(`${DEPLOY_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,8 +88,6 @@ function signupFormSubmitHandler(event) {
         .then((data) => {
           UserId = data.user.id;
           sessionStorage.setItem('UserId', UserId);
-          token = data.token.Token
-          sessionStorage.setItem('token', token)
           // Refresh the list after adding
           alert(data.message);
           window.location.href = 'home.html';

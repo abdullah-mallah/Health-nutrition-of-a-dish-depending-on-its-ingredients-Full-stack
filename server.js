@@ -7,6 +7,7 @@ const favouriteRoutes = require('./routes/favouriteRoutes');
 const ingrediantRoutes = require('./routes/ingrediantRoutes')
 const calorieEntryRoutes = require('./routes/calorieEntriesRoutes.js')
 const logoutRoute = require('./routes/logoutRoute.js');
+const signuptRoute = require('./routes/signupRoute.js');
 
 
 // const adminRoutes = require('./routes/adminRoutes')
@@ -37,6 +38,7 @@ app.use('/api/ingrediants', ingrediantRoutes)
 app.use('/api/favourites', favouriteRoutes);
 app.use('/api/calorieEntries', calorieEntryRoutes); 
 app.use('/api/logout', logoutRoute);
+app.use('/', signuptRoute )
 
 
 
