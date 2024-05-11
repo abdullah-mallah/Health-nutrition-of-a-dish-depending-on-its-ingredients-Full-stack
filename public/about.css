@@ -1,0 +1,36 @@
+#project-explanation {
+    padding: 100px 0;
+  }
+  
+  /* Style for the team members section */
+  #team-members {
+    padding: 50px 0;
+  }
+  
+  /* Style for the team member boxes */
+  .team-member {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .team-member .info h3 {
+    margin-top: 0;
+  }
+  
+  .team-member .info p {
+    margin-bottom: 0;
+  }
+  
+  /* Style for the general image */
+  .team-image {
+    width: 100%;
+    height: auto;
+  }
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .team-member-boxes {
+        margin-top: 20px;
+    }
+  }

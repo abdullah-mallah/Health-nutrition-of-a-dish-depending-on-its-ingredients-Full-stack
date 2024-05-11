@@ -1,16 +1,40 @@
-const api = "http://localhost:5000/api/users";
+const DEPLOY_URL = "http://localhost:5000"
+
+const user_api = `${DEPLOY_URL}/api/users`;
 
 let allRecipes = []; // Global variable to store all fetched recipes
+let UserId; 
 
 document.addEventListener("DOMContentLoaded", function () {
-  const url = "http://localhost:5000/api/reciepes"; // example of totally another rout with another use
   const path = window.location.pathname;
-  if (path.includes('signup')) {
+  UserId = sessionStorage.getItem('UserId');
+  token = sessionStorage.getItem('token');
+  
+    if (path.includes('login')) {
     const signupForm = document.querySelector('#signup_signupForm');
-    signupForm.addEventListener('submit', signupFormSubmitHandler);
-  } else if (path.includes('login')) {
     const loginForm = document.querySelector('#login_loginForm');
+    const sign_in_btn = document.querySelector("#sign-in-btn");
+    const sign_up_btn = document.querySelector("#sign-up-btn");
+    const container = document.querySelector(".container");
+    const sign_in_btn2 = document.querySelector("#sign-in-btn2");
+    const sign_up_btn2 = document.querySelector("#sign-up-btn2");
+
+    sign_up_btn.addEventListener("click", () => {
+      container.classList.add("sign-up-mode");
+  });
+  sign_in_btn.addEventListener("click", () => {
+      container.classList.remove("sign-up-mode");
+  });
+  sign_up_btn2.addEventListener("click", () => {
+      container.classList.add("sign-up-mode2");
+  });
+  sign_in_btn2.addEventListener("click", () => {
+      container.classList.remove("sign-up-mode2");
+  });
+
+    signupForm.addEventListener('submit', signupFormSubmitHandler);
     loginForm.addEventListener('submit', loginFormSubmitHandler);
+
   } else if (path.includes('recipes')) {
     const recipeForm = document.querySelector('#RecipeForm');
     recipeForm.addEventListener('submit', fetchRecipes);
@@ -19,10 +43,19 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
     });
   } else if (path.includes('home')) {
+    const userName = sessionStorage.getItem('userName');
+        if (userName) {
+            displayWelcomeMessage(userName);
+        }
     home()
+  } else if (path.includes('ingredients')) {
+    fetchIngrediants();
+  } else if (path.includes('favourites')) {
+    getFavouriteRecipes()
+  } else if (path.includes('profile')) {
+    getAcooutInfo();
   }
 });
-
 
 //////////// Login and signup functions
 function signupFormSubmitHandler(event) {
@@ -31,13 +64,14 @@ function signupFormSubmitHandler(event) {
   let newUsername = document.getElementById('signup_Name').value;
   let newEmail = document.getElementById('signup_E-mail').value;
   let newPassword = document.getElementById('signup_Password').value;
+  let admin =document.getElementById('signup_Admin').checked;
   if (!checkNewInput(newUsername, 'username') || !checkNewInput(newEmail, 'email') || !checkNewInput(newPassword, 'password')){
     //switch 
     alert('Please enter the data  in the correct format');
   }else{
   // could make this into its own function 
-    let currentUser = { userName: newUsername, email: newEmail, password: newPassword} //preparing them to become a json 
-  fetch(`${api}/signup`, {
+    let currentUser = { userName: newUsername, email: newEmail, password: newPassword,admin: admin} //preparing them to become a json 
+  fetch(`${DEPLOY_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,6 +88,11 @@ function signupFormSubmitHandler(event) {
           }
         })
         .then((data) => {
+          const newUsername = document.getElementById('signup_Name').value;
+        sessionStorage.setItem('userName', newUsername);
+
+          UserId = data.user.id;
+          sessionStorage.setItem('UserId', UserId);
           // Refresh the list after adding
           alert(data.message);
           window.location.href = 'home.html';
@@ -77,26 +116,34 @@ function loginFormSubmitHandler(event) {
   }else{
   // could make this into its own function 
   const userData = { email: Email , password: Password }; //preparing them to become a json 
-  fetch(`${api}/login`, {
+    fetch(`${DEPLOY_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userData), //the body holds the data I'm sending to the route
       })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
+      .then((response) => {
+        if (response.ok) {
+          return response.json();  
+        } else if (response.status === 401) {  
+          return response.json().then(data => {
+            alert(data.message); 
+          });
+        } else {
             return response.json().then(data => {
               throw new Error(data.message); // Assuming the JSON contains a "message" property with the error message
             });
           }
         })
         .then((data) => {
-          console.log(userData.password, userData.email)
-          // Refresh the list after adding
-          alert(data.message);
+          const userName = data.user.userName; // Assuming the API response includes the user's name
+        sessionStorage.setItem('userName', userName);
+
+          UserId = data.user.id;
+          sessionStorage.setItem('UserId', UserId);
+          token = data.token.Token
+          sessionStorage.setItem('token', token);
           window.location.href = 'home.html';
         })
         .catch((error) => {
@@ -104,6 +151,11 @@ function loginFormSubmitHandler(event) {
         });
   // alert(`logged in to E-mail: ${Email} and password: ${Password}`);
       }
+}
+
+function displayWelcomeMessage(userName) {
+  const welcomeMessage = document.getElementById('welcomeMessage');
+  welcomeMessage.textContent = `Welcome ${userName}`;
 }
 
 function checkNewInput(input, type) {
@@ -140,7 +192,13 @@ function fetchRecipes(event) {
   const food = document.getElementById('foodInput').value;
 
   if (food) { // Fetch new recipes every time the form is submitted
-    fetch(`http://localhost:5000/api/recipes/${food}`)
+    fetch(`${DEPLOY_URL}/api/recipes/${food}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+      }
+    })
     .then(response => response.json())
     .then(recipes => {
         allRecipes = recipes; // Store fetched recipes
@@ -196,8 +254,6 @@ function filterAndDisplayRecipes() {
   displayRecipes(filteredRecipes); // Display the recipes themselves
 }
 
-
-
 function displayRecipeCount(count) {
   const countContainer = document.getElementById('recipeCount');
   if (!countContainer) {
@@ -212,28 +268,407 @@ function displayRecipes(recipes) {
   recipesContainer.innerHTML = ''; // Clear previous results
 
   recipes.forEach(recipe => {
+    const recipeLabelSanitized = recipe.label.replace(/[^a-zA-Z0-9]/g, '_'); // Replace non-alphanumeric characters with underscores
     const recipeElement = document.createElement('div');
+    recipeElement.className = 'recipe-card'; // Assign class for styling
     const ingredients = recipe.ingredientLines.map(ingredient => `<li>${ingredient}</li>`).join('');
     recipeElement.innerHTML = `
-      <h3>${recipe.label}</h3>
-      <p>Meal Type: ${recipe.mealType}</p>
-      <p>Calories: ${recipe.calories} kcal</p>
-      <p>Protein: ${recipe.protein} g</p>
-      <p>Sugar: ${recipe.sugar} g</p>
-      <img src="${recipe.image}" alt="Recipe image">
-      <h4>Ingredients:</h4>
-      <ul>${ingredients}</ul>
-    `;
+    <img src="${recipe.image}" alt="Recipe image">
+    <div class="recipe-card-content">
+    <h3 id="recipeName-${recipeLabelSanitized}">${recipe.label}</h3>
+    <p>Meal Type: ${recipe.mealType}</p>
+    <p>Calories: ${recipe.calories} kcal</p>
+    <p>Protein: ${recipe.protein} g</p>
+    <p>Sugar: ${recipe.sugar} g</p>
+    <h4>Ingredients:</h4>
+    <ul>${ingredients}</ul>
+
+    <div class="recipe-card-buttons">
+      <button type="button" class="cardButton" id="saveRecipe-${recipeLabelSanitized}" data-calories="${recipe.calories}" data-sugar="${recipe.sugar}" data-protein="${recipe.protein}" >Add to favourites</button>
+      <button type="button" class="cardButton" onclick="openDatePicker('${recipeLabelSanitized}', '${recipe.calories}', '${recipe.protein}', '${recipe.sugar}' )">Schedule Meal</button>
+      <div style="display:none;" id="datePicker-${recipeLabelSanitized}">
+          <input type="date" id="dateInput-${recipeLabelSanitized}">
+          <button type="button" onclick="saveMealDate('${recipeLabelSanitized}', '${recipe.calories}', '${recipe.protein}', '${recipe.sugar}')">Save Date</button>
+      </div>
+    </div>
+`;
+
     recipesContainer.appendChild(recipeElement);
+    document.getElementById(`saveRecipe-${recipeLabelSanitized}`).addEventListener('click', function() {
+      saveRecipe(recipe);
+    });
+  });
+}
+
+///////// favourites tab functions
+function saveRecipe(recipe) {
+  if (UserId) {
+    const recipeData = {
+      user_id: UserId,
+      recipe_name: recipe.label,
+      calories: recipe.calories,
+      image: recipe.image
+    };
+
+    fetch(`${DEPLOY_URL}/api/favourites/save`, {
+    method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+      },
+    body: JSON.stringify(recipeData)
+})
+.then(response => {
+  if (response.status === 409) {
+    // Handle conflict
+    alert('This recipe has already been saved.');
+    return;
+  }
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+})
+.then(data => {
+  if (data) {
+    alert('Recipe saved successfully!');
+  }
+})
+.catch(error => console.error('Failed to save recipe:', error));
+
+
+  } else {
+    console.log('UserId not set. Cannot save recipe.');
+  }
+}
+
+//// calorie, protein and sugar Entry tab function
+let selectedRecipeId; // This will store the recipe id for which the date is being set
+
+function openDatePicker(recipeLabelSanitized, calories, protein, sugar) {
+    selectedRecipeId = recipeLabelSanitized; // Store the current recipe ID
+    const modal = document.getElementById('dateModal');
+    modal.style.display = 'block'; // Show the modal
+}
+
+function confirmDateSelection() {
+  const date = document.getElementById('modalDateInput').value;
+  if (!date) {
+      alert('Please select a date.');
+      return;
+  }
+  const modal = document.getElementById('dateModal');
+  modal.style.display = 'none'; // Hide the modal
+
+  saveMealDate(selectedRecipeId, date);
+}
+function cancelDateSelection() {
+  const modal = document.getElementById('dateModal');
+  modal.style.display = 'none'; // Hide the modal
+}
+
+function saveMealDate(recipeLabelSanitized, date) {
+  const dataElement = document.getElementById(`saveRecipe-${recipeLabelSanitized}`);
+  const calories = dataElement.getAttribute('data-calories');
+  const protein = dataElement.getAttribute('data-protein');
+  const sugar = dataElement.getAttribute('data-sugar');
+  const recipeNameElement = document.getElementById(`recipeName-${recipeLabelSanitized}`);
+  const recipeName = recipeNameElement.textContent.trim();
+
+  if (!date) {
+      alert('Please select a date.');
+      return;
+  }
+
+  const recipeData = {
+      user_id: UserId,
+      date: date,
+      recipe_name: recipeName,
+      calories: calories,
+      protein: protein,
+      sugar: sugar,
+  };
+
+  
+  fetch(`${DEPLOY_URL}/api/calorieEntries`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    },
+    body: JSON.stringify(recipeData)
+})
+.then(response => {
+    if (response.status === 409) {
+        alert('This recipe has already been scheduled for this date.');
+        return null;
+    } else if (!response.ok) {
+        throw new Error(`HTTP status ${response.status}: ` + response.statusText);
+    }
+    return response.json();
+})
+.then(data => {
+    if (data) {
+        alert('Meal scheduled successfully!');
+    }
+})
+.catch(error => {
+    console.error('Failed to schedule meal:', error);
+    alert('Failed to schedule meal: ' + error.message);
+});
+
+}
+
+//////////// tracker tab
+function fetchEntries() {
+  const startDate = document.getElementById('startDate').value;
+  const endDate = document.getElementById('endDate').value;
+
+  const url = `${DEPLOY_URL}/api/calorieEntries/${UserId}?startDate=${startDate}&endDate=${endDate}`;
+
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+        displayNutritionsData(data); 
+    })
+    .catch(error => console.error('Failed to fetch entries:', error));
+}
+
+function displayNutritionsData(data) {
+  const container = document.getElementById('nutritionsData');
+  container.innerHTML = '';  // Clear previous data
+
+  data.forEach(day => {
+    const dayDiv = document.createElement('div');
+    dayDiv.className = 'nutrition-day';  // Add a class for styling
+
+    const date = document.createElement('div');
+    date.className = 'nutrition-date';
+    date.textContent = `Date: ${day._id}`;
+    dayDiv.appendChild(date);
+
+    // Creating the calorie info with icon
+    const calories = document.createElement('div');
+    calories.className = 'nutrition-calories';
+    calories.innerHTML = `<i class="fas fa-fire"></i> Total Calories: ${day.totalCalories} kcal`;  // Using 'fas fa-fire' for calories icon
+    dayDiv.appendChild(calories);
+
+    // Creating the protein info with icon
+    const protein = document.createElement('div');
+    protein.className = 'nutrition-protein';
+    protein.innerHTML = `<i class="fas fa-dumbbell"></i> Total Protein: ${day.totalProtein} g`;  // Using 'fas fa-dumbbell' for protein icon
+    dayDiv.appendChild(protein);
+
+    // Creating the sugar info with icon
+    const sugar = document.createElement('div');
+    sugar.className = 'nutrition-sugar';
+    sugar.innerHTML = `<i class="fas fa-candy-cane"></i> Total Sugar: ${day.totalSugar} g`;  // Using 'fas fa-candy-cane' for sugar icon
+    dayDiv.appendChild(sugar);
+
+    container.appendChild(dayDiv);
   });
 }
 
 
+
+
 //////////// profile tab functions
+function getAcooutInfo() {
+  fetch(`${DEPLOY_URL}/api/users/getAccountInfo/${UserId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const tableBody = document.getElementById("accountInfoRows");
+      tableBody.innerHTML = ""; // Clear existing rows
+      data.accountInfos.forEach((accountInfo) => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = accountInfo.userName;
+        row.insertCell(1).textContent = accountInfo.email;
+        row.insertCell(2).textContent = "******"
+
+        const btn_uppdate = document.createElement("button");
+        btn_uppdate.textContent = "Update";
+        btn_uppdate.onclick = function () {
+          transformRowToUpdateMode(row, accountInfo); //
+        };
+        row.insertCell(3).appendChild(btn_uppdate);
+      });
+      function transformRowToUpdateMode(row, accountInfo) {
+        const userName = document.createElement("input");
+        userName.type = "text";
+        userName.value = accountInfo.userName;
+        row.cells[0].innerHTML = "";
+        row.cells[0].appendChild(userName);
+    
+        const email = document.createElement("input");
+        email.type = "text";
+        email.value = accountInfo.email;
+        row.cells[1].innerHTML = "";
+        row.cells[1].appendChild(email);
+    
+        const password = document.createElement("input");
+        password.type = "password";
+        password.placeholder = "New Password"; 
+        row.cells[2].innerHTML = "";
+        row.cells[2].appendChild(password);
+    
+        const confirmBtn = document.createElement("button");
+        confirmBtn.textContent = "Confirm Update";
+        confirmBtn.onclick = function () {
+            if (validatePassword(password.value)) { 
+                updateAccount(UserId, {
+                    userName: userName.value,
+                    email: email.value,
+                    password: password.value,
+                    admin: accountInfo.admin,
+                });
+            } else {
+                alert("Password should be at least 8 characters long.");
+            }
+        };
+        row.cells[3].innerHTML = ""; // Clear previous buttons
+        row.cells[3].appendChild(confirmBtn);
+    }
+    
+    function validatePassword(password) {
+        // Simple password validation, you can adjust it based on your requirements
+        return password.length >= 8;
+    }
+    
+      function updateAccount(id, updatedData) {
+        fetch(`${DEPLOY_URL}/api/users/uppdateAccount/${id}`, {
+          method: "PUT",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+          },
+          body: JSON.stringify(updatedData),
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              return response.json().then(data => {
+                throw new Error(data.message); // Assuming the JSON contains a "message" property with the error message
+              });
+            }
+          })
+          .then((data) => {
+            getAcooutInfo(); // Refresh the list to show the updated info
+          })
+          .catch((error) => console.error("Error updating account info:", error));
+      }
+    })
+    .catch((error) => console.error("Error fetching account info:", error));
+}
 
 //////////// ingrediant tab functions
+function fetchIngrediants() {
+  fetch(`${DEPLOY_URL}/api/ingrediants/getAllIngrediants`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const tableBody = document.getElementById("ingrediantsRows");
+      tableBody.innerHTML = ""; // Clear existing rows
+      data.ingrediants.forEach((ingrediant) => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = ingrediant.name;
+        row.insertCell(1).textContent = ingrediant.size;
+        row.insertCell(2).textContent = ingrediant.fat;
+        row.insertCell(3).textContent = ingrediant.cholesterol;
+        row.insertCell(4).textContent = ingrediant.sodium;
+        row.insertCell(5).textContent = ingrediant.carbohydrate;
+        row.insertCell(6).textContent = ingrediant.sugar;
+        row.insertCell(7).textContent = ingrediant.protein;
+        row.insertCell(8).textContent = ingrediant.vitamin_c;
+        row.insertCell(9).textContent = ingrediant.vitamin_d;
+        row.insertCell(10).textContent = ingrediant.iron;
+        row.insertCell(11).textContent = ingrediant.calcium;
+        row.insertCell(12).textContent = ingrediant.potassium;
+        row.insertCell(13).textContent = ingrediant.phosphorus;
+      });
+    })
+    .catch((error) => console.error("Error fetching recipes:", error));
+}
 
-//////////// profile tab functions
+//////////// favourites tab functions
+function getFavouriteRecipes() {
+  fetch(`${DEPLOY_URL}/api/favourites/getAllFavouriteRecipes/${UserId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const tableBody = document.getElementById("favouriteRecipeRows");
+      tableBody.innerHTML = ""; // Clear existing rows
+      data.favouriteRecipes.forEach((favouriteRecipe) => {
+        const row = tableBody.insertRow();
+        row.insertCell(0).textContent = favouriteRecipe.recipe_name;
+        row.insertCell(1).textContent = favouriteRecipe.calories + " kcal";
+
+        // Create an image element
+        const img = document.createElement('img');
+        img.src = favouriteRecipe.image;
+        img.alt = 'Favourite recipe image';
+        img.style.width = '100px';
+        img.style.height = 'auto';
+
+        // Insert a new cell for the image
+        const imgCell = row.insertCell(2);  // Create the new cell for the image
+        imgCell.appendChild(img);  // Append the image to the new cell
+        
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-button";
+        deleteButton.onclick = function () {
+          deleteRecipe(UserId, favouriteRecipe.recipe_name);
+        };
+        row.insertCell(3).appendChild(deleteButton);
+      });
+      function deleteRecipe(UserId, recipe_name) {
+        const favouriteRecipeData = { user_id: UserId, recipe_name: recipe_name }; //preparing them to become a json 
+        fetch(`${DEPLOY_URL}/api/favourites/delete`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(favouriteRecipeData),
+        }).then((response) => {
+            if (response.ok) {
+              alert("Favourite recipe successfully deleted.");
+              getFavouriteRecipes(); // Refresh the list after deletion
+            } else {
+              throw new Error("Failed to delete favourite recipe");
+            }
+          }).catch((error) => {
+            console.error("Error deleting favourite recipe:", error);
+            alert(error.message);
+          });
+      }
+    })
+    .catch((error) => console.error("Error fetching recipes:", error));
+}
+
 
 //////////// home tab functions
 function home() { 
@@ -264,6 +699,31 @@ function home() {
   // Change image every 3 seconds
   setInterval(nextImage, 3000);
 }
+
+function fetchArticlesFromAPI() {
+}
+
+
+//// logout
+function logout() {
+  fetch('/api/logout', {
+      method: 'POST',
+      headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+      }
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log(data.message);
+      sessionStorage.removeItem('token'); 
+      sessionStorage.removeItem('UserId'); 
+      window.location.href = 'login.html'; 
+  })
+  .catch(error => console.error('Error logging out:', error));
+}
+
+
 
 
 

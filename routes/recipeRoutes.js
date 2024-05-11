@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const Recipe = require('../models/recipe.js');
 
 router.get("/:food", async (req, res) => {
     const food = req.params.food;
@@ -30,5 +31,10 @@ router.get("/:food", async (req, res) => {
         res.status(500).send('Failed to fetch recipes');
     }
 });
-
+  
 module.exports = router;
+  
+  
+  
+  
+  
