@@ -45,6 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
     });
   } else if (path.includes('home')) {
+    const userName = sessionStorage.getItem('userName');
+        if (userName) {
+            displayWelcomeMessage(userName);
+        }
     home()
   } else if (path.includes('ingredients')) {
     fetchIngrediants();
@@ -86,6 +90,9 @@ function signupFormSubmitHandler(event) {
           }
         })
         .then((data) => {
+          const newUsername = document.getElementById('signup_Name').value;
+        sessionStorage.setItem('userName', newUsername);
+
           UserId = data.user.id;
           sessionStorage.setItem('UserId', UserId);
           // Refresh the list after adding
@@ -132,6 +139,9 @@ function loginFormSubmitHandler(event) {
           }
         })
         .then((data) => {
+          const userName = data.user.userName; // Assuming the API response includes the user's name
+        sessionStorage.setItem('userName', userName);
+
           UserId = data.user.id;
           sessionStorage.setItem('UserId', UserId);
           token = data.token.Token
@@ -143,6 +153,11 @@ function loginFormSubmitHandler(event) {
         });
   // alert(`logged in to E-mail: ${Email} and password: ${Password}`);
       }
+}
+
+function displayWelcomeMessage(userName) {
+  const welcomeMessage = document.getElementById('welcomeMessage');
+  welcomeMessage.textContent = `Welcome ${userName}`;
 }
 
 function checkNewInput(input, type) {

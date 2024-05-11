@@ -48,11 +48,11 @@ app.post("/login", async (req, res) => { // Added async here
   try {
     const user = await authenticateUser(email, password); // Added await here
     if (user) {
-      const userPayload = { id: user._id, email: user.email };
+      const userPayload = { id: user._id, email: user.email , userName: user.userName};
       var accessToken = jwt.sign(userPayload, process.env.TOKEN_SECRET);
       res.status(200).json({
         message: "Login successful",
-        user: { id: user._id, email: user.email },
+        user: { id: user._id, email: user.email, userName: user.userName },
         token: { Token: accessToken }
       });
     } else {
