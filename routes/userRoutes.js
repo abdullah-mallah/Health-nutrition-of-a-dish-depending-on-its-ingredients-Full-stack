@@ -30,6 +30,7 @@ const { //to import the functions from users.js
 router.delete("/deleteUser/:id", async (req, res) => {
   const id = req.params.id;
   try {
+    console.log(id);
     const deletedUser = await deleteUser(id);
     if (!deletedUser) { // if this variable is null
       return res

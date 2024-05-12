@@ -28,3 +28,39 @@
   margin: 0 auto;
   /* Center the container horizontally */
 }
+
+.module {
+  max-width: 400px;
+  padding: 3rem;
+  background: #f06d06;
+  
+  --notchSize: 20px;
+  
+  clip-path: 
+    polygon(
+      0% var(--notchSize), 
+      var(--notchSize) 0%, 
+      calc(100% - var(--notchSize)) 0%, 
+      100% var(--notchSize), 
+      100% calc(100% - var(--notchSize)), 
+      calc(100% - var(--notchSize)) 100%, 
+      var(--notchSize) 100%, 
+      0% calc(100% - var(--notchSize))
+    );
+}
+
+h2 {
+  color: white;
+  margin: 0 0 1rem 0;
+  font-family: 'Roboto', sans-serif;
+}
+p {
+  margin: 0;
+}
+
+input {
+  position: absolute;
+  top: 20px;
+  left: 5vw;
+  width: 90vw;
+}

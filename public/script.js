@@ -54,7 +54,10 @@ document.addEventListener("DOMContentLoaded", function () {
     getFavouriteRecipes()
   } else if (path.includes('profile')) {
     getAcooutInfo();
+  }else if (path.includes('dashboard')) {
+    adminDashBordSU();
   }
+
 });
 
 //////////// Login and signup functions
@@ -526,7 +529,7 @@ function getAcooutInfo() {
         const confirmBtn = document.createElement("button");
         confirmBtn.textContent = "Confirm Update";
         confirmBtn.onclick = function () {
-            if (validatePassword(password.value)) { 
+            if (checkNewInput(password.value,"password")) { 
                 updateAccount(UserId, {
                     userName: userName.value,
                     email: email.value,
@@ -539,12 +542,9 @@ function getAcooutInfo() {
         };
         row.cells[3].innerHTML = ""; // Clear previous buttons
         row.cells[3].appendChild(confirmBtn);
-    }
+      }
     
-    function validatePassword(password) {
-        // Simple password validation, you can adjust it based on your requirements
-        return password.length >= 8;
-    }
+
     
       function updateAccount(id, updatedData) {
         fetch(`${DEPLOY_URL}/api/users/uppdateAccount/${id}`, {
@@ -700,9 +700,30 @@ function home() {
   setInterval(nextImage, 3000);
 }
 
-function fetchArticlesFromAPI() {
+function fetchArticlesFromAPI(numberOfArticles) {
 }
+function appendArticle(article) {
+  var chosenDiv = document.getElementById("Articles");
+  let articles = {};
+  articles = fetchArticlesFromAPI("number of articles");
 
+  for (article in articles){
+    var newContainer = document.createElement('div')
+    newContainer.classList.add('module')
+
+    var newH3 = document.createElement('H3');
+    newH3.innerText = article.title;
+    newContainer.appendChild(newH3);
+
+    var newP = document.createElement('p')
+    newP.innerHTML= article.explanation;
+    newContainer.appendChild(newP);
+
+    chosenDiv.insertBefore(newContainer, chosenDiv.firstChild);
+
+
+  }
+}
 
 //// logout
 function logout() {
@@ -722,10 +743,76 @@ function logout() {
   })
   .catch(error => console.error('Error logging out:', error));
 }
+/////////// ADMIN \\\\\\\\\\\
 
-////////// about tab functions
+
+function deleteAcount(userid){
+  
+  fetch(`${DEPLOY_URL}/api/users/deleteUser/${userid}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  }).then(
+    alert("user deleted successfully"),
+    // console.log(userInfo(userid))
+  
+
+  ).then( 
+    adminDashBordSU()
+  ).catch((error) => console.error("Error fetching deleting user:", error))
+}
 
 
+function adminDashBordSU() {
+  
+  fetch(`${DEPLOY_URL}/api/users/getUsers`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // console.log(data)
+      const adminTable = document.getElementById("accountInfoRows");
+      adminTable.textContent = '';
+      data.allUsers.forEach(user => {
+      
+        userInfoSetup(user);
+        // console.log(user)
+      })
+    })
+    .catch((error) => console.error("Error fetching account info:", error));
+}
+
+function userInfoSetup(userInfo) {
+
+  const user = userInfo;
+  // console.log(user,"userInfoSetup")
+  const tableBody = document.getElementById("accountInfoRows");
+  const adminTable = document.getElementById("AdminUserTable");
+
+ 
+  const row = tableBody.insertRow();
+  row.insertCell(0).textContent = user.userName;
+  row.insertCell(1).textContent = user.email;
+  row.insertCell(2).textContent = "******"
+  const id = user._id;
+  
+    const btn_delete = document.createElement("button");
+    btn_delete.textContent = "Delete";
+    btn_delete.onclick = function () {
+      deleteAcount(id); //
+    };
+    row.insertCell(3).appendChild(btn_delete);
+    // adminTable.appendChild(row);
+};
+
+// function kcalSetup(userInfo) {}
+  
 
 // you can make the query injections as a seperate function since it is being used so often
 // you can then take the check validity based on type 
