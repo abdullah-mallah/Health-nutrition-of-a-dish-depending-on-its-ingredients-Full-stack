@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const path = window.location.pathname;
   UserId = sessionStorage.getItem('UserId');
   token = sessionStorage.getItem('token');
-  if (!UserId && !path.includes('login')) {
+  if (!UserId && !path.includes('login') && !token) {
     window.location.href = 'login.html';
   } else {
     if (path.includes('login')) {
@@ -95,12 +95,9 @@ function signupFormSubmitHandler(event) {
         .then((data) => {
           const newUsername = document.getElementById('signup_Name').value;
         sessionStorage.setItem('userName', newUsername);
-
-          UserId = data.user.id;
-          sessionStorage.setItem('UserId', UserId);
           // Refresh the list after adding
           alert(data.message);
-          window.location.href = 'home.html';
+          window.location.href = 'login.html';
         })
         .catch((error) => {
           alert(error.message)
