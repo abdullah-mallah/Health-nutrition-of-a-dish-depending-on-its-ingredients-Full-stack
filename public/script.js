@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const path = window.location.pathname;
   UserId = sessionStorage.getItem('UserId');
   token = sessionStorage.getItem('token');
-  if (!UserId && !path.includes('login') && !token) {
+  if (!UserId && !path.includes('login')) {
     window.location.href = 'login.html';
   } else {
     if (path.includes('login')) {
