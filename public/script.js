@@ -57,6 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }else if (path.includes('dashboard')) {
     adminDashBordSU();
   }
+  else if(path.includes("about")){
+    About();
+
+  }
 
 });
 
@@ -812,7 +816,18 @@ function userInfoSetup(userInfo) {
 };
 
 // function kcalSetup(userInfo) {}
-  
+/////////// about tab functions
+function About(){
+  var featureBoxes = document.querySelectorAll(".clickable-feature-box");
+     featureBoxes.forEach(function(box) {
+        box.addEventListener("click", function() {
+            var target = box.getAttribute("data-target");
+            if (target) {
+                window.location.href = target;
+            }
+        });
+    });
+}
 
 // you can make the query injections as a seperate function since it is being used so often
 // you can then take the check validity based on type 
