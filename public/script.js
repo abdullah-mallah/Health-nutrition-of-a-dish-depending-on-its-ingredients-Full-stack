@@ -4,6 +4,7 @@ const user_api = `${DEPLOY_URL}/api/users`;
 
 let allRecipes = []; // Global variable to store all fetched recipes
 let UserId; 
+let userName1;
 
 document.addEventListener("DOMContentLoaded", function () {
   const path = window.location.pathname;
@@ -45,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
     });
   } else if (path.includes('home')) {
-    const userName = sessionStorage.getItem('userName');
+    const userName = sessionStorage.getItem('userName1');
         if (userName) {
             displayWelcomeMessage(userName);
         }
@@ -93,8 +94,7 @@ function signupFormSubmitHandler(event) {
           }
         })
         .then((data) => {
-          const newUsername = document.getElementById('signup_Name').value;
-        sessionStorage.setItem('userName', newUsername);
+          
           // Refresh the list after adding
           alert(data.message);
           window.location.href = 'login.html';
@@ -139,8 +139,8 @@ function loginFormSubmitHandler(event) {
           }
         })
         .then((data) => {
-          const userName = data.user.userName; // Assuming the API response includes the user's name
-        sessionStorage.setItem('userName', userName);
+        userName1 = data.user.userName; // Assuming the API response includes the user's name
+        sessionStorage.setItem('userName1', userName1);
 
           UserId = data.user.id;
           sessionStorage.setItem('UserId', UserId);
@@ -556,6 +556,8 @@ function getAcooutInfo() {
         })
           .then((response) => {
             if (response.ok) {
+              userName1 = updatedData.userName; // Assuming the API response includes the user's name
+        sessionStorage.setItem('userName1', userName1);
               return response.json();
             } else {
               return response.json().then(data => {
