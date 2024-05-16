@@ -113,7 +113,7 @@ function signupFormSubmitHandler(event) {
           }
         })
         .then((data) => {
-
+          
           // Refresh the list after adding
           alert(data.message);
           window.location.href = 'login.html';
@@ -456,7 +456,7 @@ function fetchEntries() {
   })
     .then(response => response.json())
     .then(data => {
-        displayNutritionsData(data); 
+      displayNutritionsData(data);
       openModal('nutritionsDataModal');
     })
     .catch(error => console.error('Failed to fetch entries:', error));
@@ -494,7 +494,7 @@ if(data.length>0) {
     dayDiv.appendChild(sugar);
 
     container.appendChild(dayDiv);
-  });
+    });
   } else {
     const noData = document.createElement('div');
     noData.className = 'no-data';
@@ -678,6 +678,8 @@ function getAcooutInfo() {
         })
           .then((response) => {
             if (response.ok) {
+              userName1 = updatedData.userName; // Assuming the API response includes the user's name
+        sessionStorage.setItem('userName1', userName1);
               return response.json();
             } else {
               return response.json().then(data => {
@@ -692,6 +694,21 @@ function getAcooutInfo() {
       }
     })
     .catch((error) => console.error("Error fetching account info:", error));
+}
+function deleteAccount() {
+  deleteEntry(UserId);
+  deleteAllFavouriteRecipes(UserId);
+  deleteAcount(UserId)
+  logout();
+}
+function deleteAllFavouriteRecipes(UserId) {
+  fetch(`${DEPLOY_URL}/api/favourites/deleteAllFavouriteRecipes/${UserId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
 }
 
 //////////// ingrediant tab functions
