@@ -16,8 +16,7 @@ router.post('/createMassage', async (req, res) => { //take info from request bod
       massage,
     );
     res.status(201).json({
-      message: "User added successfully",
-      newMassage: { user_id: newMassage.user_id, massage: newMassage.massage }
+      message: "massage added successfully",
     });
   } catch (error) {
     console.error("Error in route when adding the massage:", error);

@@ -14,7 +14,6 @@ async function addmassage(user_id, massage) {
       massage: massage,
     });
     await newMassage.save();
-    return newMassage;
   } catch (error) {
     throw error; // handle the error in the route
   }
