@@ -577,6 +577,21 @@ function getAcooutInfo() {
     })
     .catch((error) => console.error("Error fetching account info:", error));
 }
+function deleteAccount() {
+  deleteEntry(UserId);
+  deleteAllFavouriteRecipes(UserId);
+  deleteAcount(UserId)
+  logout();
+}
+function deleteAllFavouriteRecipes(UserId) {
+  fetch(`${DEPLOY_URL}/api/favourites/deleteAllFavouriteRecipes/${UserId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
+}
 
 //////////// ingrediant tab functions
 function fetchIngrediants() {
