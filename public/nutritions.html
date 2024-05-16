@@ -132,16 +132,24 @@
     </nav>
     <main>
         <h1>Nutritions Tracker</h1>
-        <p>Use the date selectors below to specify the start and end dates for the calorie entry data you wish to view. This tool helps you track your calorie intake, protein and sugar over specified periods, making it easier to follow your dietary goals.</p>
+        <p>Use the date selectors below to specify the start and end dates for the calorie entry data you wish to view. This tool helps you track your calorie intake, protein, and sugar over specified periods, making it easier to follow your dietary goals.</p>
         <label for="startDate">Start Date:</label>
         <input type="date" id="startDate">
         <label for="endDate">End Date:</label>
         <input type="date" id="endDate">
-        <button class="nutritionButtion" onclick="fetchEntries()">Show Entries</button>
 
-        <div id="nutritionsData"></div>
+        <div id="nutritionsButtons">
+            <button class="nutritionButton" onclick="fetchEntries()">Show Entries</button>
+        </div>
 
-    </main>
+        <div id="nutritionsDataModal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closeModal('nutritionsDataModal')">&times;</span>
+            <div id="nutritionsData"></div>
+          </div>
+        </div>
+        
+      </main>
     <footer id="page-footer">
         &#169; example AB 2024
         <address>Examplegatan 1, 111 111 malmö</address>

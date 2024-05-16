@@ -27,9 +27,6 @@ router.post('/', async (req, res) => {
     }
 });
 
-
-
-
 router.get('/:user_id', async (req, res) => {
     const { user_id } = req.params;
     const { startDate, endDate } = req.query;
@@ -65,7 +62,22 @@ router.get('/:user_id', async (req, res) => {
 });
 
 
+// DELETE route to delete all entries for a specific user
+router.delete('/:user_id', async (req, res) => {
+    const { user_id } = req.params;
 
+    try {
+        const result = await CalorieEntry.deleteMany({ user_id: user_id });
 
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: 'No entries found for this user' });
+        }
+
+        res.status(200).json({ message: 'All entries for the user deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting the entries:', error);
+        res.status(500).json({ message: 'Failed to delete the entries: ' + error.message });
+    }
+});
 
 module.exports = router;

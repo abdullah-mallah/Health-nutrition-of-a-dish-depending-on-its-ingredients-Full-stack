@@ -64,6 +64,14 @@ document.addEventListener("DOMContentLoaded", function () {
     About();
 
   }
+  else if(path.includes("nutritions")) {
+    const buttonsContainer = document.querySelector('#nutritionsButtons');
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'nutritionButton';
+    deleteButton.textContent = 'Delete ALL Entries History';
+    deleteButton.onclick = () => deleteEntry(UserId);
+    buttonsContainer.appendChild(deleteButton);
+  }
 
 }});
 
@@ -441,7 +449,8 @@ function fetchEntries() {
   })
     .then(response => response.json())
     .then(data => {
-        displayNutritionsData(data); 
+      displayNutritionsData(data);
+      openModal('nutritionsDataModal');
     })
     .catch(error => console.error('Failed to fetch entries:', error));
 }
@@ -459,29 +468,64 @@ function displayNutritionsData(data) {
     date.textContent = `Date: ${day._id}`;
     dayDiv.appendChild(date);
 
-    // Creating the calorie info with icon
     const calories = document.createElement('div');
     calories.className = 'nutrition-calories';
-    calories.innerHTML = `<i class="fas fa-fire"></i> Total Calories: ${day.totalCalories} kcal`;  // Using 'fas fa-fire' for calories icon
+    calories.innerHTML = `<i class="fas fa-fire"></i> Total Calories: ${day.totalCalories} kcal`;
     dayDiv.appendChild(calories);
 
-    // Creating the protein info with icon
     const protein = document.createElement('div');
     protein.className = 'nutrition-protein';
-    protein.innerHTML = `<i class="fas fa-dumbbell"></i> Total Protein: ${day.totalProtein} g`;  // Using 'fas fa-dumbbell' for protein icon
+    protein.innerHTML = `<i class="fas fa-dumbbell"></i> Total Protein: ${day.totalProtein} g`;
     dayDiv.appendChild(protein);
 
-    // Creating the sugar info with icon
     const sugar = document.createElement('div');
     sugar.className = 'nutrition-sugar';
-    sugar.innerHTML = `<i class="fas fa-candy-cane"></i> Total Sugar: ${day.totalSugar} g`;  // Using 'fas fa-candy-cane' for sugar icon
+    sugar.innerHTML = `<i class="fas fa-candy-cane"></i> Total Sugar: ${day.totalSugar} g`;
     dayDiv.appendChild(sugar);
 
     container.appendChild(dayDiv);
   });
 }
 
+function deleteEntry(userId) {
+  const url = `${DEPLOY_URL}/api/calorieEntries/${userId}`;
 
+  fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
+    .then(response => {
+      if (response.ok) {
+        alert('Entry deleted successfully');
+      } else {
+        throw new Error('Failed to delete entry');
+      }
+    })
+    .catch(error => console.error('Error deleting entry:', error));
+}
+
+function openModal(modalId) {
+  const modal = document.getElementById(modalId);
+  modal.style.display = 'block';
+}
+
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  modal.style.display = 'none';
+}
+
+// Close modals when clicking outside
+window.onclick = function(event) {
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach(modal => {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  });
+}
 
 
 //////////// profile tab functions
