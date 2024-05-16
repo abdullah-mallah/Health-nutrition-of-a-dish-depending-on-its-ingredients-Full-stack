@@ -140,6 +140,7 @@
 
         <div id="nutritionsButtons">
             <button class="nutritionButton" onclick="fetchEntries()">Show Entries</button>
+            <button class="nutritionButton" onclick="fetchSumLast30Days()">Entries Last 30 Days</button>
         </div>
 
         <div id="nutritionsDataModal" class="modal">
@@ -148,7 +149,13 @@
             <div id="nutritionsData"></div>
           </div>
         </div>
-        
+    
+        <div id="last30DaysSumModal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closeModal('last30DaysSumModal')">&times;</span>
+            <div id="last30DaysSum"></div>
+          </div>
+        </div>
       </main>
     <footer id="page-footer">
         &#169; example AB 2024
