@@ -8,6 +8,7 @@ const ingrediantRoutes = require('./routes/ingrediantRoutes')
 const calorieEntryRoutes = require('./routes/calorieEntriesRoutes.js')
 const logoutRoute = require('./routes/logoutRoute.js');
 const signuptRoute = require('./routes/signupRoute.js');
+const massageRoutes = require('./routes/massageRoutes.js');
 
 
 // const adminRoutes = require('./routes/adminRoutes')

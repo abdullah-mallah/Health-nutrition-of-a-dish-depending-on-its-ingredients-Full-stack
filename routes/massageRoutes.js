@@ -23,3 +23,5 @@ router.post('/createMassage', async (req, res) => { //take info from request bod
     res.status(500).json({ message: "Error adding massage data" });
   }
 });
+
+module.exports = router;
