@@ -80,4 +80,43 @@ router.delete('/:user_id', async (req, res) => {
     }
 });
 
+
+router.get('/last30days/:user_id', async (req, res) => {
+    const { user_id } = req.params;
+    const endDate = new Date();
+    endDate.setHours(23, 59, 59, 999); // Set the time to the last millisecond of the current day
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - 29); // 30 days including today
+    startDate.setHours(0, 0, 0, 0);
+
+    try {
+        const pipeline = [
+            {
+                $match: {
+                    user_id: new mongoose.Types.ObjectId(user_id),
+                    date: { $gte: startDate, $lte: endDate }
+                }
+            },
+            {
+                $group: {
+                    _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+                    totalCalories: { $sum: "$calories" },
+                    totalProtein: { $sum: "$protein" },
+                    totalSugar: { $sum: "$sugar" }
+                }
+            },
+            {
+                $sort: { "_id": 1 }
+            }
+        ];
+
+        const result = await CalorieEntry.aggregate(pipeline);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error fetching sum of data for the last 30 days:', error);
+        res.status(500).json({ message: 'Failed to fetch sum of data for the last 30 days: ' + error.message });
+    }
+});
+
+
 module.exports = router;

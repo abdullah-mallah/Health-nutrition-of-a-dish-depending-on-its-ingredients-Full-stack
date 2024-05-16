@@ -458,7 +458,7 @@ function fetchEntries() {
 function displayNutritionsData(data) {
   const container = document.getElementById('nutritionsData');
   container.innerHTML = '';  // Clear previous data
-
+if(data.length>0) {
   data.forEach(day => {
     const dayDiv = document.createElement('div');
     dayDiv.className = 'nutrition-day';  // Add a class for styling
@@ -484,7 +484,71 @@ function displayNutritionsData(data) {
     dayDiv.appendChild(sugar);
 
     container.appendChild(dayDiv);
-  });
+    });
+  } else {
+    const noData = document.createElement('div');
+    noData.className = 'no-data';
+    noData.textContent = 'You did not schedule any meals at this date or you did not slelect date';
+    container.appendChild(noData);
+  }
+}
+
+function fetchSumLast30Days() {
+  const url = `${DEPLOY_URL}/api/calorieEntries/last30days/${UserId}`;
+
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      displaySumLast30Days(data);
+      openModal('last30DaysSumModal');
+    })
+    .catch(error => console.error('Failed to fetch sum of last 30 days:', error));
+}
+
+function displaySumLast30Days(data) {
+  const container = document.getElementById('last30DaysSum');
+  container.innerHTML = '';  // Clear previous data
+
+  if (data.length > 0) {
+    data.forEach(day => {
+      const dayDiv = document.createElement('div');
+      dayDiv.className = 'sum-day';
+
+      const date = document.createElement('div');
+      date.className = 'sum-date';
+      date.textContent = `Date: ${day._id}`;
+      dayDiv.appendChild(date);
+
+      const totalCalories = document.createElement('div');
+      totalCalories.className = 'sum-calories';
+      totalCalories.innerHTML = `<i class="fas fa-fire"></i> Total Calories: ${day.totalCalories} kcal`;
+
+      const totalProtein = document.createElement('div');
+      totalProtein.className = 'sum-protein';
+      totalProtein.innerHTML = `<i class="fas fa-dumbbell"></i> Total Protein: ${day.totalProtein} g`;
+
+      const totalSugar = document.createElement('div');
+      totalSugar.className = 'sum-sugar';
+      totalSugar.innerHTML = `<i class="fas fa-candy-cane"></i> Total Sugar: ${day.totalSugar} g`;
+
+      dayDiv.appendChild(totalCalories);
+      dayDiv.appendChild(totalProtein);
+      dayDiv.appendChild(totalSugar);
+
+      container.appendChild(dayDiv);
+    });
+  } else {
+    const noData = document.createElement('div');
+    noData.className = 'no-data';
+    noData.textContent = 'You did not schedule any meals for the last 30 days';
+    container.appendChild(noData);
+  }
 }
 
 function deleteEntry(userId) {
