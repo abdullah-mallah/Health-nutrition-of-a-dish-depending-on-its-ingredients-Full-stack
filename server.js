@@ -8,6 +8,7 @@ const ingrediantRoutes = require('./routes/ingrediantRoutes')
 const calorieEntryRoutes = require('./routes/calorieEntriesRoutes.js')
 const logoutRoute = require('./routes/logoutRoute.js');
 const signuptRoute = require('./routes/signupRoute.js');
+const massageRoutes = require('./routes/massageRoutes.js');
 
 
 // const adminRoutes = require('./routes/adminRoutes')
@@ -37,6 +38,7 @@ app.use('/api/recipes', recipeRoutes) // to get the recipes from the api
 app.use('/api/ingrediants', ingrediantRoutes)
 app.use('/api/favourites', favouriteRoutes);
 app.use('/api/calorieEntries', calorieEntryRoutes); 
+app.use('/api/massages', massageRoutes);
 app.use('/api/logout', logoutRoute);
 app.use('/', signuptRoute )
 

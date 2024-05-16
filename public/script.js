@@ -4,6 +4,7 @@ const user_api = `${DEPLOY_URL}/api/users`;
 
 let allRecipes = []; // Global variable to store all fetched recipes
 let UserId; 
+let userName1;
 
 document.addEventListener("DOMContentLoaded", function () {
   const path = window.location.pathname;
@@ -45,10 +46,17 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
     });
   } else if (path.includes('home')) {
+<<<<<<< HEAD
     // const userName = sessionStorage.getItem('userName');
     //     if (userName) {
     //         displayWelcomeMessage(userName);
     //     }
+=======
+    const userName = sessionStorage.getItem('userName1');
+        if (userName) {
+            displayWelcomeMessage(userName);
+        }
+>>>>>>> f9be8f7cbbf4e7870ba41f782d076148fcd187d9
     home()
   } else if (path.includes('ingredients')) {
     fetchIngrediants();
@@ -58,6 +66,18 @@ document.addEventListener("DOMContentLoaded", function () {
     getAcooutInfo();
   }else if (path.includes('dashboard')) {
     adminDashBordSU();
+  }
+  else if(path.includes("about")){
+    About();
+
+  }
+  else if(path.includes("nutritions")) {
+    const buttonsContainer = document.querySelector('#nutritionsButtons');
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'nutritionButton';
+    deleteButton.textContent = 'Delete ALL Entries History';
+    deleteButton.onclick = () => deleteEntry(UserId);
+    buttonsContainer.appendChild(deleteButton);
   }
 
 }});
@@ -93,14 +113,10 @@ function signupFormSubmitHandler(event) {
           }
         })
         .then((data) => {
-          const newUsername = document.getElementById('signup_Name').value;
-        sessionStorage.setItem('userName', newUsername);
 
-          UserId = data.user.id;
-          sessionStorage.setItem('UserId', UserId);
           // Refresh the list after adding
           alert(data.message);
-          window.location.href = 'home.html';
+          window.location.href = 'login.html';
         })
         .catch((error) => {
           alert(error.message)
@@ -142,8 +158,8 @@ function loginFormSubmitHandler(event) {
           }
         })
         .then((data) => {
-          const userName = data.user.userName; // Assuming the API response includes the user's name
-        sessionStorage.setItem('userName', userName);
+        userName1 = data.user.userName; // Assuming the API response includes the user's name
+        sessionStorage.setItem('userName1', userName1);
 
           UserId = data.user.id;
           sessionStorage.setItem('UserId', UserId);
@@ -441,6 +457,7 @@ function fetchEntries() {
     .then(response => response.json())
     .then(data => {
         displayNutritionsData(data); 
+      openModal('nutritionsDataModal');
     })
     .catch(error => console.error('Failed to fetch entries:', error));
 }
@@ -448,7 +465,7 @@ function fetchEntries() {
 function displayNutritionsData(data) {
   const container = document.getElementById('nutritionsData');
   container.innerHTML = '';  // Clear previous data
-
+if(data.length>0) {
   data.forEach(day => {
     const dayDiv = document.createElement('div');
     dayDiv.className = 'nutrition-day';  // Add a class for styling
@@ -478,9 +495,111 @@ function displayNutritionsData(data) {
 
     container.appendChild(dayDiv);
   });
+  } else {
+    const noData = document.createElement('div');
+    noData.className = 'no-data';
+    noData.textContent = 'You did not schedule any meals at this date or you did not slelect date';
+    container.appendChild(noData);
+  }
 }
 
+function fetchSumLast30Days() {
+  const url = `${DEPLOY_URL}/api/calorieEntries/last30days/${UserId}`;
 
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      displaySumLast30Days(data);
+      openModal('last30DaysSumModal');
+    })
+    .catch(error => console.error('Failed to fetch sum of last 30 days:', error));
+}
+
+function displaySumLast30Days(data) {
+  const container = document.getElementById('last30DaysSum');
+  container.innerHTML = '';  // Clear previous data
+
+  if (data.length > 0) {
+    data.forEach(day => {
+      const dayDiv = document.createElement('div');
+      dayDiv.className = 'sum-day';
+
+      const date = document.createElement('div');
+      date.className = 'sum-date';
+      date.textContent = `Date: ${day._id}`;
+      dayDiv.appendChild(date);
+
+      const totalCalories = document.createElement('div');
+      totalCalories.className = 'sum-calories';
+      totalCalories.innerHTML = `<i class="fas fa-fire"></i> Total Calories: ${day.totalCalories} kcal`;
+
+      const totalProtein = document.createElement('div');
+      totalProtein.className = 'sum-protein';
+      totalProtein.innerHTML = `<i class="fas fa-dumbbell"></i> Total Protein: ${day.totalProtein} g`;
+
+      const totalSugar = document.createElement('div');
+      totalSugar.className = 'sum-sugar';
+      totalSugar.innerHTML = `<i class="fas fa-candy-cane"></i> Total Sugar: ${day.totalSugar} g`;
+
+      dayDiv.appendChild(totalCalories);
+      dayDiv.appendChild(totalProtein);
+      dayDiv.appendChild(totalSugar);
+
+      container.appendChild(dayDiv);
+    });
+  } else {
+    const noData = document.createElement('div');
+    noData.className = 'no-data';
+    noData.textContent = 'You did not schedule any meals for the last 30 days';
+    container.appendChild(noData);
+  }
+}
+
+function deleteEntry(userId) {
+  const url = `${DEPLOY_URL}/api/calorieEntries/${userId}`;
+
+  fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+    }
+  })
+    .then(response => {
+      if (response.ok) {
+        alert('Entry deleted successfully');
+      } else {
+        throw new Error('Failed to delete entry');
+      }
+    })
+    .catch(error => console.error('Error deleting entry:', error));
+}
+
+function openModal(modalId) {
+  const modal = document.getElementById(modalId);
+  modal.style.display = 'block';
+}
+
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  modal.style.display = 'none';
+}
+
+// Close modals when clicking outside
+window.onclick = function(event) {
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach(modal => {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  });
+}
 
 
 //////////// profile tab functions
@@ -814,7 +933,18 @@ function userInfoSetup(userInfo) {
 };
 
 // function kcalSetup(userInfo) {}
-  
+/////////// about tab functions
+function About(){
+  var featureBoxes = document.querySelectorAll(".clickable-feature-box");
+     featureBoxes.forEach(function(box) {
+        box.addEventListener("click", function() {
+            var target = box.getAttribute("data-target");
+            if (target) {
+                window.location.href = target;
+            }
+        });
+    });
+}
 
 // you can make the query injections as a seperate function since it is being used so often
 // you can then take the check validity based on type 
