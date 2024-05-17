@@ -46,11 +46,19 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
     });
   } else if (path.includes('home')) {
+<<<<<<< HEAD
 
     const userName = sessionStorage.getItem('userName1');
         if (userName) {
             displayWelcomeMessage(userName);
         }
+=======
+    const userName = sessionStorage.getItem('userName');
+        if (userName) {
+            displayWelcomeMessage(userName);
+        }
+
+>>>>>>> 5eb5f86bc7c965cb9374fe02b0a8d8e81a0b1f74
     home()
   } else if (path.includes('ingredients')) {
     fetchIngrediants();
@@ -68,8 +76,8 @@ document.addEventListener("DOMContentLoaded", function () {
   else if(path.includes("nutritions")) {
     const buttonsContainer = document.querySelector('#nutritionsButtons');
     const deleteButton = document.createElement('button');
-    deleteButton.className = 'nutritionButton';
-    deleteButton.textContent = 'Delete ALL Entries History';
+    deleteButton.className = 'deleteNutritionButton';
+    deleteButton.innerHTML = '<i class="fas fa-trash-alt" aria-hidden="true"></i> Delete ALL Entries History'
     deleteButton.onclick = () => deleteEntry(UserId);
     buttonsContainer.appendChild(deleteButton);
   }
