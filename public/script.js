@@ -46,17 +46,11 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
     });
   } else if (path.includes('home')) {
-<<<<<<< HEAD
-    // const userName = sessionStorage.getItem('userName');
-    //     if (userName) {
-    //         displayWelcomeMessage(userName);
-    //     }
-=======
-    const userName = sessionStorage.getItem('userName1');
+    const userName = sessionStorage.getItem('userName');
         if (userName) {
             displayWelcomeMessage(userName);
         }
->>>>>>> f9be8f7cbbf4e7870ba41f782d076148fcd187d9
+
     home()
   } else if (path.includes('ingredients')) {
     fetchIngrediants();
