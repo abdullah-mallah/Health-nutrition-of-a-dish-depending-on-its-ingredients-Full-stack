@@ -404,7 +404,7 @@ function saveMealDate(recipeLabelSanitized, date) {
   };
 
   
-  fetch(`${DEPLOY_URL}/api/calorieEntries`, {
+  fetch(`${DEPLOY_URL}/api/nutritions`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -433,12 +433,12 @@ function saveMealDate(recipeLabelSanitized, date) {
 
 }
 
-//////////// tracker tab
+//////////// nutritions tab
 function fetchEntries() {
   const startDate = document.getElementById('startDate').value;
   const endDate = document.getElementById('endDate').value;
 
-  const url = `${DEPLOY_URL}/api/calorieEntries/${UserId}?startDate=${startDate}&endDate=${endDate}`;
+  const url = `${DEPLOY_URL}/api/nutritions/${UserId}?startDate=${startDate}&endDate=${endDate}`;
 
   fetch(url, {
     method: 'GET',
@@ -494,7 +494,7 @@ if(data.length>0) {
 }
 
 function fetchSumLast30Days() {
-  const url = `${DEPLOY_URL}/api/calorieEntries/last30days/${UserId}`;
+  const url = `${DEPLOY_URL}/api/nutritions/last30days/${UserId}`;
 
   fetch(url, {
     method: 'GET',
@@ -552,7 +552,7 @@ function displaySumLast30Days(data) {
 }
 
 function deleteEntry(userId) {
-  const url = `${DEPLOY_URL}/api/calorieEntries/${userId}`;
+  const url = `${DEPLOY_URL}/api/nutritions/${userId}`;
 
   fetch(url, {
     method: 'DELETE',
