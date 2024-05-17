@@ -67,8 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
   else if(path.includes("nutritions")) {
     const buttonsContainer = document.querySelector('#nutritionsButtons');
     const deleteButton = document.createElement('button');
-    deleteButton.className = 'nutritionButton';
-    deleteButton.textContent = 'Delete ALL Entries History';
+    deleteButton.className = 'deleteNutritionButton';
+    deleteButton.innerHTML = '<i class="fas fa-trash-alt" aria-hidden="true"></i> Delete ALL Entries History'
     deleteButton.onclick = () => deleteEntry(UserId);
     buttonsContainer.appendChild(deleteButton);
   }
