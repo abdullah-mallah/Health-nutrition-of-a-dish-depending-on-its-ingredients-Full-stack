@@ -46,10 +46,17 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
     });
   } else if (path.includes('home')) {
+<<<<<<< HEAD
+    // const userName = sessionStorage.getItem('userName');
+    //     if (userName) {
+    //         displayWelcomeMessage(userName);
+    //     }
+=======
     const userName = sessionStorage.getItem('userName1');
         if (userName) {
             displayWelcomeMessage(userName);
         }
+>>>>>>> f9be8f7cbbf4e7870ba41f782d076148fcd187d9
     home()
   } else if (path.includes('ingredients')) {
     fetchIngrediants();
@@ -468,19 +475,22 @@ if(data.length>0) {
     date.textContent = `Date: ${day._id}`;
     dayDiv.appendChild(date);
 
+    // Creating the calorie info with icon
     const calories = document.createElement('div');
     calories.className = 'nutrition-calories';
-    calories.innerHTML = `<i class="fas fa-fire"></i> Total Calories: ${day.totalCalories} kcal`;
+    calories.innerHTML = `<i class="fas fa-fire"></i> Total Calories: ${day.totalCalories} kcal`;  // Using 'fas fa-fire' for calories icon
     dayDiv.appendChild(calories);
 
+    // Creating the protein info with icon
     const protein = document.createElement('div');
     protein.className = 'nutrition-protein';
-    protein.innerHTML = `<i class="fas fa-dumbbell"></i> Total Protein: ${day.totalProtein} g`;
+    protein.innerHTML = `<i class="fas fa-dumbbell"></i> Total Protein: ${day.totalProtein} g`;  // Using 'fas fa-dumbbell' for protein icon
     dayDiv.appendChild(protein);
 
+    // Creating the sugar info with icon
     const sugar = document.createElement('div');
     sugar.className = 'nutrition-sugar';
-    sugar.innerHTML = `<i class="fas fa-candy-cane"></i> Total Sugar: ${day.totalSugar} g`;
+    sugar.innerHTML = `<i class="fas fa-candy-cane"></i> Total Sugar: ${day.totalSugar} g`;  // Using 'fas fa-candy-cane' for sugar icon
     dayDiv.appendChild(sugar);
 
     container.appendChild(dayDiv);
