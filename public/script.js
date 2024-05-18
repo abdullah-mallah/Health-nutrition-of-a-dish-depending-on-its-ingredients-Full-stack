@@ -46,11 +46,11 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById(id).addEventListener('change', filterAndDisplayRecipes);
     });
   } else if (path.includes('home')) {
-    const userName = sessionStorage.getItem('userName');
+
+    const userName = sessionStorage.getItem('userName1');
         if (userName) {
             displayWelcomeMessage(userName);
         }
-
     home()
   } else if (path.includes('ingredients')) {
     fetchIngrediants();
