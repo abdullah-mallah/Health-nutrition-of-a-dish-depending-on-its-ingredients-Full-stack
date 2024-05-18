@@ -5,7 +5,7 @@ const usersRoutes = require('./routes/userRoutes');
 const recipeRoutes = require('./routes/recipeRoutes');
 const favouriteRoutes = require('./routes/favouriteRoutes');
 const ingrediantRoutes = require('./routes/ingrediantRoutes')
-const calorieEntryRoutes = require('./routes/calorieEntriesRoutes.js')
+const nutritionRoutes = require('./routes/nutritionRoutes')
 const logoutRoute = require('./routes/logoutRoute.js');
 const signuptRoute = require('./routes/signupRoute.js');
 const massageRoutes = require('./routes/massageRoutes.js');
@@ -37,7 +37,7 @@ app.use('/api/users', usersRoutes);
 app.use('/api/recipes', recipeRoutes) // to get the recipes from the api
 app.use('/api/ingrediants', ingrediantRoutes)
 app.use('/api/favourites', favouriteRoutes);
-app.use('/api/calorieEntries', calorieEntryRoutes); 
+app.use('/api/nutritions', nutritionRoutes); 
 app.use('/api/massages', massageRoutes);
 app.use('/api/logout', logoutRoute);
 app.use('/', signuptRoute )

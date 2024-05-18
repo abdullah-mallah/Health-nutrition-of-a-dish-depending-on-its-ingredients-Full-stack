@@ -12,7 +12,7 @@ const calorieEntrySchema = new mongoose.Schema({
 // Create a unique index to prevent the same recipe from being saved more than once for a specific date.
 calorieEntrySchema.index({ user_id: 1, recipe_name: 1, date: 1 }, { unique: true });
 
-module.exports = mongoose.model('CalorieEntry', calorieEntrySchema);
+module.exports = mongoose.model('Nutritions', calorieEntrySchema);
 
 
 

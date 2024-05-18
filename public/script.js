@@ -67,8 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
   else if(path.includes("nutritions")) {
     const buttonsContainer = document.querySelector('#nutritionsButtons');
     const deleteButton = document.createElement('button');
-    deleteButton.className = 'nutritionButton';
-    deleteButton.textContent = 'Delete ALL Entries History';
+    deleteButton.className = 'deleteNutritionButton';
+    deleteButton.innerHTML = '<i class="fas fa-trash-alt" aria-hidden="true"></i> Delete ALL Entries History'
     deleteButton.onclick = () => deleteEntry(UserId);
     buttonsContainer.appendChild(deleteButton);
   }
@@ -404,7 +404,7 @@ function saveMealDate(recipeLabelSanitized, date) {
   };
 
   
-  fetch(`${DEPLOY_URL}/api/calorieEntries`, {
+  fetch(`${DEPLOY_URL}/api/nutritions`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -433,12 +433,12 @@ function saveMealDate(recipeLabelSanitized, date) {
 
 }
 
-//////////// tracker tab
+//////////// nutritions tab
 function fetchEntries() {
   const startDate = document.getElementById('startDate').value;
   const endDate = document.getElementById('endDate').value;
 
-  const url = `${DEPLOY_URL}/api/calorieEntries/${UserId}?startDate=${startDate}&endDate=${endDate}`;
+  const url = `${DEPLOY_URL}/api/nutritions/${UserId}?startDate=${startDate}&endDate=${endDate}`;
 
   fetch(url, {
     method: 'GET',
@@ -468,19 +468,22 @@ if(data.length>0) {
     date.textContent = `Date: ${day._id}`;
     dayDiv.appendChild(date);
 
+    // Creating the calorie info with icon
     const calories = document.createElement('div');
     calories.className = 'nutrition-calories';
-    calories.innerHTML = `<i class="fas fa-fire"></i> Total Calories: ${day.totalCalories} kcal`;
+    calories.innerHTML = `<i class="fas fa-fire"></i> Total Calories: ${day.totalCalories} kcal`;  // Using 'fas fa-fire' for calories icon
     dayDiv.appendChild(calories);
 
+    // Creating the protein info with icon
     const protein = document.createElement('div');
     protein.className = 'nutrition-protein';
-    protein.innerHTML = `<i class="fas fa-dumbbell"></i> Total Protein: ${day.totalProtein} g`;
+    protein.innerHTML = `<i class="fas fa-dumbbell"></i> Total Protein: ${day.totalProtein} g`;  // Using 'fas fa-dumbbell' for protein icon
     dayDiv.appendChild(protein);
 
+    // Creating the sugar info with icon
     const sugar = document.createElement('div');
     sugar.className = 'nutrition-sugar';
-    sugar.innerHTML = `<i class="fas fa-candy-cane"></i> Total Sugar: ${day.totalSugar} g`;
+    sugar.innerHTML = `<i class="fas fa-candy-cane"></i> Total Sugar: ${day.totalSugar} g`;  // Using 'fas fa-candy-cane' for sugar icon
     dayDiv.appendChild(sugar);
 
     container.appendChild(dayDiv);
@@ -494,7 +497,7 @@ if(data.length>0) {
 }
 
 function fetchSumLast30Days() {
-  const url = `${DEPLOY_URL}/api/calorieEntries/last30days/${UserId}`;
+  const url = `${DEPLOY_URL}/api/nutritions/last30days/${UserId}`;
 
   fetch(url, {
     method: 'GET',
@@ -552,7 +555,7 @@ function displaySumLast30Days(data) {
 }
 
 function deleteEntry(userId) {
-  const url = `${DEPLOY_URL}/api/calorieEntries/${userId}`;
+  const url = `${DEPLOY_URL}/api/nutritions/${userId}`;
 
   fetch(url, {
     method: 'DELETE',
