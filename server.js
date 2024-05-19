@@ -4,14 +4,11 @@ const { //to import the functions from users.js
 const usersRoutes = require('./routes/userRoutes');
 const recipeRoutes = require('./routes/recipeRoutes');
 const favouriteRoutes = require('./routes/favouriteRoutes');
-const ingrediantRoutes = require('./routes/ingrediantRoutes')
 const nutritionRoutes = require('./routes/nutritionRoutes')
 const logoutRoute = require('./routes/logoutRoute.js');
 const signuptRoute = require('./routes/signupRoute.js');
 const massageRoutes = require('./routes/massageRoutes.js');
-
-
-// const adminRoutes = require('./routes/adminRoutes')
+const ingredientRoutes = require('./routes/ingredientRoutes2.js');
 
 require("dotenv").config(); //import .env file
 
@@ -29,18 +26,17 @@ const port = process.env.PORT || 5000;
 
 const path = require("path");//
 app.use(bodyParser.json());//to use bodyparse in express
-// Serve static files from 'public' directory
 app.use(express.static('public'));
 
 // routes
 app.use('/api/users', usersRoutes);
 app.use('/api/recipes', recipeRoutes) // to get the recipes from the api
-app.use('/api/ingrediants', ingrediantRoutes)
 app.use('/api/favourites', favouriteRoutes);
-app.use('/api/nutritions', nutritionRoutes); 
+app.use('/api/nutritions', nutritionRoutes);
 app.use('/api/massages', massageRoutes);
 app.use('/api/logout', logoutRoute);
-app.use('/', signuptRoute )
+app.use('/api/ingredients', ingredientRoutes);
+app.use('/', signuptRoute)
 
 
 
@@ -50,7 +46,7 @@ app.post("/login", async (req, res) => { // Added async here
   try {
     const user = await authenticateUser(email, password); // Added await here
     if (user) {
-      const userPayload = { id: user._id, email: user.email , userName: user.userName};
+      const userPayload = { id: user._id, email: user.email, userName: user.userName };
       var accessToken = jwt.sign(userPayload, process.env.TOKEN_SECRET);
       res.status(200).json({
         message: "Login successful",

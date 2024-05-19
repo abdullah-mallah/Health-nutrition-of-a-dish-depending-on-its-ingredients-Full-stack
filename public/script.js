@@ -734,6 +734,50 @@ function fetchIngrediants() {
       });
   })
 }
+function getIngredientIdAndShowDetails(ingredientId) {
+  fetch(`${DEPLOY_URL}/api/ingredients/getIngredient/${ingredientId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      const nutritionInfo = document.getElementById("nutritionInfo");
+      nutritionInfo.innerHTML = ""; // Clear previous nutrition data
+
+      const nutrients = data.ingredient.nutrition.nutrients;
+      nutrients.forEach(nutrient => {
+        const p = document.createElement("p");
+        p.textContent = `${nutrient.name}: ${nutrient.amount} ${nutrient.unit} (${nutrient.percentOfDailyNeeds}% daily need)`;
+        nutritionInfo.appendChild(p);
+      });
+
+      // Show the modal
+      const modal = document.getElementById("nutritionModal");
+      modal.style.display = "block";
+
+      // Get the <span> element that closes the modal
+      const span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      };
+    })
+    .catch(error => {
+      console.error('Error fetching ingredient details:', error);
+      alert('Failed to fetch ingredient details.');
+    });
+}
 
 //////////// favourites tab functions
 function getFavouriteRecipes() {
@@ -825,8 +869,6 @@ function home() {
 
   // Change image every 3 seconds
   setInterval(nextImage, 3000);
-}
-function fetchArticlesFromAPI(numberOfArticles) {
 }
 function appendArticle(article) {
   var chosenDiv = document.getElementById("Articles");
