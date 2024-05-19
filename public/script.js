@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const path = window.location.pathname;
   UserId = sessionStorage.getItem('UserId');
   token = sessionStorage.getItem('token');
+  admin = sessionStorage.getItem('admin');
   if (!UserId && !path.includes('login')) {
     window.location.href = 'login.html';
   } else {
@@ -75,6 +76,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 }});
+function adminOnly() {
+  if (admin) {  // Assuming 'admin' is a boolean variable that determines admin status
+    document.querySelectorAll('.adminOnly').forEach(element => {
+      element.classList.remove('adminOnly');
+    });
+  }
+}
+//
+
+
 
 //////////// Login and signup functions
 function signupFormSubmitHandler(event) {
@@ -157,13 +168,22 @@ function loginFormSubmitHandler(event) {
 
           UserId = data.user.id;
           sessionStorage.setItem('UserId', UserId);
+          
           token = data.token.Token
           sessionStorage.setItem('token', token);
+
+          admin = data.user.admin;
+          sessionStorage.setItem('admin', admin);
+
           window.location.href = 'home.html';
+
         })
         .catch((error) => {
           alert(error.message)
         });
+
+        alert(admin)
+        adminOnly();
   // alert(`logged in to E-mail: ${Email} and password: ${Password}`);
       }
 }
