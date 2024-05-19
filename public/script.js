@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const container = document.querySelector(".container");
     const sign_in_btn2 = document.querySelector("#sign-in-btn2");
     const sign_up_btn2 = document.querySelector("#sign-up-btn2");
-
     sign_up_btn.addEventListener("click", () => {
       container.classList.add("sign-up-mode");
   });
@@ -34,10 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
   sign_in_btn2.addEventListener("click", () => {
       container.classList.remove("sign-up-mode2");
   });
-
     signupForm.addEventListener('submit', signupFormSubmitHandler);
     loginForm.addEventListener('submit', loginFormSubmitHandler);
-
   } else if (path.includes('recipes')) {
     const recipeForm = document.querySelector('#RecipeForm');
     recipeForm.addEventListener('submit', fetchRecipes);
@@ -62,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   else if(path.includes("about")){
     About();
-
   }
   else if(path.includes("nutritions")) {
     const buttonsContainer = document.querySelector('#nutritionsButtons');
@@ -72,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteButton.onclick = () => deleteEntry(UserId);
     buttonsContainer.appendChild(deleteButton);
   }
-
 }});
 
 //////////// Login and signup functions
@@ -117,7 +112,6 @@ function signupFormSubmitHandler(event) {
   // alert(`Creating account with username: ${newUsername}, E-mail: ${newEmail} and password: ${newPassword}`);
       }
 }
-
 function loginFormSubmitHandler(event) {
   event.preventDefault();
   console.log('Handling login form submission');
@@ -166,12 +160,10 @@ function loginFormSubmitHandler(event) {
   // alert(`logged in to E-mail: ${Email} and password: ${Password}`);
       }
 }
-
 function displayWelcomeMessage(userName) {
   const welcomeMessage = document.getElementById('welcomeMessage');
   welcomeMessage.textContent = `Welcome ${userName}`;
 }
-
 function checkNewInput(input, type) {
   if (type === 'username') {
     // Check if username meets criteria
@@ -204,7 +196,6 @@ function checkNewInput(input, type) {
 function fetchRecipes(event) {
   event.preventDefault();
   const food = document.getElementById('foodInput').value;
-
   if (food) { // Fetch new recipes every time the form is submitted
     fetch(`${DEPLOY_URL}/api/recipes/${food}`, {
       method: 'GET',
@@ -226,7 +217,6 @@ function fetchRecipes(event) {
     alert('Please enter a food item.');
   }
 }
-
 function filterAndDisplayRecipes() {
   const vegan = document.getElementById('vegan').checked;
   const vegetarian = document.getElementById('vegetarian').checked;
@@ -267,7 +257,6 @@ function filterAndDisplayRecipes() {
   displayRecipeCount(filteredRecipes.length); // Display the count of filtered recipes
   displayRecipes(filteredRecipes); // Display the recipes themselves
 }
-
 function displayRecipeCount(count) {
   const countContainer = document.getElementById('recipeCount');
   if (!countContainer) {
@@ -276,7 +265,6 @@ function displayRecipeCount(count) {
   }
   countContainer.textContent = `Showing ${count} recipe(s) that match your filters.`;
 }
-
 function displayRecipes(recipes) {
   const recipesContainer = document.getElementById('recipes');
   recipesContainer.innerHTML = ''; // Clear previous results
@@ -355,16 +343,13 @@ function saveRecipe(recipe) {
     console.log('UserId not set. Cannot save recipe.');
   }
 }
-
-//// calorie, protein and sugar Entry tab function
+// calorie, protein and sugar Entry tab function
 let selectedRecipeId; // This will store the recipe id for which the date is being set
-
 function openDatePicker(recipeLabelSanitized, calories, protein, sugar) {
     selectedRecipeId = recipeLabelSanitized; // Store the current recipe ID
     const modal = document.getElementById('dateModal');
     modal.style.display = 'block'; // Show the modal
 }
-
 function confirmDateSelection() {
   const date = document.getElementById('modalDateInput').value;
   if (!date) {
@@ -380,7 +365,6 @@ function cancelDateSelection() {
   const modal = document.getElementById('dateModal');
   modal.style.display = 'none'; // Hide the modal
 }
-
 function saveMealDate(recipeLabelSanitized, date) {
   const dataElement = document.getElementById(`saveRecipe-${recipeLabelSanitized}`);
   const calories = dataElement.getAttribute('data-calories');
@@ -454,7 +438,6 @@ function fetchEntries() {
     })
     .catch(error => console.error('Failed to fetch entries:', error));
 }
-
 function displayNutritionsData(data) {
   const container = document.getElementById('nutritionsData');
   container.innerHTML = '';  // Clear previous data
@@ -495,7 +478,6 @@ if(data.length>0) {
     container.appendChild(noData);
   }
 }
-
 function fetchSumLast30Days() {
   const url = `${DEPLOY_URL}/api/nutritions/last30days/${UserId}`;
 
@@ -513,7 +495,6 @@ function fetchSumLast30Days() {
     })
     .catch(error => console.error('Failed to fetch sum of last 30 days:', error));
 }
-
 function displaySumLast30Days(data) {
   const container = document.getElementById('last30DaysSum');
   container.innerHTML = '';  // Clear previous data
@@ -553,7 +534,6 @@ function displaySumLast30Days(data) {
     container.appendChild(noData);
   }
 }
-
 function deleteEntry(userId) {
   const url = `${DEPLOY_URL}/api/nutritions/${userId}`;
 
@@ -573,17 +553,14 @@ function deleteEntry(userId) {
     })
     .catch(error => console.error('Error deleting entry:', error));
 }
-
 function openModal(modalId) {
   const modal = document.getElementById(modalId);
   modal.style.display = 'block';
 }
-
 function closeModal(modalId) {
   const modal = document.getElementById(modalId);
   modal.style.display = 'none';
 }
-
 // Close modals when clicking outside
 window.onclick = function(event) {
   const modals = document.querySelectorAll('.modal');
@@ -593,7 +570,6 @@ window.onclick = function(event) {
     }
   });
 }
-
 
 //////////// profile tab functions
 function getAcooutInfo() {
@@ -703,39 +679,60 @@ function deleteAllFavouriteRecipes(UserId) {
     }
   })
 }
+function logout() {
+  fetch('/api/logout', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.message);
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('UserId');
+      window.location.href = 'login.html';
+    })
+    .catch(error => console.error('Error logging out:', error));
+}
 
 //////////// ingrediant tab functions
 function fetchIngrediants() {
-  fetch(`${DEPLOY_URL}/api/ingrediants/getAllIngrediants`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`  // Ensure this is correctly set
-    }
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      const tableBody = document.getElementById("ingrediantsRows");
-      tableBody.innerHTML = ""; // Clear existing rows
-      data.ingrediants.forEach((ingrediant) => {
-        const row = tableBody.insertRow();
-        row.insertCell(0).textContent = ingrediant.name;
-        row.insertCell(1).textContent = ingrediant.size;
-        row.insertCell(2).textContent = ingrediant.fat;
-        row.insertCell(3).textContent = ingrediant.cholesterol;
-        row.insertCell(4).textContent = ingrediant.sodium;
-        row.insertCell(5).textContent = ingrediant.carbohydrate;
-        row.insertCell(6).textContent = ingrediant.sugar;
-        row.insertCell(7).textContent = ingrediant.protein;
-        row.insertCell(8).textContent = ingrediant.vitamin_c;
-        row.insertCell(9).textContent = ingrediant.vitamin_d;
-        row.insertCell(10).textContent = ingrediant.iron;
-        row.insertCell(11).textContent = ingrediant.calcium;
-        row.insertCell(12).textContent = ingrediant.potassium;
-        row.insertCell(13).textContent = ingrediant.phosphorus;
-      });
+  const searchForm = document.querySelector('#ingredientForm');
+  searchForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const searchedIngredient = document.getElementById('ingredientInput').value;
+    fetch(`${DEPLOY_URL}/api/ingredients/${searchedIngredient}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  // Ensure this is correctly set
+      }
     })
-    .catch((error) => console.error("Error fetching recipes:", error));
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.getElementById("ingredientInfoRows");
+        tableBody.innerHTML = ""; // Clear existing rows
+        data.ingredients.results.forEach(ingredient => {
+          const row = tableBody.insertRow();
+          row.insertCell(0).textContent = ingredient.id;
+          row.insertCell(1).textContent = ingredient.name;
+          row.insertCell(2).textContent = ingredient.image;
+
+          const btn_getId = document.createElement("button");
+          btn_getId.textContent = "Show details";
+          btn_getId.onclick = function () {
+            getIngredientIdAndShowDetails(ingredient.id); //
+          };
+          row.insertCell(3).appendChild(btn_getId);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching recipes:', error);
+        alert('Failed to fetch recipes.');
+      });
+  })
 }
 
 //////////// favourites tab functions
@@ -800,7 +797,6 @@ function getFavouriteRecipes() {
     .catch((error) => console.error("Error fetching recipes:", error));
 }
 
-
 //////////// home tab functions
 function home() { 
   // Get all images
@@ -830,7 +826,6 @@ function home() {
   // Change image every 3 seconds
   setInterval(nextImage, 3000);
 }
-
 function fetchArticlesFromAPI(numberOfArticles) {
 }
 function appendArticle(article) {
@@ -856,27 +851,7 @@ function appendArticle(article) {
   }
 }
 
-//// logout
-function logout() {
-  fetch('/api/logout', {
-      method: 'POST',
-      headers: {
-          "Content-Type": "application/json",
-          'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-      }
-  })
-  .then(response => response.json())
-  .then(data => {
-      console.log(data.message);
-      sessionStorage.removeItem('token'); 
-      sessionStorage.removeItem('UserId'); 
-      window.location.href = 'login.html'; 
-  })
-  .catch(error => console.error('Error logging out:', error));
-}
 /////////// ADMIN \\\\\\\\\\\
-
-
 function deleteAcount(userid){
   
   fetch(`${DEPLOY_URL}/api/users/deleteUser/${userid}`, {
@@ -894,8 +869,6 @@ function deleteAcount(userid){
     adminDashBordSU()
   ).catch((error) => console.error("Error fetching deleting user:", error))
 }
-
-
 function adminDashBordSU() {
   
   fetch(`${DEPLOY_URL}/api/users/getUsers`, {
@@ -918,7 +891,6 @@ function adminDashBordSU() {
     })
     .catch((error) => console.error("Error fetching account info:", error));
 }
-
 function userInfoSetup(userInfo) {
 
   const user = userInfo;
@@ -942,7 +914,6 @@ function userInfoSetup(userInfo) {
     // adminTable.appendChild(row);
 };
 
-// function kcalSetup(userInfo) {}
 /////////// about tab functions
 function About(){
   var featureBoxes = document.querySelectorAll(".clickable-feature-box");
@@ -955,8 +926,3 @@ function About(){
         });
     });
 }
-
-// you can make the query injections as a seperate function since it is being used so often
-// you can then take the check validity based on type 
-// checking if too long can be part of the query check or validity
-// side quest Action listener

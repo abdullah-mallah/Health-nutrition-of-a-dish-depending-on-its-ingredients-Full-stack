@@ -128,29 +128,33 @@
         </div>
     </nav>
     <main>
-        <h1>Ingredients</h1>
-        <table id="ingrediants">
+        <form id="ingredientForm">
+            <h1>Ingredient Finder</h1>
+            <p>Enter an ingredient to find a match</p>
+            <label for="ingredientInput">Food Item:</label>
+            <input type="text" id="ingredientInput" placeholder="e.g., Apple, Carrot" />
+            <button type="submit">Search Ingredient</button>
+        </form>
+        <h1>Results</h1>
+        <table id="ingredientInfo">
             <thead>
                 <tr>
+                    <th> Id</th>
                     <th>Name</th>
-                    <th>size</th>
-                    <th>fat</th>
-                    <th>cholesterol</th>
-                    <th>sodium</th>
-                    <th>carbohydrate</th>
-                    <th>sugar</th>
-                    <th>protein</th>
-                    <th>vitamin_c</th>
-                    <th>vitamin_d</th>
-                    <th>iron</th>
-                    <th>calcium</th>
-                    <th>potassium</th>
-                    <th>phosphorus</th>
+                    <th> Picture</th>
+                    <th> Actions</th>
                 </tr>
             </thead>
-            <tbody id="ingrediantsRows"></tbody>
+            <tbody id="ingredientInfoRows"></tbody>
         </table>
-
+        <!-- Modal -->
+        <div id="nutritionModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Nutrition Details</h2>
+                <div id="nutritionInfo"></div>
+            </div>
+        </div>
     </main>
     <footer id="page-footer">
         &#169; example AB 2024

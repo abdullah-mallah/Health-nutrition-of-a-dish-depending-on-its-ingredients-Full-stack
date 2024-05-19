@@ -1,89 +1,136 @@
 /* Basic reset for styling */
 body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif; /* Set a clean and simple font */
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* Set a clean and simple font */
+}
+
+/* Styling the table to be full width and adding basic styles */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Ensures that table borders are collapsed into a single border */
+  table-layout: fixed; /* Helps in defining column widths */
+}
+
+/* Table header styles */
+thead th {
+  background-color: #4CAF50; /* A nice green color for the header */
+  color: white;
+  text-align: left;
+  padding: 12px; /* Adds space around text */
+  border-bottom: 2px solid #ddd; /* Adds a subtle line between header and rows */
+}
+
+/* Table body styles */
+tbody td {
+  padding: 8px; /* Smaller padding for cell content */
+  border-bottom: 1px solid #ddd; /* Light line for separating rows */
+  text-align: left; /* Align text to left for readability */
+}
+
+/* Style for alternate row colors to enhance readability */
+tbody tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Light grey color for every other row */
+}
+  /* The Modal (background) */
+  .modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
   }
-  
-  /* Styling the table to be full width and adding basic styles */
+
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+  }
+
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+/* Responsive design: Ensure table is scrollable on small devices */
+@media screen and (max-width: 600px) {
   table {
     width: 100%;
-    border-collapse: collapse; /* Ensures that table borders are collapsed into a single border */
-    table-layout: fixed; /* Helps in defining column widths */
+    overflow-x: auto; /* Allows table to scroll sideways on small screens */
+    display: block; /* Makes the table a block element */
   }
-  
-  /* Table header styles */
-  thead th {
-    background-color: #4CAF50; /* A nice green color for the header */
-    color: white;
-    text-align: left;
-    padding: 12px; /* Adds space around text */
-    border-bottom: 2px solid #ddd; /* Adds a subtle line between header and rows */
+
+  thead, tbody, th, td, tr {
+    display: block; /* Changes the display to block for all table elements */
   }
-  
-  /* Table body styles */
-  tbody td {
-    padding: 8px; /* Smaller padding for cell content */
-    border-bottom: 1px solid #ddd; /* Light line for separating rows */
-    text-align: left; /* Align text to left for readability */
+
+  thead tr {
+    position: absolute; /* Fixes the header at the top */
+    top: -9999px; /* Moves the header out of view */
   }
-  
-  /* Style for alternate row colors to enhance readability */
-  tbody tr:nth-child(odd) {
-    background-color: #f9f9f9; /* Light grey color for every other row */
+
+  tr { border: 1px solid #ccc; }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee; /* Keeps a line between rows */
+    position: relative;
+    padding-left: 50%; /* Gives enough room for content */
   }
-  
-  /* Responsive design: Ensure table is scrollable on small devices */
-  @media screen and (max-width: 600px) {
-    table {
-      width: 100%;
-      overflow-x: auto; /* Allows table to scroll sideways on small screens */
-      display: block; /* Makes the table a block element */
-    }
-  
-    thead, tbody, th, td, tr {
-      display: block; /* Changes the display to block for all table elements */
-    }
-  
-    thead tr {
-      position: absolute; /* Fixes the header at the top */
-      top: -9999px; /* Moves the header out of view */
-    }
-  
-    tr { border: 1px solid #ccc; }
-  
-    td {
-      border: none;
-      border-bottom: 1px solid #eee; /* Keeps a line between rows */
-      position: relative;
-      padding-left: 50%; /* Gives enough room for content */
-    }
-  
-    td:before {
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      width: 45%; /* Label width, make it less than padding-left of td */
-      padding-right: 10px; /* Right padding for label */
-      white-space: nowrap; /* Ensures label text does not wrap */
-      content: attr(data-title); /* Uses the data-title attribute as content */
-    }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%; /* Label width, make it less than padding-left of td */
+    padding-right: 10px; /* Right padding for label */
+    white-space: nowrap; /* Ensures label text does not wrap */
+    content: attr(data-title); /* Uses the data-title attribute as content */
   }
-  
-  /* Customizing scrollbar for better visibility on small devices */
-  ::-webkit-scrollbar {
-    width: 12px; /* Width of scrollbar */
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Color of the track */
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #888; /* Color of the scrollbar thumb */
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Color when hovering over the thumb */
-  }
-  
+}
+
+/* Customizing scrollbar for better visibility on small devices */
+::-webkit-scrollbar {
+  width: 12px; /* Width of scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color when hovering over the thumb */
+}
+
