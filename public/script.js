@@ -976,6 +976,21 @@ function About(){
         });
     });
 }
+// hamburger menu
+// Add JavaScript to toggle the visibility of icons when the hamburger menu is clicked
+document.addEventListener('DOMContentLoaded', function() {
+  const toggler = document.querySelector('.navbar-toggler');
+  const navbarCollapse = document.getElementById('navbarCollapse');
+
+  toggler.addEventListener('click', function() {
+      navbarCollapse.classList.toggle('expanded');
+  });
+});
+
+
+
+
+
 
 // you can make the query injections as a seperate function since it is being used so often
 // you can then take the check validity based on type 

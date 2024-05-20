@@ -3142,27 +3142,30 @@ input, select, textarea {
 
 	}
 /* NAV bar*/ 
-nav{
-	position:relative;
+nav {
+	position: relative;
 	margin: 27px auto 0;
-	width: 1200px;
+	width: 100%;
 	height: 70px;
-	background: #34495e;
+	background: #212529;
 	border-radius: 12px;
 	font-size: 0;
-	box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
+	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
 	display: flex;
-	align-items: center; /* Center items vertically */
-	justify-content: center;
+	align-items: center;
+	justify-content: left;
+	padding: 0 15px;
   }
-.navIcon {
-	margin-top: 8px; 
-	margin-bottom: 4px; 
-	}
+  
+  .navIcon {
+	margin-top: 8px;
+	margin-bottom: 4px;
+  }
+  
   nav a {
 	font-size: 15px;
 	text-transform: uppercase;
-	color:#ccc;
+	color: #ccc;
 	text-decoration: none; /* Remove underlines from links */
 	line-height: 10px;
 	position: relative;
@@ -3172,72 +3175,143 @@ nav{
 	flex-direction: column;
 	align-items: center; /* Center items horizontally */
 	justify-content: center; /* Align items to the bottom */
-	
-	
- }
- 
-
- 
- nav .animation {
-	 position: absolute;
-	 height: 100%; /* Adjust height as needed */
-	 bottom: 0; /* Align animation to the bottom of the navigation bar */
-	 z-index: 0;
-	 background: #1abc9c;
-	 border-radius: 12px;
-	 transition: all .5s ease 0s;
- }
- 
-  a:nth-child(1){
+  }
+  
+  nav .animation {
+	position: absolute;
+	height: 5px; /* Adjust height as needed */
+	bottom: 0; /* Align animation to the bottom of the navigation bar */
+	z-index: 0;
+	background: #1abc9c;
+	border-radius: 12px;
+	transition: all 0.5s ease 0s;
+  }
+  
+  a:nth-child(1) {
 	width: 150px;
   }
-  nav .start-home,a:nth-child(1):hover~.animation{
-	  width: 150px;
-	  left: 25px;
+  
+  nav .start-home, a:nth-child(1):hover~.animation {
+	width: 150px;
+	left: 0px;
   }
-  a:nth-child(2){
+  
+  a:nth-child(2) {
 	width: 150px;
   }
-  nav .start-ingredients, a:nth-child(2):hover~.animation{
-	  width: 150px;
-	  left: 175px;
+  
+  nav .start-ingredients, a:nth-child(2):hover~.animation {
+	width: 150px;
+	left: 150px;
   }
-  a:nth-child(3){
+  
+  a:nth-child(3) {
 	width: 150px;
   }
-  nav .start-nutrition,a:nth-child(3):hover~.animation{
-	left:325px;
+  
+  nav .start-nutrition, a:nth-child(3):hover~.animation {
+	left: 300px;
 	width: 150px;
   }
-  a:nth-child(4){
+  
+  a:nth-child(4) {
 	width: 150px;
   }
-  nav .start-recipies,a:nth-child(4):hover~.animation{
-	  width: 150px;
-	  left: 475px;
+  
+  nav .start-recipes, a:nth-child(4):hover~.animation {
+	width: 150px;
+	left: 450px;
   }
-  a:nth-child(5){
+  
+  a:nth-child(5) {
 	width: 150px;
   }
-  nav .start-favourites,a:nth-child(5):hover~.animation{
-	  width: 150px;
-	  left: 625px;
+  
+  nav .start-favourites, a:nth-child(5):hover~.animation {
+	width: 150px;
+	left: 600px;
   }
-  a:nth-child(6){
+  
+  a:nth-child(6) {
 	width: 150px;
   }
-  nav .start-profile,a:nth-child(6):hover~.animation{
-	left:775px;
+  
+  nav .start-profile, a:nth-child(6):hover~.animation {
+	left: 750px;
 	width: 150px;
   }
-  a:nth-child(7){
+  
+  a:nth-child(7) {
 	width: 150px;
   }
-  nav .start-about,a:nth-child(7):hover~.animation{
-	left:925px;
+  
+  nav .start-about, a:nth-child(7):hover~.animation {
+	left: 900px;
 	width: 150px;
   }
-
-  .adminOnly{
+  
+  .navbar-toggler {
+	display: none;
+	font-size: 30px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: #ccc;
+  }
+  
+  .navbar-toggler-icon {
+	display: inline-block;
+	width: 30px;
+	height: 3px;
+	background-color: #ccc;
+	margin: 5px 0;
+  }
+  
+  .navbar-collapse {
+	display: flex;
+  }
+  
+  @media (max-width: 767px) {
+	.navbar-toggler {
+		display: block;
+		font-size: 30px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #ccc;
+	}
+	.navbar-toggler-icon {
+        display: inline-block;
+        width: 30px;
+        height: 3px;
+        background-color: #ccc;
+        margin: 5px 0;
+    }
+  
+	.navbar-collapse {
+		flex-direction: column;
+		display: none; /* Hide nav items by default */
+		width: 100%;
+		background: #212529; /* Adjust background as needed */
+	}
+  
+	.navbar-collapse.show {
+		display: flex; /* Show nav items when toggled */
+	}
+  
+	nav a {
+		width: 100%; /* Make links full width */
+		text-align: center; /* Center text */
+		margin: 5px 0; /* Add vertical margin */
+	}
+  
+	nav .animation {
+		display: none; /* Hide animation on small screens */
+	}
+  }
+  
+  
+  .adminOnly {
 	display: none;
   }
+  
