@@ -10,9 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const path = window.location.pathname;
   UserId = sessionStorage.getItem('UserId');
   token = sessionStorage.getItem('token');
-  if (!UserId && !path.includes('login')) {
-    window.location.href = 'login.html';
-  } else {
+
     if (path.includes('login')) {
     const signupForm = document.querySelector('#signup_signupForm');
     const loginForm = document.querySelector('#login_loginForm');
@@ -68,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteButton.onclick = () => deleteEntry(UserId);
     buttonsContainer.appendChild(deleteButton);
   }
-}});
+});
 
 //////////// Login and signup functions
 function signupFormSubmitHandler(event) {
