@@ -7,6 +7,8 @@ let UserId;
 let userName1;
 
 document.addEventListener("DOMContentLoaded", function () {
+ 
+
   const path = window.location.pathname;
   UserId = sessionStorage.getItem('UserId');
   token = sessionStorage.getItem('token');
@@ -74,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteButton.onclick = () => deleteEntry(UserId);
     buttonsContainer.appendChild(deleteButton);
   }
+  
 
 }});
 function adminOnly() {
@@ -977,7 +980,6 @@ function About(){
     });
 }
 // hamburger menu
-// Add JavaScript to toggle the visibility of icons when the hamburger menu is clicked
 document.addEventListener('DOMContentLoaded', function() {
   const toggler = document.querySelector('.navbar-toggler');
   const navbarCollapse = document.getElementById('navbarCollapse');
@@ -986,7 +988,6 @@ document.addEventListener('DOMContentLoaded', function() {
       navbarCollapse.classList.toggle('expanded');
   });
 });
-
 
 
 
