@@ -719,14 +719,13 @@ function fetchIngrediants() {
           const row = tableBody.insertRow();
           row.insertCell(0).textContent = ingredient.id;
           row.insertCell(1).textContent = ingredient.name;
-          row.insertCell(2).textContent = ingredient.image;
 
           const btn_getId = document.createElement("button");
           btn_getId.textContent = "Show details";
           btn_getId.onclick = function () {
             getIngredientIdAndShowDetails(ingredient.id); //
           };
-          row.insertCell(3).appendChild(btn_getId);
+          row.insertCell(2).appendChild(btn_getId);
         });
       })
       .catch(error => {
