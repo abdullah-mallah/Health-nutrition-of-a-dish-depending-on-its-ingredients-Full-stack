@@ -89,7 +89,7 @@ button:hover {
 }
 
 /* Responsive */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 400px) {
   table {
     width: 100%;
     overflow-x: auto; 
