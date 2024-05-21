@@ -41,7 +41,7 @@ nav {
 	position: relative;
 	margin: 27px auto 0;
 	width: 100%;
-	height: 70px;
+	height: 100px;
 	background: #212529;
 	border-radius: 12px;
 	font-size: 0;
@@ -80,15 +80,15 @@ nav ul li {
 	justify-content: center; /* Align items to the bottom */
 }
 
-nav .animation {
+/* nav .animation {
 	position: absolute;
-	height: 100%; /* Adjust height as needed */
-	bottom: 0; /* Align animation to the bottom of the navigation bar */
+	height: 100%; 
+	bottom: 0;
 	z-index: 0;
 	background: #1abc9c;
 	border-radius: 12px;
 	transition: all 0.5s ease 0s;
-}
+} */
 
 a:nth-child(1) {
 	width: 150px;
