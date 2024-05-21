@@ -1,89 +1,143 @@
-/* Basic reset for styling */
 body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif; /* Set a clean and simple font */
-  }
-  
-  /* Styling the table to be full width and adding basic styles */
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; 
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse; 
+  table-layout: auto; 
+}
+
+/* Table header styles */
+thead th {
+  background-color: #4CAF50; 
+  color: white;
+  text-align: left;
+  padding: 16px; 
+  font-size: 18px; 
+  border: 1px solid #ddd; 
+  text-align:center;
+}
+
+/* Table body styles */
+tbody td {
+  padding: 12px; 
+  border: 1px solid #ddd; 
+  text-align: left; 
+  font-size: 16px; 
+  text-align:center;
+}
+
+/* Style for alternate row colors to enhance readability */
+tbody tr:nth-child(odd) {
+  background-color: #f9f9f9; 
+}
+
+/* Button styling */
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media screen and (max-width: 400px) {
   table {
     width: 100%;
-    border-collapse: collapse; /* Ensures that table borders are collapsed into a single border */
-    table-layout: fixed; /* Helps in defining column widths */
+    overflow-x: auto; 
+    display: block; 
   }
-  
-  /* Table header styles */
-  thead th {
-    background-color: #4CAF50; /* A nice green color for the header */
-    color: white;
-    text-align: left;
-    padding: 12px; /* Adds space around text */
-    border-bottom: 2px solid #ddd; /* Adds a subtle line between header and rows */
+
+  thead, tbody, th, td, tr {
+    display: block; 
   }
-  
-  /* Table body styles */
-  tbody td {
-    padding: 8px; /* Smaller padding for cell content */
-    border-bottom: 1px solid #ddd; /* Light line for separating rows */
-    text-align: left; /* Align text to left for readability */
+
+  thead tr {
+    position: absolute; 
+    top: -9999px; 
   }
-  
-  /* Style for alternate row colors to enhance readability */
-  tbody tr:nth-child(odd) {
-    background-color: #f9f9f9; /* Light grey color for every other row */
+
+  tr { border: 1px solid #ccc; }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%; 
   }
-  
-  /* Responsive design: Ensure table is scrollable on small devices */
-  @media screen and (max-width: 600px) {
-    table {
-      width: 100%;
-      overflow-x: auto; /* Allows table to scroll sideways on small screens */
-      display: block; /* Makes the table a block element */
-    }
-  
-    thead, tbody, th, td, tr {
-      display: block; /* Changes the display to block for all table elements */
-    }
-  
-    thead tr {
-      position: absolute; /* Fixes the header at the top */
-      top: -9999px; /* Moves the header out of view */
-    }
-  
-    tr { border: 1px solid #ccc; }
-  
-    td {
-      border: none;
-      border-bottom: 1px solid #eee; /* Keeps a line between rows */
-      position: relative;
-      padding-left: 50%; /* Gives enough room for content */
-    }
-  
-    td:before {
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      width: 45%; /* Label width, make it less than padding-left of td */
-      padding-right: 10px; /* Right padding for label */
-      white-space: nowrap; /* Ensures label text does not wrap */
-      content: attr(data-title); /* Uses the data-title attribute as content */
-    }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap; 
+    content: attr(data-title); 
   }
-  
-  /* Customizing scrollbar for better visibility on small devices */
-  ::-webkit-scrollbar {
-    width: 12px; /* Width of scrollbar */
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Color of the track */
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #888; /* Color of the scrollbar thumb */
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Color when hovering over the thumb */
-  }
-  
+}
+
+/* scrollbar visibility on small devices */
+::-webkit-scrollbar {
+  width: 12px; 
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
