@@ -212,7 +212,7 @@ nav .start-about, a:nth-child(7):hover ~ .animation {
 	}
 
 	.navbar-collapse {
-		margin-top: 20%;
+		margin-top: 20% !important;
 		flex-direction: column;
 		display: none; 
 		width: 100%;
@@ -249,9 +249,9 @@ nav .start-about, a:nth-child(7):hover ~ .animation {
 
   
   
-  .adminOnly {
-	display: none;
-  }
+.adminOnly {
+display: none;
+}
 /* Icon */
 
 .icon {

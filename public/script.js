@@ -960,6 +960,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
 // you can make the query injections as a seperate function since it is being used so often
 // you can then take the check validity based on type 
 // checking if too long can be part of the query check or validity
