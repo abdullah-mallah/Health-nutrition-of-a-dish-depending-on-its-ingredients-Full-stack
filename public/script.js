@@ -167,9 +167,6 @@ function loginFormSubmitHandler(event) {
         .catch((error) => {
           alert(error.message)
         });
-
-        alert(admin)
-        adminOnly();
   // alert(`logged in to E-mail: ${Email} and password: ${Password}`);
       }
 }
@@ -702,7 +699,6 @@ function logout() {
   })
     .then(response => response.json())
     .then(data => {
-      console.log(data.message);
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('UserId');
       window.location.href = 'login.html';
@@ -907,7 +903,8 @@ function appendArticle(article) {
 
 /////////// ADMIN \\\\\\\\\\\
 function deleteAcount(userid){
-  
+  deleteEntry(userid),
+  deleteAllFavouriteRecipes(userid)
   fetch(`${DEPLOY_URL}/api/users/deleteUser/${userid}`, {
     method: 'DELETE',
     headers: {
