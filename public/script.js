@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (userName) {
         displayWelcomeMessage(userName);
       }
-      home()
     } else if (path.includes('ingredients')) {
       fetchIngrediants();
     } else if (path.includes('favourites')) {
@@ -841,57 +840,6 @@ function getFavouriteRecipes() {
     .catch((error) => console.error("Error fetching recipes:", error));
 }
 
-//////////// home tab functions
-function home() { 
-  // Get all images
-  var images = document.querySelectorAll('.home_food-image');
-  var currentIndex = 0;
-
-  function showImage(index) {
-    // Hide all images
-    images.forEach(function (image) {
-      image.style.display = 'none';
-    });
-    // Show the current image
-    images[index].style.display = 'block';
-  }
-
-  function nextImage() {
-    currentIndex++;
-    if (currentIndex >= images.length) {
-      currentIndex = 0;
-    }
-    showImage(currentIndex);
-  }
-
-  // Show the first image initially
-  showImage(currentIndex);
-
-  // Change image every 3 seconds
-  setInterval(nextImage, 3000);
-}
-function appendArticle(article) {
-  var chosenDiv = document.getElementById("Articles");
-  let articles = {};
-  articles = fetchArticlesFromAPI("number of articles");
-
-  for (article in articles){
-    var newContainer = document.createElement('div')
-    newContainer.classList.add('module')
-
-    var newH3 = document.createElement('H3');
-    newH3.innerText = article.title;
-    newContainer.appendChild(newH3);
-
-    var newP = document.createElement('p')
-    newP.innerHTML= article.explanation;
-    newContainer.appendChild(newP);
-
-    chosenDiv.insertBefore(newContainer, chosenDiv.firstChild);
-
-
-  }
-}
 
 /////////// ADMIN \\\\\\\\\\\
 function deleteAcount(userid){
