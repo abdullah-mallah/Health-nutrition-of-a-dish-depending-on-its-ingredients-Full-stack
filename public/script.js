@@ -7,9 +7,12 @@ let UserId;
 let userName1;
 
 document.addEventListener("DOMContentLoaded", function () {
+ 
+
   const path = window.location.pathname;
   UserId = sessionStorage.getItem('UserId');
   token = sessionStorage.getItem('token');
+  admin = sessionStorage.getItem('admin');
   if (!UserId && !path.includes('login')) {
     window.location.href = 'login.html';
   } else {
@@ -151,13 +154,22 @@ function loginFormSubmitHandler(event) {
 
           UserId = data.user.id;
           sessionStorage.setItem('UserId', UserId);
+          
           token = data.token.Token
           sessionStorage.setItem('token', token);
+
+          admin = data.user.admin;
+          sessionStorage.setItem('admin', admin);
+
           window.location.href = 'home.html';
+
         })
         .catch((error) => {
           alert(error.message)
         });
+
+        alert(admin)
+        adminOnly();
   // alert(`logged in to E-mail: ${Email} and password: ${Password}`);
       }
 }
@@ -869,9 +881,6 @@ function home() {
 
   // Change image every 3 seconds
   setInterval(nextImage, 3000);
-}
-
-function fetchArticlesFromAPI(numberOfArticles) {
 }
 function appendArticle(article) {
   var chosenDiv = document.getElementById("Articles");
