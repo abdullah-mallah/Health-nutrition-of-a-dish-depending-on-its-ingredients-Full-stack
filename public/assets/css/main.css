@@ -3188,65 +3188,65 @@ nav {
 	transition: all 0.5s ease 0s;
   }
   
-  a:nth-child(1) {
+  ul li:nth-child(1) {
 	width: 150px;
   }
   
-  nav .start-home, a:nth-child(1):hover~.animation {
+  nav .start-home,ul li:nth-child(1):hover~.animation {
 	width: 150px;
 	left: 0px;
   }
   
-  a:nth-child(2) {
+  nav ul li:nth-child(2) {
 	width: 150px;
   }
   
-  nav .start-ingredients, a:nth-child(2):hover~.animation {
+  nav .start-ingredients, nav ul li:nth-child(2):hover~.animation {
 	width: 150px;
 	left: 150px;
   }
   
-  a:nth-child(3) {
+  nav ul li:nth-child(3) {
 	width: 150px;
   }
   
-  nav .start-nutrition, a:nth-child(3):hover~.animation {
+  nav .start-nutrition, nav ul li:nth-child(3):hover~.animation {
 	left: 300px;
 	width: 150px;
   }
   
-  a:nth-child(4) {
+  nav ul li:nth-child(4) {
 	width: 150px;
   }
   
-  nav .start-recipes, a:nth-child(4):hover~.animation {
+  nav .start-recipes,nav ul li:nth-child(4):hover~.animation {
 	width: 150px;
 	left: 450px;
   }
   
-  a:nth-child(5) {
+  nav ul li:nth-child(5) {
 	width: 150px;
   }
   
-  nav .start-favourites, a:nth-child(5):hover~.animation {
+  nav .start-favourites,nav ul li:nth-child(5):hover~.animation {
 	width: 150px;
 	left: 600px;
   }
   
-  a:nth-child(6) {
+  nav ul li:nth-child(6) {
 	width: 150px;
   }
   
-  nav .start-profile, a:nth-child(6):hover~.animation {
+  nav .start-profile,nav ul li:nth-child(6):hover~.animation {
 	left: 750px;
 	width: 150px;
   }
   
-  a:nth-child(7) {
+  nav ul li:nth-child(7) {
 	width: 150px;
   }
   
-  nav .start-about, a:nth-child(7):hover~.animation {
+  nav .start-about,nav ul li:nth-child(7):hover~.animation {
 	left: 900px;
 	width: 150px;
   }
@@ -3272,7 +3272,7 @@ nav {
 	display: flex;
   }
   
-  @media (max-width: 767px) {
+  @media (max-width: 999px) {
 	.navbar-toggler {
 		display: block;
 		font-size: 30px;
@@ -3312,7 +3312,7 @@ nav {
   }
   
   
-  .adminOnly {
+  #adminOnly {
 	display: none;
   }
   
