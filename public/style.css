@@ -48,8 +48,8 @@ nav {
 	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
 	display: flex;
 	align-items: center;
-	justify-content: flex-end; /* Changed to flex-end for RTL */
-	padding: 0 15px;
+	justify-content: right; /* Changed to flex-end for RTL */
+
 	direction: rtl; /* Set direction to RTL */
 }
 
@@ -76,7 +76,7 @@ nav ul li {
 	text-align: bottom;
 	display: flex; /* Use flexbox */
 	flex-direction: column;
-	align-items: flex-end; /* Align items to the right */
+	align-items: right; 
 	justify-content: center; /* Align items to the bottom */
 }
 
@@ -96,7 +96,7 @@ a:nth-child(1) {
 
 nav .start-home, a:nth-child(1):hover ~ .animation {
 	width: 150px;
-	right: 0px; /* Changed to right for RTL */
+	right: 20px; /* Changed to right for RTL */
 }
 
 a:nth-child(2) {
@@ -105,7 +105,7 @@ a:nth-child(2) {
 
 nav .start-ingredients, a:nth-child(2):hover ~ .animation {
 	width: 150px;
-	right: 150px; /* Changed to right for RTL */
+	right: 170px; /* Changed to right for RTL */
 }
 
 a:nth-child(3) {
@@ -113,8 +113,8 @@ a:nth-child(3) {
 }
 
 nav .start-nutrition, a:nth-child(3):hover ~ .animation {
-	right: 300px; /* Changed to right for RTL */
-	width: 150px;
+  width: 150px;
+	right: 320px; /* Changed to right for RTL */
 }
 
 a:nth-child(4) {
@@ -123,7 +123,7 @@ a:nth-child(4) {
 
 nav .start-recipes, a:nth-child(4):hover ~ .animation {
 	width: 150px;
-	right: 450px; /* Changed to right for RTL */
+	right: 470px; /* Changed to right for RTL */
 }
 
 a:nth-child(5) {
@@ -132,7 +132,7 @@ a:nth-child(5) {
 
 nav .start-favourites, a:nth-child(5):hover ~ .animation {
 	width: 150px;
-	right: 600px; /* Changed to right for RTL */
+	right: 620px; /* Changed to right for RTL */
 }
 
 a:nth-child(6) {
@@ -140,8 +140,8 @@ a:nth-child(6) {
 }
 
 nav .start-profile, a:nth-child(6):hover ~ .animation {
-	right: 750px; /* Changed to right for RTL */
 	width: 150px;
+	right: 770px; /* Changed to right for RTL */
 }
 
 a:nth-child(7) {
@@ -160,6 +160,8 @@ nav .start-about, a:nth-child(7):hover ~ .animation {
 	border: none;
 	cursor: pointer;
 	color: #ccc;
+  position: absolute;
+	right: 15px; 
 }
 
 .navbar-toggler-icon {
@@ -206,6 +208,7 @@ nav .start-about, a:nth-child(7):hover ~ .animation {
 		height: 3px;
 		background-color: #ccc;
 		margin: 5px 0;
+    
 	}
 
 	.navbar-collapse {

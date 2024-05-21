@@ -824,39 +824,6 @@ function getFavouriteRecipes() {
     .catch((error) => console.error("Error fetching recipes:", error));
 }
 
-
-//////////// home tab functions
-// function home() { 
-//   // Get all images
-//   var images = document.querySelectorAll('.home_food-image');
-//   var currentIndex = 0;
-
-//   function showImage(index) {
-//     // Hide all images
-//     images.forEach(function (image) {
-//       image.style.display = 'none';
-//     });
-//     // Show the current image
-//     images[index].style.display = 'block';
-//   }
-
-//   function nextImage() {
-//     currentIndex++;
-//     if (currentIndex >= images.length) {
-//       currentIndex = 0;
-//     }
-//     showImage(currentIndex);
-//   }
-
-//   // Show the first image initially
-//   showImage(currentIndex);
-
-//   // Change image every 3 seconds
-//   setInterval(nextImage, 3000);
-// }
-
-function fetchArticlesFromAPI(numberOfArticles) {
-}
 function appendArticle(article) {
   var chosenDiv = document.getElementById("Articles");
   let articles = {};
