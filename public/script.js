@@ -57,8 +57,11 @@ document.addEventListener("DOMContentLoaded", function () {
       getFavouriteRecipes()
     } else if (path.includes('profile')) {
       getAcooutInfo();
-    } else if (path.includes('dashboard')) {
+    } else if (admin=="1" &&path.includes('dashboard')  ) {
       adminDashBordSU();
+    } else if (admin=="0" && path.includes('dashboard')  ) {
+      alert("admin users only")
+      window.location.href = 'home.html';
     }
     else if (path.includes("about")) {
       About();
@@ -81,7 +84,13 @@ function signupFormSubmitHandler(event) {
   let newUsername = document.getElementById('signup_Name').value;
   let newEmail = document.getElementById('signup_E-mail').value;
   let newPassword = document.getElementById('signup_Password').value;
-  let admin =document.getElementById('signup_Admin').checked;
+  let admin1 = document.getElementById('signup_Admin').checked;
+  let admin=""
+  if (admin1) {
+    admin= "1"
+  } else {
+    admin = "0"
+  }
   if (!checkNewInput(newUsername, 'username') || !checkNewInput(newEmail, 'email') || !checkNewInput(newPassword, 'password')){
     //switch 
     alert('Please enter the data  in the correct format');
