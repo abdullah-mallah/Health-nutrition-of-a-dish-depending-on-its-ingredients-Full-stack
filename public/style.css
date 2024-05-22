@@ -212,7 +212,7 @@ nav .start-about, a:nth-child(7):hover ~ .animation {
 	}
 
 	.navbar-collapse {
-		margin-top: 20% !important;
+		margin-top: 20% ;
 		flex-direction: column;
 		display: none; 
 		width: 100%;
