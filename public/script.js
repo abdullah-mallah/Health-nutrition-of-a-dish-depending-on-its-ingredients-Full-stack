@@ -944,9 +944,12 @@ function adminDashBordSU() {
       const adminTable = document.getElementById("accountInfoRows");
       adminTable.textContent = '';
       data.allUsers.forEach(user => {
+        if (user._id !== UserId) {
+          userInfoSetup(user);
+          // console.log(user)
+        }
       
-        userInfoSetup(user);
-        // console.log(user)
+        
       })
     })
     .catch((error) => console.error("Error fetching account info:", error));
