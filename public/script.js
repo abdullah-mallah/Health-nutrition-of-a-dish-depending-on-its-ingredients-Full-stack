@@ -989,3 +989,12 @@ function About(){
         });
     });
 }
+//this is  for script.js
+document.addEventListener('DOMContentLoaded', function () {
+  const toggler = document.querySelector('.navbar-toggler');
+  const navbarCollapse = document.getElementById('navbarCollapse');
+
+  toggler.addEventListener('click', function () {
+    navbarCollapse.classList.toggle('expanded');
+  });
+});

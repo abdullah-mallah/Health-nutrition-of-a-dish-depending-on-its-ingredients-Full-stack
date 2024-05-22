@@ -209,11 +209,11 @@ h1.display-4.fw-bolder {
     
 	}
 
-	.navbar-collapse {
-		/* margin-top: 10%;/ */
-		flex-direction: column;
-		display: none; 
-		width: 100%;
-		background: #212529; 
-	}
+  	.navbar-collapse {
+  	  margin-top: 10% !important;
+  	  flex-direction: column;
+  	  display: none;
+  	  width: 100%;
+  	  background: #212529;
+  	}
 }
